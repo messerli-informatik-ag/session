@@ -18,11 +18,6 @@ namespace Bash.AspNetCore.Session.Infrastructure
 
         Task<SessionData?> ReadSessionData(SessionId id);
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
         Task<bool> SessionDataExists(SessionId id);
     }
 }
