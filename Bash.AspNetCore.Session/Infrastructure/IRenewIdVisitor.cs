@@ -2,8 +2,7 @@ using Bash.AspNetCore.Session.SessionState;
 
 namespace Bash.AspNetCore.Session.Infrastructure
 {
-    public interface IRenewIdVisitor : IVisitor
+    public interface IRenewIdVisitor : IVisitor<ISessionStateVariant>
     {
-        ISessionStateVariant NewState { get; }
     }
 }

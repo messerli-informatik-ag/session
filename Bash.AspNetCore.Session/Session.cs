@@ -17,13 +17,18 @@ namespace Bash.AspNetCore.Session
             _createRenewIdVisitor = createRenewIdVisitor;
         }
 
+        public SessionId Id => _session.GetId();
+
         public ISessionStateVariant State => _session.State;
 
         public void RenewId()
         {
-            var visitor = _createRenewIdVisitor();
-            State.Visit(visitor);
-            _session.State = visitor.NewState;
+            _session.State = State.Abandon(_createRenewIdVisitor());
+        }
+
+        public void Abandon()
+        {
+            _session.State = new Abandoned(Id);
         }
 
         public void Set(string key, string value)

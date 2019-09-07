@@ -12,9 +12,6 @@ namespace Bash.AspNetCore.Session.SessionState
             NewId = newId;
         }
 
-        public void Visit(IVisitor visitor)
-        {
-            visitor.VisitExistingWithNewId(this);
-        }
+        public T Abandon<T>(IVisitor<T> visitor) => visitor.VisitExistingWithNewId(this);
     }
 }

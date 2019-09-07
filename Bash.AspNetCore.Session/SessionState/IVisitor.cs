@@ -1,11 +1,13 @@
 namespace Bash.AspNetCore.Session.SessionState
 {
-    public interface IVisitor
+    public interface IVisitor<out T>
     {
-        void VisitNew(New state);
+        T VisitNew(New state);
 
-        void VisitExisting(Existing state);
+        T VisitExisting(Existing state);
 
-        void VisitExistingWithNewId(ExistingWithNewId state);
+        T VisitExistingWithNewId(ExistingWithNewId state);
+
+        T VisitAbandoned(Abandoned abandoned);
     }
 }

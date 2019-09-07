@@ -2,11 +2,13 @@ namespace Bash.AspNetCore.Session.SessionState
 {
     public class Existing : ISessionStateVariant
     {
+        public Existing(SessionId id)
+        {
+            Id = id;
+        }
+
         public SessionId Id { get; }
 
-        public void Visit(IVisitor visitor)
-        {
-            visitor.VisitExisting(this);
-        }
+        public T Abandon<T>(IVisitor<T> visitor) => visitor.VisitExisting(this);
     }
 }

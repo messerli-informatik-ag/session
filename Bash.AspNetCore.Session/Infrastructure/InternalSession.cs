@@ -8,7 +8,9 @@ namespace Bash.AspNetCore.Session.Infrastructure
 
         public SessionData SessionData { get; set; }
 
-        public InternalSession(ISessionStateVariant state, SessionData sessionData)
+        public InternalSession(
+            ISessionStateVariant state,
+            SessionData sessionData)
         {
             State = state;
             SessionData = sessionData;

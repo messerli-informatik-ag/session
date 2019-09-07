@@ -11,13 +11,13 @@ namespace Bash.AspNetCore.Session.Infrastructure
             _sessionIdGenerator = sessionIdGenerator;
         }
 
-        public ISessionStateVariant NewState { get; private set; }
+        public ISessionStateVariant VisitNew(New state) => state;
 
-        public void VisitNew(New state) => NewState = state;
+        public ISessionStateVariant VisitExisting(Existing state) =>
+            new ExistingWithNewId(state.Id, _sessionIdGenerator.Generate());
 
-        public void VisitExisting(Existing state) =>
-            NewState = new ExistingWithNewId(state.Id, _sessionIdGenerator.Generate());
+        public ISessionStateVariant VisitExistingWithNewId(ExistingWithNewId state) => state;
 
-        public void VisitExistingWithNewId(ExistingWithNewId state) => NewState = state;
+        public ISessionStateVariant VisitAbandoned(Abandoned state) => state;
     }
 }

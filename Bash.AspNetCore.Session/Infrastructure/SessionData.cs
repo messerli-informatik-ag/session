@@ -7,20 +7,19 @@ namespace Bash.AspNetCore.Session.Infrastructure
     {
         public DateTime Created { get; }
 
-        public TimeSpan IdleTimeout { get; }
-
-        public TimeSpan AbsoluteTimeout { get; }
-
         public IDictionary<string, string> Data { get; }
 
-        public SessionData(DateTime created,
-            TimeSpan idleTimeout,
-            TimeSpan absoluteTimeout,
+        public SessionData(DateTime created)
+        {
+            Created = created;
+            Data = new Dictionary<string, string>();
+        }
+
+        public SessionData(
+            DateTime created,
             IDictionary<string, string> data)
         {
             Created = created;
-            IdleTimeout = idleTimeout;
-            AbsoluteTimeout = absoluteTimeout;
             Data = data;
         }
     }
