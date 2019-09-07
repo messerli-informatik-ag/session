@@ -11,18 +11,18 @@ namespace Bash.Session.Infrastructure.Writer
 
         private readonly IDateTimeFactory _dateTimeFactory;
 
-        private readonly SessionConfiguration _sessionConfiguration;
+        private readonly TimeoutSettings _timeoutSettings;
 
         public OneTimeSessionWriter(
             InternalSession session,
             ISessionStorage sessionStorage,
             IDateTimeFactory dateTimeFactory,
-            SessionConfiguration sessionConfiguration)
+            TimeoutSettings timeoutSettings)
         {
             _session = session;
             _sessionStorage = sessionStorage;
             _dateTimeFactory = dateTimeFactory;
-            _sessionConfiguration = sessionConfiguration;
+            _timeoutSettings = timeoutSettings;
         }
 
         public async Task VisitNew(New state)
@@ -68,7 +68,7 @@ namespace Bash.Session.Infrastructure.Writer
         private async Task WriteSession()
         {
             var now = _dateTimeFactory.Now();
-            var expiration = now + _sessionConfiguration.IdleTimeout;
+            var expiration = now + _timeoutSettings.IdleTimeout;
 
             await _sessionStorage.WriteSessionData(
                 _session.GetId(),

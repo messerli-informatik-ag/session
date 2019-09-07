@@ -1,9 +1,9 @@
 #pragma warning disable 660,661
 
-namespace Bash.Session
+namespace Bash.Session.Configuration
 {
     [Equals]
-    public class CookieName
+    public sealed class CookieName
     {
         public string Value { get; }
 

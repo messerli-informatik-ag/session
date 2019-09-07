@@ -1,4 +1,4 @@
-using Bash.Session;
+using Bash.Session.Configuration;
 
 namespace Bash.Session.Infrastructure
 {

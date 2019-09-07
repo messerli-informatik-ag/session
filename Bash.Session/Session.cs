@@ -23,7 +23,7 @@ namespace Bash.Session
 
         public void RenewId()
         {
-            _session.State = State.Abandon(_createRenewIdVisitor());
+            _session.State = State.Accept(_createRenewIdVisitor());
         }
 
         public void Abandon()

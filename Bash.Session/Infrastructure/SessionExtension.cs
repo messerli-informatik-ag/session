@@ -6,7 +6,7 @@ namespace Bash.Session.Infrastructure
     {
         public static SessionId GetId(this InternalSession session)
         {
-            return session.State.Abandon(new Visitor());
+            return session.State.Accept(new Visitor());
         }
 
         private class Visitor : IVisitor<SessionId>

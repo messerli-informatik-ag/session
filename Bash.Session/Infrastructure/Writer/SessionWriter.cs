@@ -16,7 +16,7 @@ namespace Bash.Session.Infrastructure.Writer
         public async Task WriteSession(InternalSession session)
         {
             var oneTimeSessionWriter = _createOneTimeSessionWriter(session);
-            await session.State.Abandon(oneTimeSessionWriter);
+            await session.State.Accept(oneTimeSessionWriter);
         }
     }
 }

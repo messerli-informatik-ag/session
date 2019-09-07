@@ -2,7 +2,7 @@ using System;
 
 namespace Bash.Session
 {
-    public class SessionConfiguration
+    public sealed class TimeoutSettings
     {
         public TimeSpan IdleTimeout { get; }
 

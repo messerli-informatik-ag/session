@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Bash.Session;
+using Bash.Session.Configuration;
 using Bash.Session.SessionState;
 
 namespace Bash.Session.Infrastructure
