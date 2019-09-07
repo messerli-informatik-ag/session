@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bash.AspNetCore.Session", "Bash.AspNetCore.Session\Bash.AspNetCore.Session.csproj", "{A4C18A88-B9C5-4DB4-A611-DAD6189ABF67}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bash.Session", "Bash.Session\Bash.Session.csproj", "{A4C18A88-B9C5-4DB4-A611-DAD6189ABF67}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
