@@ -1,5 +1,6 @@
 using Bash.Session.Infrastructure;
 using Bash.Session.SessionState;
+using static Bash.Session.Functional;
 
 namespace Bash.Session
 {
@@ -18,15 +19,13 @@ namespace Bash.Session
 
         public SessionId Id => _session.GetId();
 
-        public ISessionStateVariant State => _session.State;
-
         public void RenewId()
         {
-            _session.State = State.Map(
-                mapNew: state => state,
+            _session.State = _session.State.Map(
+                mapNew: Identity,
                 mapExisting: RenewExisting,
-                mapExistingWithNewId: state => state,
-                mapAbandoned: state => state);
+                mapExistingWithNewId: Identity,
+                mapAbandoned: Identity);
         }
 
         private ISessionStateVariant RenewExisting(Existing oldState)
