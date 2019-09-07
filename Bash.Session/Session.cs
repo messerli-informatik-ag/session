@@ -49,5 +49,7 @@ namespace Bash.Session
             _session.SessionData.Data.TryGetValue(key, out var value);
             return value;
         }
+
+        public void Remove(string key) => _session.SessionData.Data.Remove(key);
     }
 }
