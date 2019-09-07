@@ -1,9 +1,11 @@
+using System;
+
 namespace Bash.Session.SessionState
 {
     public class ExistingWithNewId : ISessionStateVariant
     {
         public SessionId OldId { get; }
-        
+
         public SessionId NewId { get; }
 
         public ExistingWithNewId(SessionId oldId, SessionId newId)
@@ -12,6 +14,16 @@ namespace Bash.Session.SessionState
             NewId = newId;
         }
 
-        public T Abandon<T>(IVisitor<T> visitor) => visitor.VisitExistingWithNewId(this);
+        public T Map<T>(
+            Func<New, T> mapNew,
+            Func<Existing, T> mapExisting,
+            Func<ExistingWithNewId, T> mapExistingWithNewId,
+            Func<Abandoned, T> mapAbandoned) => mapExistingWithNewId(this);
+
+        public void Map(
+            Action<New> mapNew,
+            Action<Existing> mapExisting,
+            Action<ExistingWithNewId> mapExistingWithNewId,
+            Action<Abandoned> mapAbandoned) => mapExistingWithNewId(this);
     }
 }

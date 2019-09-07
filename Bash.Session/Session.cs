@@ -1,4 +1,3 @@
-using System;
 using Bash.Session.Infrastructure;
 using Bash.Session.SessionState;
 
@@ -7,14 +6,14 @@ namespace Bash.Session
     public class Session : ISession
     {
         private readonly InternalSession _session;
-        private readonly Func<IRenewIdVisitor> _createRenewIdVisitor;
+        private readonly ISessionIdGenerator _sessionIdGenerator;
 
         internal Session(
             InternalSession session,
-            Func<IRenewIdVisitor> createRenewIdVisitor)
+            ISessionIdGenerator sessionIdGenerator)
         {
             _session = session;
-            _createRenewIdVisitor = createRenewIdVisitor;
+            _sessionIdGenerator = sessionIdGenerator;
         }
 
         public SessionId Id => _session.GetId();
@@ -23,7 +22,16 @@ namespace Bash.Session
 
         public void RenewId()
         {
-            _session.State = State.Accept(_createRenewIdVisitor());
+            _session.State = State.Map(
+                mapNew: state => state,
+                mapExisting: RenewExisting,
+                mapExistingWithNewId: state => state,
+                mapAbandoned: state => state);
+        }
+
+        private ISessionStateVariant RenewExisting(Existing oldState)
+        {
+            return new ExistingWithNewId(oldState.Id, _sessionIdGenerator.Generate());
         }
 
         public void Abandon()
