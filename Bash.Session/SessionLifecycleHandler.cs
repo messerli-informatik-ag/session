@@ -6,7 +6,7 @@ namespace Bash.Session
 {
     public class SessionLifecycleHandler : ISessionLifecycleHandler
     {
-        public delegate ISession WrapSession(InternalSession session);
+        public delegate ISession WrapSession(RawSession session);
         
         private readonly ISessionLoader _sessionLoader;
 
@@ -16,7 +16,7 @@ namespace Bash.Session
 
         private readonly WrapSession _wrapSession;
 
-        private InternalSession _session;
+        private RawSession _session;
 
         public SessionLifecycleHandler(
             ISessionLoader sessionLoader,

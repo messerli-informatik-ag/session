@@ -2,13 +2,13 @@ using Bash.Session.SessionState;
 
 namespace Bash.Session.Infrastructure
 {
-    public class InternalSession
+    public class RawSession
     {
         public ISessionStateVariant State { get; set; }
 
         public SessionData SessionData { get; set; }
 
-        public InternalSession(
+        public RawSession(
             ISessionStateVariant state,
             SessionData sessionData)
         {

@@ -4,6 +4,6 @@ namespace Bash.Session.Infrastructure
 {
     public interface ISessionInitializer
     {
-        Task<InternalSession> InitializeSession(IRequest request);
+        Task<RawSession> InitializeSession(IRequest request);
     }
 }

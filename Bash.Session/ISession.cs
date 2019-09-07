@@ -5,8 +5,6 @@ namespace Bash.Session
     public interface ISession
     {
         SessionId Id { get; }
-        
-        ISessionStateVariant State { get; }
 
         /// <summary>
         /// Generates a new id for this session.

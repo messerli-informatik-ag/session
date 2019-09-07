@@ -4,6 +4,6 @@ namespace Bash.Session.Infrastructure.Writer
 {
     public interface ISessionWriter
     {
-        Task WriteSession(InternalSession session);
+        Task WriteSession(RawSession session);
     }
 }

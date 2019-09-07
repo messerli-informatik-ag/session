@@ -16,7 +16,7 @@ namespace Bash.Session.Infrastructure
             _sessionCreator = sessionCreator;
         }
 
-        public async Task<InternalSession> InitializeSession(IRequest request)
+        public async Task<RawSession> InitializeSession(IRequest request)
         {
             return await _sessionLoader.LoadFromRequest(request)
                    ?? _sessionCreator.CreateSession();

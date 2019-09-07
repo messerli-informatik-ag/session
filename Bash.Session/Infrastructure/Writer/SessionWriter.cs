@@ -21,7 +21,7 @@ namespace Bash.Session.Infrastructure.Writer
             _timeoutSettings = timeoutSettings;
         }
 
-        public async Task WriteSession(InternalSession session)
+        public async Task WriteSession(RawSession session)
         {
             await session.State.Map(
                 mapNew: _ => WriteNew(session),
@@ -30,7 +30,7 @@ namespace Bash.Session.Infrastructure.Writer
                 mapAbandoned: state => RemoveSession(state.Id));
         }
 
-        private async Task WriteNew(InternalSession session)
+        private async Task WriteNew(RawSession session)
         {
             if (!IsSessionEmpty(session))
             {
@@ -38,7 +38,7 @@ namespace Bash.Session.Infrastructure.Writer
             }
         }
 
-        private async Task WriteExisting(Existing state, InternalSession session)
+        private async Task WriteExisting(Existing state, RawSession session)
         {
             if (IsSessionEmpty(session))
             {
@@ -50,7 +50,7 @@ namespace Bash.Session.Infrastructure.Writer
             }
         }
 
-        private async Task WriteExistingWithNewId(ExistingWithNewId state, InternalSession session)
+        private async Task WriteExistingWithNewId(ExistingWithNewId state, RawSession session)
         {
             await RemoveSession(state.OldId);
 
@@ -65,7 +65,7 @@ namespace Bash.Session.Infrastructure.Writer
             await _sessionStorage.RemoveSessionData(sessionId);
         }
 
-        private async Task WriteSessionData(InternalSession session)
+        private async Task WriteSessionData(RawSession session)
         {
             var now = _dateTimeFactory.Now();
             var expiration = now + _timeoutSettings.IdleTimeout;
@@ -76,7 +76,7 @@ namespace Bash.Session.Infrastructure.Writer
                 expiration);
         }
 
-        private static bool IsSessionEmpty(InternalSession session)
+        private static bool IsSessionEmpty(RawSession session)
         {
             return session.SessionData.Data.Count == 0;
         }

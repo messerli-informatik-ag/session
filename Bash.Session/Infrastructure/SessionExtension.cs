@@ -2,7 +2,7 @@ namespace Bash.Session.Infrastructure
 {
     internal static class SessionExtension
     {
-        public static SessionId GetId(this InternalSession session)
+        public static SessionId GetId(this RawSession session)
         {
             return session.State.Map(
                 mapNew: state => state.Id,

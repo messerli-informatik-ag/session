@@ -19,7 +19,7 @@ namespace Bash.Session.Infrastructure
             _cookieName = cookieName;
         }
 
-        public async Task<InternalSession?> LoadFromRequest(IRequest request)
+        public async Task<RawSession?> LoadFromRequest(IRequest request)
         {
             var sessionIdString = request.GetCookie(_cookieName);
 
@@ -36,7 +36,7 @@ namespace Bash.Session.Infrastructure
                 return null;
             }
 
-            return new InternalSession(
+            return new RawSession(
                 new Existing(sessionId),
                 sessionData);
         }

@@ -5,11 +5,11 @@ namespace Bash.Session
 {
     public class Session : ISession
     {
-        private readonly InternalSession _session;
+        private readonly RawSession _session;
         private readonly ISessionIdGenerator _sessionIdGenerator;
 
         internal Session(
-            InternalSession session,
+            RawSession session,
             ISessionIdGenerator sessionIdGenerator)
         {
             _session = session;

@@ -16,11 +16,11 @@ namespace Bash.Session.Infrastructure
             _dateTimeFactory = dateTimeFactory;
         }
 
-        public InternalSession CreateSession()
+        public RawSession CreateSession()
         {
             var sessionId = _sessionIdGenerator.Generate();
             var now = _dateTimeFactory.Now();
-            return new InternalSession(
+            return new RawSession(
                 new New(sessionId),
                 new SessionData(now));
         }

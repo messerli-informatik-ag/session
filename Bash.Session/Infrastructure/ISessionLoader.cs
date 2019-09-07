@@ -4,6 +4,6 @@ namespace Bash.Session.Infrastructure
 {
     public interface ISessionLoader
     {
-        Task<InternalSession?> LoadFromRequest(IRequest request);
+        Task<RawSession?> LoadFromRequest(IRequest request);
     }
 }
