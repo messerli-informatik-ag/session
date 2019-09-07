@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Bash.Session.SessionState;
 
@@ -7,38 +8,29 @@ namespace Bash.Session.Infrastructure.Writer
     {
         private readonly ISessionStorage _sessionStorage;
 
-        private readonly IDateTimeFactory _dateTimeFactory;
-
-        private readonly TimeoutSettings _timeoutSettings;
-
-        public SessionWriter(
-            ISessionStorage sessionStorage,
-            IDateTimeFactory dateTimeFactory,
-            TimeoutSettings timeoutSettings)
+        public SessionWriter(ISessionStorage sessionStorage)
         {
             _sessionStorage = sessionStorage;
-            _dateTimeFactory = dateTimeFactory;
-            _timeoutSettings = timeoutSettings;
         }
 
-        public async Task WriteSession(RawSession session)
+        public async Task WriteSession(RawSession session, DateTime idleExpirationDate)
         {
             await session.State.Map(
-                mapNew: _ => WriteNew(session),
-                mapExisting: state => WriteExisting(state, session),
-                mapExistingWithNewId: state => WriteExistingWithNewId(state, session),
+                mapNew: _ => WriteNew(session, idleExpirationDate),
+                mapExisting: state => WriteExisting(state, session, idleExpirationDate),
+                mapExistingWithNewId: state => WriteExistingWithNewId(state, session, idleExpirationDate),
                 mapAbandoned: state => RemoveSession(state.Id));
         }
 
-        private async Task WriteNew(RawSession session)
+        private async Task WriteNew(RawSession session, DateTime idleExpirationDate)
         {
             if (!IsSessionEmpty(session))
             {
-                await WriteSessionData(session);
+                await WriteSessionData(session, idleExpirationDate);
             }
         }
 
-        private async Task WriteExisting(Existing state, RawSession session)
+        private async Task WriteExisting(Existing state, RawSession session, DateTime idleExpirationDate)
         {
             if (IsSessionEmpty(session))
             {
@@ -46,17 +38,17 @@ namespace Bash.Session.Infrastructure.Writer
             }
             else
             {
-                await WriteSessionData(session);
+                await WriteSessionData(session, idleExpirationDate);
             }
         }
 
-        private async Task WriteExistingWithNewId(ExistingWithNewId state, RawSession session)
+        private async Task WriteExistingWithNewId(ExistingWithNewId state, RawSession session, DateTime idleExpirationDate)
         {
             await RemoveSession(state.OldId);
 
             if (!IsSessionEmpty(session))
             {
-                await WriteSessionData(session);
+                await WriteSessionData(session, idleExpirationDate);
             }
         }
 
@@ -65,15 +57,12 @@ namespace Bash.Session.Infrastructure.Writer
             await _sessionStorage.RemoveSessionData(sessionId);
         }
 
-        private async Task WriteSessionData(RawSession session)
+        private async Task WriteSessionData(RawSession session, DateTime idleExpirationDate)
         {
-            var now = _dateTimeFactory.Now();
-            var expiration = now + _timeoutSettings.IdleTimeout;
-
             await _sessionStorage.WriteSessionData(
                 session.GetId(),
                 session.SessionData,
-                expiration);
+                idleExpirationDate);
         }
 
         private static bool IsSessionEmpty(RawSession session)

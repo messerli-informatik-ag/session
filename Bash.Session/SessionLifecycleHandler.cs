@@ -16,18 +16,22 @@ namespace Bash.Session
 
         private readonly WrapSession _wrapSession;
 
+        private readonly IIdleExpirationDateRetriever _idleExpirationDateRetriever;
+
         private RawSession _session;
 
         public SessionLifecycleHandler(
             ISessionLoader sessionLoader,
             ISessionCreator sessionCreator,
             ISessionWriter sessionWriter,
-            WrapSession wrapSession)
+            WrapSession wrapSession,
+            IIdleExpirationDateRetriever idleExpirationDateRetriever)
         {
             _sessionLoader = sessionLoader;
             _sessionCreator = sessionCreator;
             _sessionWriter = sessionWriter;
             _wrapSession = wrapSession;
+            _idleExpirationDateRetriever = idleExpirationDateRetriever;
         }
 
         public ISession Session => _wrapSession(_session);
@@ -40,7 +44,8 @@ namespace Bash.Session
 
         public async Task OnResponse(IResponse response)
         {
-            await _sessionWriter.WriteSession(_session);
+            var idleExpirationDate = _idleExpirationDateRetriever.GetIdleExpirationDate();
+            await _sessionWriter.WriteSession(_session, idleExpirationDate);
         }
     }
 }
