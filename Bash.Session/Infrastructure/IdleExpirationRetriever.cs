@@ -2,13 +2,13 @@ using System;
 
 namespace Bash.Session.Infrastructure
 {
-    public class IdleExpirationDateRetriever : IIdleExpirationDateRetriever
+    public class IdleExpirationRetriever : IIdleExpirationRetriever
     {
         private readonly IDateTimeFactory _dateTimeFactory;
 
         private readonly TimeoutSettings _timeoutSettings;
 
-        public IdleExpirationDateRetriever(
+        public IdleExpirationRetriever(
             IDateTimeFactory dateTimeFactory,
             TimeoutSettings timeoutSettings)
         {
@@ -16,6 +16,6 @@ namespace Bash.Session.Infrastructure
             _timeoutSettings = timeoutSettings;
         }
 
-        public DateTime GetIdleExpirationDate() => _dateTimeFactory.Now() + _timeoutSettings.IdleTimeout;
+        public DateTime GetIdleExpiration() => _dateTimeFactory.Now() + _timeoutSettings.IdleTimeout;
     }
 }

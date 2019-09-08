@@ -16,7 +16,9 @@ namespace Bash.Session
 
         private readonly WrapSession _wrapSession;
 
-        private readonly IIdleExpirationDateRetriever _idleExpirationDateRetriever;
+        private readonly IIdleExpirationRetriever _idleExpirationRetriever;
+
+        private readonly ICookieWriter _cookieWriter;
 
         private RawSession _session;
 
@@ -25,13 +27,15 @@ namespace Bash.Session
             ISessionCreator sessionCreator,
             ISessionWriter sessionWriter,
             WrapSession wrapSession,
-            IIdleExpirationDateRetriever idleExpirationDateRetriever)
+            ICookieWriter cookieWriter,
+            IIdleExpirationRetriever idleExpirationRetriever)
         {
             _sessionLoader = sessionLoader;
             _sessionCreator = sessionCreator;
             _sessionWriter = sessionWriter;
             _wrapSession = wrapSession;
-            _idleExpirationDateRetriever = idleExpirationDateRetriever;
+            _cookieWriter = cookieWriter;
+            _idleExpirationRetriever = idleExpirationRetriever;
         }
 
         public ISession Session => _wrapSession(_session);
@@ -44,8 +48,9 @@ namespace Bash.Session
 
         public async Task OnResponse(IResponse response)
         {
-            var idleExpirationDate = _idleExpirationDateRetriever.GetIdleExpirationDate();
-            await _sessionWriter.WriteSession(_session, idleExpirationDate);
+            var idleExpiration = _idleExpirationRetriever.GetIdleExpiration();
+            await _sessionWriter.WriteSession(_session, idleExpiration);
+            _cookieWriter.WriteCookie(response, _session, idleExpiration);
         }
     }
 }
