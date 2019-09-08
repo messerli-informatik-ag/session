@@ -1,5 +1,3 @@
-using Bash.Session.SessionState;
-
 namespace Bash.Session
 {
     public interface ISession
