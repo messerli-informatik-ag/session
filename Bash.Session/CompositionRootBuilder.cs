@@ -30,17 +30,25 @@ namespace Bash.Session
             _sessionIdGenerator = sessionIdGenerator;
         }
 
-        public CompositionRootBuilder SessionStorage(ISessionStorage sessionStorage) =>
-            ShallowClone(sessionStorage: sessionStorage);
-        
-        public CompositionRootBuilder CookieSettings(CookieSettings cookieSettings) =>
-            ShallowClone(cookieSettings: cookieSettings);
+        public CompositionRootBuilder SessionStorage(ISessionStorage sessionStorage)
+        {
+            return ShallowClone(sessionStorage: sessionStorage);
+        }
 
-        public CompositionRootBuilder TimeoutSettings(TimeoutSettings timeoutSettings) =>
-            ShallowClone(timeoutSettings: timeoutSettings);
+        public CompositionRootBuilder CookieSettings(CookieSettings cookieSettings)
+        {
+            return ShallowClone(cookieSettings: cookieSettings);
+        }
 
-        public CompositionRootBuilder SessionIdGenerator(ISessionIdGenerator sessionIdGenerator) =>
-            ShallowClone(sessionIdGenerator: sessionIdGenerator);
+        public CompositionRootBuilder TimeoutSettings(TimeoutSettings timeoutSettings)
+        {
+            return ShallowClone(timeoutSettings: timeoutSettings);
+        }
+
+        public CompositionRootBuilder SessionIdGenerator(ISessionIdGenerator sessionIdGenerator)
+        {
+            return ShallowClone(sessionIdGenerator: sessionIdGenerator);
+        }
 
         public CompositionRoot Build()
         {
@@ -64,16 +72,24 @@ namespace Bash.Session
                 sessionIdGenerator ?? _sessionIdGenerator);
         }
         
-        private static ISessionStorage DefaultSessionStorage() =>
+        private static ISessionStorage DefaultSessionStorage()
+        {
             throw new NotImplementedException();
+        }
 
-        private static ISessionIdGenerator DefaultSessionIdGenerator() =>
+        private static ISessionIdGenerator DefaultSessionIdGenerator()
+        {
             throw new NotImplementedException();
+        }
 
-        private static CookieSettings DefaultCookieSettings() =>
-            new CookieSettingsBuilder().Build();
+        private static CookieSettings DefaultCookieSettings()
+        {
+            return new CookieSettingsBuilder().Build();
+        }
 
-        private static TimeoutSettings DefaultTimeoutSettings() =>
+        private static TimeoutSettings DefaultTimeoutSettings()
+        {
             throw new NotImplementedException();
+        }
     }
 }

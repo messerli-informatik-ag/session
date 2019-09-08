@@ -27,31 +27,50 @@ namespace Bash.Session
             _sessionIdGenerator = sessionIdGenerator;
         }
 
-        public ISessionLifecycleHandler CreateSessionLifeCycleHandler() =>
-            new SessionLifecycleHandler(
+        public ISessionLifecycleHandler CreateSessionLifeCycleHandler()
+        {
+            return new SessionLifecycleHandler(
                 CreateSessionLoader(),
                 CreateSessionCreator(),
                 CreateSessionWriter(),
                 CreateSession,
                 CreateCookieWriter(),
                 CreateIdleExpirationRetriever());
+        }
 
-        private IIdleExpirationRetriever CreateIdleExpirationRetriever() =>
-            new IdleExpirationRetriever(CreateDateTimeFactory(), _timeoutSettings);
+        private IIdleExpirationRetriever CreateIdleExpirationRetriever()
+        {
+            return new IdleExpirationRetriever(CreateDateTimeFactory(), _timeoutSettings);
+        }
 
-        private ISessionWriter CreateSessionWriter() => new SessionWriter(_sessionStorage);
+        private ISessionWriter CreateSessionWriter()
+        {
+            return new SessionWriter(_sessionStorage);
+        }
 
-        private ISessionCreator CreateSessionCreator() =>
-            new SessionCreator(_sessionIdGenerator, CreateDateTimeFactory());
+        private ISessionCreator CreateSessionCreator()
+        {
+            return new SessionCreator(_sessionIdGenerator, CreateDateTimeFactory());
+        }
 
-        private static IDateTimeFactory CreateDateTimeFactory() => new DateTimeFactory();
+        private static IDateTimeFactory CreateDateTimeFactory()
+        {
+            return new DateTimeFactory();
+        }
 
-        private ISessionLoader CreateSessionLoader() => 
-            new SessionLoader(_sessionStorage, _cookieSettings.Name);
+        private ISessionLoader CreateSessionLoader()
+        {
+            return new SessionLoader(_sessionStorage, _cookieSettings.Name);
+        }
 
-        private static ICookieWriter CreateCookieWriter() => throw new NotImplementedException();
+        private static ICookieWriter CreateCookieWriter()
+        {
+            throw new NotImplementedException();
+        }
 
-        private ISession CreateSession(RawSession rawSession) => 
-            new Session(rawSession, _sessionIdGenerator);
+        private ISession CreateSession(RawSession rawSession)
+        {
+            return new Session(rawSession, _sessionIdGenerator);
+        }
     }
 }
