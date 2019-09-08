@@ -4,7 +4,7 @@ using Bash.Session.Infrastructure;
 
 namespace Bash.Session
 {
-    public class CompositionRootBuilder
+    public sealed class CompositionRootBuilder
     {
         private readonly ISessionStorage? _sessionStorage;
 

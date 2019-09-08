@@ -3,7 +3,7 @@
 namespace Bash.Session
 {
     [Equals]
-    public class SessionId
+    public sealed class SessionId
     {
         public string Value { get; }
 

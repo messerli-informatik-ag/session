@@ -1,6 +1,6 @@
 namespace Bash.Session.Configuration
 {
-    public class CookieSettingsBuilder
+    public sealed class CookieSettingsBuilder
     {
         private const CookieSecurePreference DefaultCookieSecurePreference =
             CookieSecurePreference.MatchingRequest;
