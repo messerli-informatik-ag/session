@@ -1,6 +1,6 @@
 using System;
 
-namespace Bash.Session.Infrastructure
+namespace Bash.Session.Internal
 {
     internal interface IIdleExpirationRetriever
     {

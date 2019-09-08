@@ -1,6 +1,7 @@
 using Bash.Session.SessionState;
+using Bash.Session.Storage;
 
-namespace Bash.Session.Infrastructure
+namespace Bash.Session.Internal
 {
     internal class RawSession
     {

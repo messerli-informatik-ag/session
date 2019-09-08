@@ -1,4 +1,4 @@
-namespace Bash.Session.Infrastructure
+namespace Bash.Session.Internal
 {
     internal static class SessionExtension
     {

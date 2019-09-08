@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
+using Bash.Session.Http;
 
-namespace Bash.Session.Infrastructure
+namespace Bash.Session.Internal
 {
     internal interface ISessionLoader
     {

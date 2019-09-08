@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Bash.Session.Infrastructure.Writer
+namespace Bash.Session.Internal.Writer
 {
     internal interface ISessionWriter
     {

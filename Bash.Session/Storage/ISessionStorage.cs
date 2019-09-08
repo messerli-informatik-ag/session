@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Bash.Session.Infrastructure
+namespace Bash.Session.Storage
 {
     public interface ISessionStorage
     {

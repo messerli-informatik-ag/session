@@ -1,4 +1,4 @@
-namespace Bash.Session.Infrastructure
+namespace Bash.Session.Http
 {
     public interface IResponse
     {

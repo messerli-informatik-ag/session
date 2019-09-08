@@ -1,6 +1,6 @@
 using System;
 
-namespace Bash.Session
+namespace Bash.Session.Internal
 {
     internal interface IDateTimeFactory
     {

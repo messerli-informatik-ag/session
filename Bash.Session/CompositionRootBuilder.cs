@@ -1,6 +1,6 @@
 using System;
 using Bash.Session.Configuration;
-using Bash.Session.Infrastructure;
+using Bash.Session.Storage;
 
 namespace Bash.Session
 {

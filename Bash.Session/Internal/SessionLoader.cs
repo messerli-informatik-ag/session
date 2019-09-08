@@ -1,8 +1,10 @@
 using System.Threading.Tasks;
 using Bash.Session.Configuration;
+using Bash.Session.Http;
 using Bash.Session.SessionState;
+using Bash.Session.Storage;
 
-namespace Bash.Session.Infrastructure
+namespace Bash.Session.Internal
 {
     internal class SessionLoader : ISessionLoader
     {

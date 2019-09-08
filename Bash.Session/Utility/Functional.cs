@@ -1,4 +1,4 @@
-namespace Bash.Session
+namespace Bash.Session.Utility
 {
     internal static class Functional
     {

@@ -1,8 +1,9 @@
 using System;
 using System.Threading.Tasks;
 using Bash.Session.SessionState;
+using Bash.Session.Storage;
 
-namespace Bash.Session.Infrastructure.Writer
+namespace Bash.Session.Internal.Writer
 {
     internal class SessionWriter : ISessionWriter
     {

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Bash.Session.Infrastructure
+namespace Bash.Session.Storage
 {
     public sealed class SessionData
     {

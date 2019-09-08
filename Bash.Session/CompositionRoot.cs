@@ -1,7 +1,8 @@
 using System;
 using Bash.Session.Configuration;
-using Bash.Session.Infrastructure;
-using Bash.Session.Infrastructure.Writer;
+using Bash.Session.Internal;
+using Bash.Session.Internal.Writer;
+using Bash.Session.Storage;
 
 namespace Bash.Session
 {

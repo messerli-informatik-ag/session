@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Bash.Session.Infrastructure
+namespace Bash.Session.Internal
 {
     internal interface IAbsoluteExpirationChecker
     {

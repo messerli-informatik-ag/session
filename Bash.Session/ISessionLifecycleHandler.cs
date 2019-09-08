@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using Bash.Session.Infrastructure;
+using Bash.Session.Http;
 
 namespace Bash.Session
 {

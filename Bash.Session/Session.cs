@@ -1,6 +1,6 @@
-using Bash.Session.Infrastructure;
+using Bash.Session.Internal;
 using Bash.Session.SessionState;
-using static Bash.Session.Functional;
+using static Bash.Session.Utility.Functional;
 
 namespace Bash.Session
 {

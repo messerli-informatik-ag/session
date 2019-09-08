@@ -1,7 +1,7 @@
 using System;
 using Bash.Session.Configuration;
 
-namespace Bash.Session.Infrastructure
+namespace Bash.Session.Http
 {
     public sealed class Cookie
     {

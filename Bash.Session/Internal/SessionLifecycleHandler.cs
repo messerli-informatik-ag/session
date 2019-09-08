@@ -1,9 +1,9 @@
 using System;
 using System.Threading.Tasks;
-using Bash.Session.Infrastructure;
-using Bash.Session.Infrastructure.Writer;
+using Bash.Session.Http;
+using Bash.Session.Internal.Writer;
 
-namespace Bash.Session
+namespace Bash.Session.Internal
 {
     internal class SessionLifecycleHandler : ISessionLifecycleHandler
     {
