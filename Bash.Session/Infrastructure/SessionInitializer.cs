@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 
 namespace Bash.Session.Infrastructure
 {
-    public class SessionInitializer : ISessionInitializer
+    internal class SessionInitializer : ISessionInitializer
     {
         private readonly ISessionLoader _sessionLoader;
 

@@ -1,6 +1,6 @@
 namespace Bash.Session.Infrastructure
 {
-    public interface ISessionCreator
+    internal interface ISessionCreator
     {
         RawSession CreateSession();
     }

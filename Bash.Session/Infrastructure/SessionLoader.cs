@@ -4,7 +4,7 @@ using Bash.Session.SessionState;
 
 namespace Bash.Session.Infrastructure
 {
-    public class SessionLoader : ISessionLoader
+    internal class SessionLoader : ISessionLoader
     {
         private readonly ISessionStorage _sessionStorage;
         

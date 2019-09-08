@@ -4,7 +4,7 @@ using Bash.Session.SessionState;
 
 namespace Bash.Session.Infrastructure.Writer
 {
-    public class SessionWriter : ISessionWriter
+    internal class SessionWriter : ISessionWriter
     {
         private readonly ISessionStorage _sessionStorage;
 

@@ -2,7 +2,7 @@ using System;
 
 namespace Bash.Session
 {
-    public interface IDateTimeFactory
+    internal interface IDateTimeFactory
     {
         DateTime Now();
     }

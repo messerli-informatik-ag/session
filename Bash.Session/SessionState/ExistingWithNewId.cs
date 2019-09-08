@@ -2,7 +2,7 @@ using System;
 
 namespace Bash.Session.SessionState
 {
-    public class ExistingWithNewId : ISessionStateVariant
+    internal class ExistingWithNewId : ISessionStateVariant
     {
         public SessionId OldId { get; }
 

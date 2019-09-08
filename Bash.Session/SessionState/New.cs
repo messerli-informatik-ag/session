@@ -2,7 +2,7 @@ using System;
 
 namespace Bash.Session.SessionState
 {
-    public class New : ISessionStateVariant
+    internal class New : ISessionStateVariant
     {
         public New(SessionId id)
         {

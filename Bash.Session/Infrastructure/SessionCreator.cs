@@ -2,7 +2,7 @@ using Bash.Session.SessionState;
 
 namespace Bash.Session.Infrastructure
 {
-    public class SessionCreator : ISessionCreator
+    internal class SessionCreator : ISessionCreator
     {
         private readonly ISessionIdGenerator _sessionIdGenerator;
 

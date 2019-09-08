@@ -4,7 +4,7 @@ using static Bash.Session.Functional;
 
 namespace Bash.Session
 {
-    public class Session : ISession
+    internal class Session : ISession
     {
         private readonly RawSession _session;
         private readonly ISessionIdGenerator _sessionIdGenerator;

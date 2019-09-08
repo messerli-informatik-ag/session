@@ -18,7 +18,7 @@ namespace Bash.Session
         {
         }
 
-        internal CompositionRootBuilder(
+        private CompositionRootBuilder(
             ISessionStorage? sessionStorage,
             CookieSettings? cookieSettings,
             TimeoutSettings? timeoutSettings,

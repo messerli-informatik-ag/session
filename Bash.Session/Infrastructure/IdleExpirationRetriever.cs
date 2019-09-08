@@ -2,7 +2,7 @@ using System;
 
 namespace Bash.Session.Infrastructure
 {
-    public class IdleExpirationRetriever : IIdleExpirationRetriever
+    internal class IdleExpirationRetriever : IIdleExpirationRetriever
     {
         private readonly IDateTimeFactory _dateTimeFactory;
 

@@ -2,7 +2,7 @@ using System;
 
 namespace Bash.Session.SessionState
 {
-    public interface ISessionStateVariant
+    internal interface ISessionStateVariant
     {
         T Map<T>(
             Func<New, T> mapNew,

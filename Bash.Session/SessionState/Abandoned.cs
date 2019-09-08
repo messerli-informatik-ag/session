@@ -2,7 +2,7 @@ using System;
 
 namespace Bash.Session.SessionState
 {
-    public class Abandoned : ISessionStateVariant
+    internal class Abandoned : ISessionStateVariant
     {
         public Abandoned(SessionId id)
         {

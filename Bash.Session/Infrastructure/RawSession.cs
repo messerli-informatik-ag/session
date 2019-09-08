@@ -2,7 +2,7 @@ using Bash.Session.SessionState;
 
 namespace Bash.Session.Infrastructure
 {
-    public class RawSession
+    internal class RawSession
     {
         public ISessionStateVariant State { get; set; }
 

@@ -5,9 +5,9 @@ using Bash.Session.Infrastructure.Writer;
 
 namespace Bash.Session
 {
-    public class SessionLifecycleHandler : ISessionLifecycleHandler
+    internal class SessionLifecycleHandler : ISessionLifecycleHandler
     {
-        public delegate ISession WrapSession(RawSession session);
+        internal delegate ISession WrapSession(RawSession session);
 
         private readonly ISessionLoader _sessionLoader;
 
@@ -23,7 +23,7 @@ namespace Bash.Session
 
         private RawSession? _rawSession;
 
-        public SessionLifecycleHandler(
+        internal SessionLifecycleHandler(
             ISessionLoader sessionLoader,
             ISessionCreator sessionCreator,
             ISessionWriter sessionWriter,

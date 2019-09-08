@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 
 namespace Bash.Session.Infrastructure
 {
-    public interface IAbsoluteExpirationChecker
+    internal interface IAbsoluteExpirationChecker
     {
         Task InvalidateSessionIfAbsoluteExpirationReached();
     }
