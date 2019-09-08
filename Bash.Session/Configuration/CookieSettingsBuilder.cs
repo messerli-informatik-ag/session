@@ -8,23 +8,20 @@ namespace Bash.Session.Configuration
         private static readonly CookieName DefaultCookieName =
             new CookieName("session_id");
 
-        private readonly CookieName _name;
+        private readonly CookieName? _name;
 
-        private readonly bool _httpOnly;
+        private readonly bool? _httpOnly;
 
-        private readonly CookieSecurePreference _securePreference;
+        private readonly CookieSecurePreference? _securePreference;
 
         public CookieSettingsBuilder()
         {
-            _name = DefaultCookieName;
-            _httpOnly = true;
-            _securePreference = DefaultCookieSecurePreference;
         }
 
         private CookieSettingsBuilder(
-            CookieName name,
-            bool httpOnly,
-            CookieSecurePreference securePreference)
+            CookieName? name,
+            bool? httpOnly,
+            CookieSecurePreference? securePreference)
         {
             _name = name;
             _httpOnly = httpOnly;
@@ -48,7 +45,10 @@ namespace Bash.Session.Configuration
 
         public CookieSettings Build()
         {
-            return new CookieSettings(_name, _httpOnly, _securePreference);
+            return new CookieSettings(
+                _name ?? DefaultCookieName,
+                _httpOnly ?? true,
+                _securePreference ?? DefaultCookieSecurePreference);
         }
 
         private CookieSettingsBuilder ShallowClone(
