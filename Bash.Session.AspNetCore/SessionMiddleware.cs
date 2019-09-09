@@ -18,13 +18,13 @@ namespace Bash.Session.AspNetCore
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
             var lifecycleHandler = _createSessionLifecycleHandler();
-            
+
             var request = new Request(context);
             var response = new Response(context);
-            
+
             await lifecycleHandler.OnRequest(request);
             context.Features.Set(lifecycleHandler.Session);
-            
+
             // TODO: handle errors properly
 
             try
