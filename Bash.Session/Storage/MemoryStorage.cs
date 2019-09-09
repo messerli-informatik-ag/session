@@ -34,7 +34,7 @@ namespace Bash.Session.Storage
             });
         }
 
-        public Task<SessionData> ReadSessionData(SessionId id)
+        public Task<SessionData?> ReadSessionData(SessionId id)
         {
             return Task.Run(() =>
             {

@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bash.Session", "Bash.Sessio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bash.Session.AspNetCore", "Bash.Session.AspNetCore\Bash.Session.AspNetCore.csproj", "{BF1C0DBF-84E5-4DCB-90C6-9775E5874828}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bash.Session.Test", "Bash.Session.Test\Bash.Session.Test.csproj", "{7415339D-BBA6-4E4C-830F-328387278C7F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{BF1C0DBF-84E5-4DCB-90C6-9775E5874828}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF1C0DBF-84E5-4DCB-90C6-9775E5874828}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF1C0DBF-84E5-4DCB-90C6-9775E5874828}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7415339D-BBA6-4E4C-830F-328387278C7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7415339D-BBA6-4E4C-830F-328387278C7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7415339D-BBA6-4E4C-830F-328387278C7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7415339D-BBA6-4E4C-830F-328387278C7F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
