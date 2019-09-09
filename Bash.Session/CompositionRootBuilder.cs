@@ -1,4 +1,3 @@
-using System;
 using Bash.Session.Configuration;
 using Bash.Session.Internal;
 using Bash.Session.Storage;
@@ -90,7 +89,7 @@ namespace Bash.Session
 
         private static TimeoutSettings DefaultTimeoutSettings()
         {
-            throw new NotImplementedException();
+            return new TimeoutSettingsBuilder().Build();
         }
     }
 }
