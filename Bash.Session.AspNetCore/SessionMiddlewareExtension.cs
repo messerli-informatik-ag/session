@@ -1,5 +1,5 @@
-using System;
 using Microsoft.AspNetCore.Builder;
+using ConfigureCompositionRoot = System.Func<Bash.Session.CompositionRootBuilder, Bash.Session.CompositionRootBuilder>;
 
 namespace Bash.Session.AspNetCore
 {
@@ -12,12 +12,17 @@ namespace Bash.Session.AspNetCore
 
         public static IApplicationBuilder UseSession(
             this IApplicationBuilder applicationBuilder,
-            Func<CompositionRootBuilder, CompositionRootBuilder> customizeCompositionRoot)
+            ConfigureCompositionRoot configureCompositionRoot)
         {
-            var sessionLifecycleHandler = customizeCompositionRoot(new CompositionRootBuilder())
-                .Build()
-                .CreateSessionLifeCycleHandler();
-            return applicationBuilder.UseMiddleware<SessionMiddleware>(sessionLifecycleHandler);
+            var compositionRoot = CreateCompositionRoot(configureCompositionRoot);
+            var createLifecycleHandler = new SessionMiddleware.CreateSessionLifecycleHandler(
+                compositionRoot.CreateSessionLifeCycleHandler);
+            return applicationBuilder.UseMiddleware<SessionMiddleware>(createLifecycleHandler);
+        }
+
+        private static CompositionRoot CreateCompositionRoot(ConfigureCompositionRoot configureCompositionRoot)
+        {
+            return configureCompositionRoot(new CompositionRootBuilder()).Build();
         }
     }
 }
