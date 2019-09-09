@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bash.Session", "Bash.Session\Bash.Session.csproj", "{A4C18A88-B9C5-4DB4-A611-DAD6189ABF67}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bash.Session.AspNetCore", "Bash.Session.AspNetCore\Bash.Session.AspNetCore.csproj", "{BF1C0DBF-84E5-4DCB-90C6-9775E5874828}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{A4C18A88-B9C5-4DB4-A611-DAD6189ABF67}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A4C18A88-B9C5-4DB4-A611-DAD6189ABF67}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A4C18A88-B9C5-4DB4-A611-DAD6189ABF67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF1C0DBF-84E5-4DCB-90C6-9775E5874828}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF1C0DBF-84E5-4DCB-90C6-9775E5874828}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF1C0DBF-84E5-4DCB-90C6-9775E5874828}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF1C0DBF-84E5-4DCB-90C6-9775E5874828}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

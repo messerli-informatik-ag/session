@@ -1,5 +1,6 @@
 using System;
 using Bash.Session.Configuration;
+using Bash.Session.Internal;
 using Bash.Session.Storage;
 
 namespace Bash.Session
@@ -74,12 +75,12 @@ namespace Bash.Session
         
         private static ISessionStorage DefaultSessionStorage()
         {
-            throw new NotImplementedException();
+            return new MemoryStorage(new DateTimeFactory());
         }
 
         private static ISessionIdGenerator DefaultSessionIdGenerator()
         {
-            throw new NotImplementedException();
+            return new SessionIdGenerator();
         }
 
         private static CookieSettings DefaultCookieSettings()

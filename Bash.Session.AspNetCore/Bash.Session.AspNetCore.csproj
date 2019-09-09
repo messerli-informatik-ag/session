@@ -3,10 +3,12 @@
         <TargetFramework>netstandard2.1</TargetFramework>
         <Nullable>enable</Nullable>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-        <RootNamespace>Bash.Session</RootNamespace>
+        <RootNamespace>Bash.Session.AspNetCore</RootNamespace>
     </PropertyGroup>
     <ItemGroup>
-      <PackageReference Include="Equals.Fody" Version="4.0.0" />
-      <PackageReference Include="Fody" Version="6.0.0" />
+      <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\Bash.Session\Bash.Session.csproj" />
     </ItemGroup>
 </Project>
