@@ -16,10 +16,14 @@ namespace Bash.Session.AspNetCore.Internal
 
         public void SetCookie(Cookie cookie)
         {
+            var maxAge = cookie.Expiration - DateTime.Now;
+
             var cookieOptions = new CookieOptions
             {
                 HttpOnly = cookie.Settings.HttpOnly,
                 Secure = MapSecurePreferenceToBool(cookie.Settings.SecurePreference),
+                Expires = new DateTimeOffset(cookie.Expiration),
+                MaxAge = maxAge > TimeSpan.Zero ? maxAge : TimeSpan.Zero,
             };
 
             _httpContext.Response.Cookies.Append(

@@ -4,19 +4,26 @@ using Microsoft.AspNetCore.Http;
 
 namespace Bash.Session.AspNetCore
 {
-    public class SessionMiddleware : IMiddleware
+    public class SessionMiddleware
     {
         public delegate ISessionLifecycleHandler CreateSessionLifecycleHandler();
 
         private readonly CreateSessionLifecycleHandler _createSessionLifecycleHandler;
 
-        public SessionMiddleware(CreateSessionLifecycleHandler sessionLifecycleHandler)
+        private readonly RequestDelegate _next;
+
+        public SessionMiddleware(
+            RequestDelegate next,
+            CreateSessionLifecycleHandler sessionLifecycleHandler)
         {
+            _next = next;
             _createSessionLifecycleHandler = sessionLifecycleHandler;
         }
 
-        public async Task InvokeAsync(HttpContext context, RequestDelegate next)
+        public async Task Invoke(HttpContext context)
         {
+            // TODO: handle errors properly
+
             var lifecycleHandler = _createSessionLifecycleHandler();
 
             var request = new Request(context);
@@ -24,17 +31,19 @@ namespace Bash.Session.AspNetCore
 
             await lifecycleHandler.OnRequest(request);
             context.Features.Set(lifecycleHandler.Session);
-
-            // TODO: handle errors properly
+            
+            context.Response.OnStarting(async () =>
+            {
+                await lifecycleHandler.OnResponse(request, response); 
+            });
 
             try
             {
-                await next(context);
+                await _next(context);
             }
             finally
             {
-                context.Features.Set<ISession>(null);
-                await lifecycleHandler.OnResponse(response);
+                context.Features[typeof(ISession)] = null;
             }
         }
     }

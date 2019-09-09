@@ -9,6 +9,6 @@ namespace Bash.Session
         
         Task OnRequest(IRequest request);
 
-        Task OnResponse(IResponse response);
+        Task OnResponse(IRequest request, IResponse response);
     }
 }

@@ -18,5 +18,10 @@ namespace Bash.Session.AspNetCore.Internal
             _httpContext.Request.Cookies.TryGetValue(name.Value, out var value);
             return value;
         }
+
+        public bool HasCookie(CookieName name)
+        {
+            return _httpContext.Request.Cookies.ContainsKey(name.Value);
+        }
     }
 }

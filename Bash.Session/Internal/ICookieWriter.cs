@@ -5,6 +5,6 @@ namespace Bash.Session.Internal
 {
     internal interface ICookieWriter
     {
-        void WriteCookie(IResponse response, RawSession session, DateTime idleExpirationDate);
+        void WriteCookie(IRequest request, IResponse response, RawSession session, DateTime idleExpirationDate);
     }
 }

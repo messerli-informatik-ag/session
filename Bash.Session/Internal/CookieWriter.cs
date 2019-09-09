@@ -13,18 +13,26 @@ namespace Bash.Session.Internal
             _cookieSettings = cookieSettings;
         }
 
-        public void WriteCookie(IResponse response, RawSession session, DateTime idleExpirationDate)
+        public void WriteCookie(IRequest request, IResponse response, RawSession session, DateTime idleExpirationDate)
         {
             session.State.Map(
-                mapNew: _ => WriteNew(response, session, idleExpirationDate),
+                mapNew: _ => WriteNew(request, response, session, idleExpirationDate),
                 mapExisting: _ => WriteExisting(response, session, idleExpirationDate),
                 mapExistingWithNewId: _ => WriteExisting(response, session, idleExpirationDate),
                 mapAbandoned: _ => WriteAbandoned(response));
         }
 
-        private void WriteNew(IResponse response, RawSession session, DateTime idleExpirationDate)
+        private void WriteNew(IRequest request, IResponse response, RawSession session, DateTime idleExpirationDate)
         {
-            if (!session.IsEmpty())
+            var requestHasCookie = request.HasCookie(_cookieSettings.Name);
+            var isSessionEmpty = session.IsEmpty();
+
+            if (isSessionEmpty && requestHasCookie)
+            {
+                UnsetCookie(response);
+            }
+
+            if (!isSessionEmpty)
             {
                 SetCookie(response, session, idleExpirationDate);
             }
