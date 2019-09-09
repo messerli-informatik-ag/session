@@ -25,7 +25,7 @@ namespace Bash.Session.Internal.Writer
 
         private async Task WriteNew(RawSession session, DateTime idleExpirationDate)
         {
-            if (!IsSessionEmpty(session))
+            if (!session.IsEmpty())
             {
                 await WriteSessionData(session, idleExpirationDate);
             }
@@ -33,7 +33,7 @@ namespace Bash.Session.Internal.Writer
 
         private async Task WriteExisting(Existing state, RawSession session, DateTime idleExpirationDate)
         {
-            if (IsSessionEmpty(session))
+            if (session.IsEmpty())
             {
                 await RemoveSession(state.Id);
             }
@@ -47,7 +47,7 @@ namespace Bash.Session.Internal.Writer
         {
             await RemoveSession(state.OldId);
 
-            if (!IsSessionEmpty(session))
+            if (!session.IsEmpty())
             {
                 await WriteSessionData(session, idleExpirationDate);
             }
@@ -64,11 +64,6 @@ namespace Bash.Session.Internal.Writer
                 session.GetId(),
                 session.SessionData,
                 idleExpirationDate);
-        }
-
-        private static bool IsSessionEmpty(RawSession session)
-        {
-            return session.SessionData.Data.Count == 0;
         }
     }
 }

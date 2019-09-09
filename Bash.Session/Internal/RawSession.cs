@@ -16,5 +16,7 @@ namespace Bash.Session.Internal
             State = state;
             SessionData = sessionData;
         }
+
+        public bool IsEmpty() => SessionData.Data.Count == 0;
     }
 }

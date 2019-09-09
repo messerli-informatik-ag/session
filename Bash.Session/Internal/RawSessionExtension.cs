@@ -1,6 +1,6 @@
 namespace Bash.Session.Internal
 {
-    internal static class SessionExtension
+    internal static class RawSessionExtension
     {
         public static SessionId GetId(this RawSession session)
         {

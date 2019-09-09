@@ -64,9 +64,9 @@ namespace Bash.Session
             return new SessionLoader(_sessionStorage, _cookieSettings.Name);
         }
 
-        private static ICookieWriter CreateCookieWriter()
+        private ICookieWriter CreateCookieWriter()
         {
-            throw new NotImplementedException();
+            return new CookieWriter(_cookieSettings);
         }
 
         private ISession CreateSession(RawSession rawSession)
