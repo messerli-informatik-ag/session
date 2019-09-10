@@ -8,7 +8,7 @@ namespace Bash.Session.AspNetCore.Example.Controllers
     public class VisitController : ControllerBase
     {
         [HttpGet]
-        public string Get()
+        public RedirectResult Get()
         {
             var session = HttpContext.Features.Get<ISession>()
                 ?? throw new NullReferenceException("Session was not found in context");
@@ -16,7 +16,7 @@ namespace Bash.Session.AspNetCore.Example.Controllers
             const string visitsKey = "visits";
             var visits = session.GetInt32(visitsKey) ?? 0;
             session.SetInt32(visitsKey, visits + 1);
-            return $"Visit #{visits}";
+            return new RedirectResult("/");
         }
     }
 }

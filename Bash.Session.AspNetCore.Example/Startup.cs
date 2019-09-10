@@ -1,3 +1,5 @@
+using System;
+using Bash.Session.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -30,7 +32,11 @@ namespace Bash.Session.AspNetCore.Example
             }
 
             app.UseHttpsRedirection();
-            app.UseSession();
+            app.UseSession(compositionRootBuilder =>
+                compositionRootBuilder
+                    .TimeoutSettings(new TimeoutSettingsBuilder()
+                        .IdleTimeout(TimeSpan.FromMinutes(1))
+                        .Build()));
             app.UseRouting();
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
