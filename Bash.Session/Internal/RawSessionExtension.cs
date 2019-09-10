@@ -1,3 +1,5 @@
+using System;
+
 namespace Bash.Session.Internal
 {
     internal static class RawSessionExtension
@@ -8,7 +10,7 @@ namespace Bash.Session.Internal
                 mapNew: state => state.Id,
                 mapExisting: state => state.Id,
                 mapExistingWithNewId: state => state.NewId,
-                mapAbandoned: state => state.Id);
+                mapAbandoned: state => throw new InvalidOperationException("Trying to retrieve the id of an abandoned session"));
         }
     }
 }

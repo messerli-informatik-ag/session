@@ -5,12 +5,15 @@ namespace Bash.Session.SessionState
     [Equals(DoNotAddEqualityOperators = true)]
     internal class Abandoned : ISessionStateVariant
     {
-        public Abandoned(SessionId id)
+        public Abandoned(SessionId? id)
         {
             Id = id;
         }
 
-        public SessionId Id { get; }
+        /// <summary>
+        /// The id of an existing session.
+        /// </summary>
+        public SessionId? Id { get; }
 
         public T Map<T>(
             Func<New, T> mapNew,

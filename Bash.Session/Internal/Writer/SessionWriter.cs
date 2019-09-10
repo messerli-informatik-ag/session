@@ -20,7 +20,7 @@ namespace Bash.Session.Internal.Writer
                 mapNew: _ => WriteNew(session, idleExpirationDate),
                 mapExisting: state => WriteExisting(state, session, idleExpirationDate),
                 mapExistingWithNewId: state => WriteExistingWithNewId(state, session, idleExpirationDate),
-                mapAbandoned: state => RemoveSession(state.Id));
+                mapAbandoned: WriteAbandonedSession);
         }
 
         private async Task WriteNew(RawSession session, DateTime idleExpirationDate)
@@ -50,6 +50,14 @@ namespace Bash.Session.Internal.Writer
             if (!session.IsEmpty())
             {
                 await WriteSessionData(session, idleExpirationDate);
+            }
+        }
+
+        private async Task WriteAbandonedSession(Abandoned state)
+        {
+            if (state.Id is { } id)
+            {
+                await RemoveSession(id);
             }
         }
 

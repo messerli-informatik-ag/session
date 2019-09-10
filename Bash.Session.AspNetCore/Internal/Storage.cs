@@ -51,7 +51,7 @@ namespace Bash.Session.AspNetCore.Internal
             return stream.ToArray();
         }
 
-        private static SessionData Deserialize(byte[] data)
+        private static SessionData? Deserialize(byte[] data)
         {
             var stream = new MemoryStream(data);
             var formatter = new BinaryFormatter();

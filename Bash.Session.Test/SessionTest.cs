@@ -56,9 +56,11 @@ namespace Bash.Session.Test
         }
 
         [Fact]
-        public void RenewIdDoesNothingForAbandonedSession()
+        public void RenewIdThrowsForAbandonedSession()
         {
-            TestRenewsSessionId(new Abandoned(SessionId), new Abandoned(SessionId));
+            var session = CreateSession(CreateRawSession());
+            session.Abandon();
+            Assert.Throws<InvalidOperationException>(() => session.RenewId());
         }
 
         [Fact]
@@ -67,11 +69,43 @@ namespace Bash.Session.Test
             TestRenewsSessionId(new Existing(SessionId), new ExistingWithNewId(SessionId, RenewedSessionId));
         }
 
+        [Fact]
+        public void AbandonsNewSession()
+        {
+            TestAbandonsSession(new New(SessionId), new Abandoned(SessionId));
+        }
+
+        [Fact]
+        public void AbandonsExistingSession()
+        {
+            TestAbandonsSession(new Existing(SessionId), new Abandoned(SessionId));
+        }
+
+        [Fact]
+        public void AbandonsExistingSessionWithNewId()
+        {
+            TestAbandonsSession(new ExistingWithNewId(SessionId, RenewedSessionId), new Abandoned(SessionId));
+        }
+
+        [Fact]
+        public void DoesNothingWhenAbandoningAbandonedSession()
+        {
+            TestAbandonsSession(new Abandoned(SessionId), new Abandoned(SessionId));
+        }
+
         private static void TestRenewsSessionId(ISessionStateVariant state, ISessionStateVariant expectedState)
         {
             var rawSession = new RawSession(state, new SessionData(Created));
             var session = CreateSession(rawSession);
             session.RenewId();
+            Assert.Equal(rawSession.State, expectedState);
+        }
+
+        private static void TestAbandonsSession(ISessionStateVariant state, ISessionStateVariant expectedState)
+        {
+            var rawSession = new RawSession(state, new SessionData(Created));
+            var session = CreateSession(rawSession);
+            session.Abandon();
             Assert.Equal(rawSession.State, expectedState);
         }
 

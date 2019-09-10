@@ -27,7 +27,7 @@ namespace Bash.Session
                 mapNew: Identity,
                 mapExisting: RenewExisting,
                 mapExistingWithNewId: Identity,
-                mapAbandoned: Identity);
+                mapAbandoned: _ => throw new InvalidOperationException("Trying to renew the id of an abandoned session"));
         }
 
         private ISessionStateVariant RenewExisting(Existing oldState)
@@ -38,7 +38,11 @@ namespace Bash.Session
         public void Abandon()
         {
             AssertSessionIsWritable();
-            _session.State = new Abandoned(Id);
+            _session.State = _session.State.Map(
+                mapNew: state => new Abandoned(null),
+                mapExisting: state => new Abandoned(state.Id),
+                mapExistingWithNewId: state => new Abandoned(state.OldId),
+                mapAbandoned: Identity);
         }
 
         public void Set(string key, byte[] value)
