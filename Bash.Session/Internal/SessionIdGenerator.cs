@@ -5,7 +5,11 @@ namespace Bash.Session.Internal
 {
     internal class SessionIdGenerator : ISessionIdGenerator
     {
-        private const int SessionIdLength = 48;
+        /// <summary>
+        /// This number is quadruple of what is recommended as minimum by
+        /// <a href="https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#session-id-length">OWASP</a>.
+        /// </summary>
+        private const int SessionIdByteLength = 64;
 
         public SessionId Generate()
         {
@@ -22,7 +26,7 @@ namespace Bash.Session.Internal
 
         private static byte[] GetRandomBytes()
         {
-            var bytes = new byte[SessionIdLength];
+            var bytes = new byte[SessionIdByteLength];
             using var crypto = new RNGCryptoServiceProvider();
             crypto.GetBytes(bytes);
             return bytes;
