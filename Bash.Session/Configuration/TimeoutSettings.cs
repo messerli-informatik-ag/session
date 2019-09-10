@@ -8,7 +8,7 @@ namespace Bash.Session.Configuration
 
         public TimeSpan AbsoluteTimeout { get; }
 
-        public TimeoutSettings(TimeSpan idleTimeout, TimeSpan absoluteTimeout)
+        internal TimeoutSettings(TimeSpan idleTimeout, TimeSpan absoluteTimeout)
         {
             IdleTimeout = idleTimeout;
             AbsoluteTimeout = absoluteTimeout;

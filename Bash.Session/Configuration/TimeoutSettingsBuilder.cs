@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.Contracts;
 
 namespace Bash.Session.Configuration
 {
@@ -22,17 +23,30 @@ namespace Bash.Session.Configuration
             _absoluteTimeout = absoluteTimeout;
         }
 
-        public TimeoutSettingsBuilder IdleTimeout(TimeSpan value)
-            => ShallowClone(idleTimeout: value);
+        [Pure]
+        public TimeoutSettingsBuilder IdleTimeout(TimeSpan value) => ShallowClone(idleTimeout: value);
 
-        public TimeoutSettingsBuilder AbsoluteTimeout(TimeSpan value)
-            => ShallowClone(absoluteTimeout: value);
+        [Pure]
+        public TimeoutSettingsBuilder AbsoluteTimeout(TimeSpan value) => ShallowClone(absoluteTimeout: value);
 
+        [Pure]
         public TimeoutSettings Build()
         {
-            return new TimeoutSettings(
-                _idleTimeout ?? DefaultIdleTimeout,
-                _absoluteTimeout ?? DefaultAbsoluteTimeout);
+            var idleTimeout = _idleTimeout ?? DefaultIdleTimeout;
+            var absoluteTimeout = _absoluteTimeout ?? DefaultAbsoluteTimeout;
+
+            ValidateTimeout(idleTimeout, nameof(TimeoutSettings.IdleTimeout));
+            ValidateTimeout(absoluteTimeout, nameof(TimeoutSettings.AbsoluteTimeout));
+
+            return new TimeoutSettings(idleTimeout, absoluteTimeout);
+        }
+
+        private static void ValidateTimeout(TimeSpan timeout, string propertyName)
+        {
+            if (timeout <= TimeSpan.Zero)
+            {
+                throw new InvalidOperationException($"{propertyName} is not allowed to be negative or zero.");
+            }
         }
 
         private TimeoutSettingsBuilder ShallowClone(
