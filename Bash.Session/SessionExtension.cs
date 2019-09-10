@@ -1,5 +1,6 @@
 using System;
 using System.Text;
+using Bash.Session.Utility;
 
 namespace Bash.Session
 {
@@ -7,7 +8,7 @@ namespace Bash.Session
     {
         public static int? GetInt32(this ISession session, string key)
         {
-            return Map<int>(session.Get(key), bytes => BitConverter.ToInt32(bytes));
+            return NullableValue.Map<byte[], int>(session.Get(key), bytes => BitConverter.ToInt32(bytes));
         }
 
         public static void SetInt32(this ISession session, string key, int value)
@@ -17,28 +18,12 @@ namespace Bash.Session
 
         public static string? GetString(this ISession session, string key)
         {
-            return Map(session.Get(key), Encoding.UTF8.GetString);
+            return NullableValue.Map(session.Get(key), Encoding.UTF8.GetString);
         }
 
         public static void SetString(this ISession session, string key, string value)
         {
             session.Set(key, Encoding.UTF8.GetBytes(value));
-        }
-
-        public static TOutput? Map<TOutput>(byte[]? input, Func<byte[], TOutput?> transform)
-            where TOutput: class
-        {
-            return input is { } notNullInput
-                ? transform(notNullInput)
-                : null;
-        }
-
-        public static TOutput? Map<TOutput>(byte[]? input, Func<byte[], TOutput?> transform)
-            where TOutput: struct
-        {
-            return input is { } notNullInput
-                ? transform(notNullInput)
-                : new TOutput?();
         }
     }
 }
