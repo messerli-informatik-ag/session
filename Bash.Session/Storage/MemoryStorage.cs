@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -50,13 +50,13 @@ namespace Bash.Session.Storage
                 return null;
             }
 
-            if (entry.IsExpired(_dateTimeFactory.Now()))
+            if (!entry.IsExpired(_dateTimeFactory.Now()))
             {
-                _storage.Remove(entry.Id);
-                return null;
+                return entry;
             }
 
-            return entry;
+            _storage.Remove(entry.Id);
+            return null;
         }
 
         private class Entry
