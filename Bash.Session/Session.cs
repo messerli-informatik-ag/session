@@ -1,3 +1,4 @@
+using System;
 using Bash.Session.Internal;
 using Bash.Session.SessionState;
 using static Bash.Session.Utility.Functional;
@@ -21,6 +22,7 @@ namespace Bash.Session
 
         public void RenewId()
         {
+            AssertSessionIsWritable();
             _session.State = _session.State.Map(
                 mapNew: Identity,
                 mapExisting: RenewExisting,
@@ -35,11 +37,13 @@ namespace Bash.Session
 
         public void Abandon()
         {
+            AssertSessionIsWritable();
             _session.State = new Abandoned(Id);
         }
 
         public void Set(string key, string value)
         {
+            AssertSessionIsWritable();
             _session.SessionData.Data[key] = value;
         }
 
@@ -49,6 +53,18 @@ namespace Bash.Session
             return value;
         }
 
-        public void Remove(string key) => _session.SessionData.Data.Remove(key);
+        public void Remove(string key)
+        {
+            AssertSessionIsWritable();
+            _session.SessionData.Data.Remove(key);
+        }
+
+        private void AssertSessionIsWritable()
+        {
+            if (_session.ReadOnly)
+            {
+                throw new InvalidOperationException("Read-only session can't be modified");
+            }
+        }
     }
 }

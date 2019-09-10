@@ -39,7 +39,6 @@ namespace Bash.Session.Internal
             _idleExpirationRetriever = idleExpirationRetriever;
         }
 
-        // TODO: block accessing the session after the OnResponse() has been called.
         public ISession Session => _wrapSession(RawSession);
 
         private RawSession RawSession => 
@@ -54,6 +53,7 @@ namespace Bash.Session.Internal
 
         public async Task OnResponse(IRequest request, IResponse response)
         {
+            RawSession.ReadOnly = true;
             var idleExpiration = _idleExpirationRetriever.GetIdleExpiration();
             await _sessionWriter.WriteSession(RawSession, idleExpiration);
             _cookieWriter.WriteCookie(request, response, RawSession, idleExpiration);

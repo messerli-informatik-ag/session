@@ -9,6 +9,8 @@ namespace Bash.Session.Internal
 
         public SessionData SessionData { get; set; }
 
+        public bool ReadOnly { get; set; }
+
         public RawSession(
             ISessionStateVariant state,
             SessionData sessionData)
