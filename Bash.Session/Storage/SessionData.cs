@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace Bash.Session.Storage
 {
+    [Serializable]
     public sealed class SessionData
     {
         public DateTime Created { get; }

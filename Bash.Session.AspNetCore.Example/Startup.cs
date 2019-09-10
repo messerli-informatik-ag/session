@@ -21,6 +21,7 @@ namespace Bash.Session.AspNetCore.Example
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddDistributedMemoryCache();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
