@@ -1,7 +1,10 @@
+#pragma warning disable 660,661
+
 using System;
 
 namespace Bash.Session.Configuration
 {
+    [Equals]
     public sealed class TimeoutSettings
     {
         public TimeSpan IdleTimeout { get; }
@@ -13,5 +16,9 @@ namespace Bash.Session.Configuration
             IdleTimeout = idleTimeout;
             AbsoluteTimeout = absoluteTimeout;
         }
+
+        public static bool operator ==(TimeoutSettings left, TimeoutSettings right) => Operator.Weave(left, right);
+
+        public static bool operator !=(TimeoutSettings left, TimeoutSettings right) => Operator.Weave(left, right);
     }
 }

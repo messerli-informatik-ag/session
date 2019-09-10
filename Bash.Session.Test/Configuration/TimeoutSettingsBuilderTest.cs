@@ -36,6 +36,21 @@ namespace Bash.Session.Test.Configuration
             });
         }
 
+        [Fact]
+        public void UsesProvidedValues()
+        {
+            var idleTimeout = TimeSpan.FromDays(1);
+            var absoluteTimeout = TimeSpan.FromDays(2);
+
+            var expectedSettings = new TimeoutSettings(idleTimeout, absoluteTimeout);
+
+            var settings = new TimeoutSettingsBuilder()
+                .IdleTimeout(idleTimeout)
+                .AbsoluteTimeout(absoluteTimeout)
+                .Build();
+            Assert.Equal(expectedSettings, settings);
+        }
+
         public static TheoryData<TimeSpan> InvalidTimeouts()
         {
             var negativeTimeSpan = TimeSpan.FromTicks(-1);
