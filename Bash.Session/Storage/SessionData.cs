@@ -10,10 +10,8 @@ namespace Bash.Session.Storage
 
         public IDictionary<string, byte[]> Data { get; }
 
-        public SessionData(DateTime created)
+        public SessionData(DateTime created) : this(created, new Dictionary<string, byte[]>())
         {
-            Created = created;
-            Data = new Dictionary<string, byte[]>();
         }
 
         public SessionData(
