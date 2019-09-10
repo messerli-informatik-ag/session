@@ -13,7 +13,7 @@ namespace Bash.Session.Test
 
         private static readonly SessionId RenewedSessionId = new SessionId("renewed");
 
-        private static readonly DateTime Created = DateTime.UnixEpoch;
+        private static readonly DateTime CreationDate = DateTime.UnixEpoch;
 
         [Fact]
         public void SetThrowsIfRawSessionIsReadonly()
@@ -126,6 +126,41 @@ namespace Bash.Session.Test
             });
         }
 
+        [Fact]
+        public void ValueCanBeWrittenAndRead()
+        {
+            const string key = "foo";
+            var value = new byte[] { 0x1, 0x2, 0x3 };
+            var session = CreateSession(CreateRawSession());
+            session.Set(key, value);
+            Assert.Equal(value, session.Get(key));
+        }
+
+        [Fact]
+        public void ValueCanBeRemoved()
+        {
+            const string key = "foo";
+            var value = new byte[] { 0x1, 0x2, 0x3 };
+            var session = CreateSession(CreateRawSession());
+            session.Set(key, value);
+            session.Remove(key);
+            Assert.Null(session.Get(key));
+        }
+
+        [Fact]
+        public void IdCanBeAccessed()
+        {
+            var session = CreateSession(CreateRawSession());
+            Assert.Equal(SessionId, session.Id);
+        }
+
+        [Fact]
+        public void CreatedDateCanBeAccessed()
+        {
+            var session = CreateSession(CreateRawSession());
+            Assert.Equal(CreationDate, session.CreationDate);
+        }
+
         public static TheoryData<string> InvalidSessionDataKeys()
         {
             return new TheoryData<string>
@@ -141,7 +176,7 @@ namespace Bash.Session.Test
 
         private static void TestRenewsSessionId(ISessionStateVariant state, ISessionStateVariant expectedState)
         {
-            var rawSession = new RawSession(state, new SessionData(Created));
+            var rawSession = new RawSession(state, new SessionData(CreationDate));
             var session = CreateSession(rawSession);
             session.RenewId();
             Assert.Equal(rawSession.State, expectedState);
@@ -149,7 +184,7 @@ namespace Bash.Session.Test
 
         private static void TestAbandonsSession(ISessionStateVariant state, ISessionStateVariant expectedState)
         {
-            var rawSession = new RawSession(state, new SessionData(Created));
+            var rawSession = new RawSession(state, new SessionData(CreationDate));
             var session = CreateSession(rawSession);
             session.Abandon();
             Assert.Equal(rawSession.State, expectedState);
@@ -169,7 +204,7 @@ namespace Bash.Session.Test
 
         private static RawSession CreateRawSession()
         {
-            return new RawSession(new New(SessionId), new SessionData(Created));
+            return new RawSession(new New(SessionId), new SessionData(CreationDate));
         }
 
         private static ISession CreateSession(RawSession rawSession)
