@@ -48,19 +48,30 @@ namespace Bash.Session
         public void Set(string key, byte[] value)
         {
             AssertSessionIsWritable();
+            ValidateKey(key);
             _session.SessionData.Data[key] = value;
         }
 
         public byte[]? Get(string key)
         {
+            ValidateKey(key);
             _session.SessionData.Data.TryGetValue(key, out var value);
             return value;
         }
 
         public void Remove(string key)
         {
+            ValidateKey(key);
             AssertSessionIsWritable();
             _session.SessionData.Data.Remove(key);
+        }
+
+        private void ValidateKey(string key)
+        {
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                throw new ArgumentException("Key should not consist of whitespace only", nameof(key));
+            }
         }
 
         private void AssertSessionIsWritable()

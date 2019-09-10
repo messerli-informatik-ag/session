@@ -72,7 +72,7 @@ namespace Bash.Session.Test
         [Fact]
         public void AbandonsNewSession()
         {
-            TestAbandonsSession(new New(SessionId), new Abandoned(SessionId));
+            TestAbandonsSession(new New(SessionId), new Abandoned(null));
         }
 
         [Fact]
@@ -91,6 +91,52 @@ namespace Bash.Session.Test
         public void DoesNothingWhenAbandoningAbandonedSession()
         {
             TestAbandonsSession(new Abandoned(SessionId), new Abandoned(SessionId));
+        }
+
+        [Theory]
+        [MemberData(nameof(InvalidSessionDataKeys))]
+        public void SetThrowsForInvalidKeys(string invalidKey)
+        {
+            var session = CreateSession(CreateRawSession());
+            Assert.Throws<ArgumentException>(() =>
+            {
+                session.Set(invalidKey, new byte[] { 0x1 });
+            });
+        }
+
+        [Theory]
+        [MemberData(nameof(InvalidSessionDataKeys))]
+        public void GetThrowsForInvalidKeys(string invalidKey)
+        {
+            var session = CreateSession(CreateRawSession());
+            Assert.Throws<ArgumentException>(() =>
+            {
+                session.Get(invalidKey);
+            });
+        }
+
+        [Theory]
+        [MemberData(nameof(InvalidSessionDataKeys))]
+        public void RemoveThrowsForInvalidKeys(string invalidKey)
+        {
+            var session = CreateSession(CreateRawSession());
+            Assert.Throws<ArgumentException>(() =>
+            {
+                session.Remove(invalidKey);
+            });
+        }
+
+        public static TheoryData<string> InvalidSessionDataKeys()
+        {
+            return new TheoryData<string>
+            {
+                "",
+                " ",
+                "\t",
+                "\n",
+                "\r",
+                "\r\n",
+            };
         }
 
         private static void TestRenewsSessionId(ISessionStateVariant state, ISessionStateVariant expectedState)
