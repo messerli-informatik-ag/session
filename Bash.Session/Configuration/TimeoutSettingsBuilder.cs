@@ -2,12 +2,12 @@ using System;
 
 namespace Bash.Session.Configuration
 {
-    public class TimeoutSettingsBuilder
+    public sealed class TimeoutSettingsBuilder
     {
         private static readonly TimeSpan DefaultIdleTimeout = TimeSpan.FromDays(1);
-        
+
         private static readonly TimeSpan DefaultAbsoluteTimeout = TimeSpan.FromDays(30);
-        
+
         private readonly TimeSpan? _idleTimeout;
 
         private readonly TimeSpan? _absoluteTimeout;
