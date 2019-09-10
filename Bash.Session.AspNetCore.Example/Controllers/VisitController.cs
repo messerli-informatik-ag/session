@@ -1,5 +1,4 @@
 ﻿using System;
-using Bash.Session.Internal;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bash.Session.AspNetCore.Example.Controllers
