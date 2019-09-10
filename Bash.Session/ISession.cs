@@ -16,9 +16,9 @@ namespace Bash.Session
         /// </summary>
         void Abandon();
 
-        void Set(string key, string value);
+        void Set(string key, byte[] value);
 
-        string? Get(string key);
+        byte[]? Get(string key);
 
         void Remove(string key);
     }

@@ -7,17 +7,17 @@ namespace Bash.Session.Storage
     {
         public DateTime Created { get; }
 
-        public IDictionary<string, string> Data { get; }
+        public IDictionary<string, byte[]> Data { get; }
 
         public SessionData(DateTime created)
         {
             Created = created;
-            Data = new Dictionary<string, string>();
+            Data = new Dictionary<string, byte[]>();
         }
 
         public SessionData(
             DateTime created,
-            IDictionary<string, string> data)
+            IDictionary<string, byte[]> data)
         {
             Created = created;
             Data = data;

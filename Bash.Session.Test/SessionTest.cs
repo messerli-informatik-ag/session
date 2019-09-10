@@ -19,7 +19,7 @@ namespace Bash.Session.Test
         public void SetThrowsIfRawSessionIsReadonly()
         {
             var session = CreateReadOnlySession();
-            Assert.Throws<InvalidOperationException>(() => session.Set("foo", "bar"));
+            Assert.Throws<InvalidOperationException>(() => session.SetString("foo", "bar"));
         }
 
         [Fact]

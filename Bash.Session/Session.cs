@@ -41,13 +41,13 @@ namespace Bash.Session
             _session.State = new Abandoned(Id);
         }
 
-        public void Set(string key, string value)
+        public void Set(string key, byte[] value)
         {
             AssertSessionIsWritable();
             _session.SessionData.Data[key] = value;
         }
 
-        public string? Get(string key)
+        public byte[]? Get(string key)
         {
             _session.SessionData.Data.TryGetValue(key, out var value);
             return value;
