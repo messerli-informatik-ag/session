@@ -4,7 +4,7 @@ using Bash.Session.SessionState;
 using Bash.Session.Storage;
 using Xunit;
 
-namespace Bash.Session.Test
+namespace Bash.Session.Test.Internal
 {
     public class RawSessionExtensionTest
     {

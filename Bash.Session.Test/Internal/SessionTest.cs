@@ -5,7 +5,7 @@ using Bash.Session.Storage;
 using Moq;
 using Xunit;
 
-namespace Bash.Session.Test
+namespace Bash.Session.Test.Internal
 {
     public class SessionTest
     {
