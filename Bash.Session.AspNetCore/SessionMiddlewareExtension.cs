@@ -1,10 +1,11 @@
 using Microsoft.AspNetCore.Builder;
-using ConfigureCompositionRoot = System.Func<Bash.Session.CompositionRootBuilder, Bash.Session.CompositionRootBuilder>;
 
 namespace Bash.Session.AspNetCore
 {
     public static class SessionMiddlewareExtension
     {
+        public delegate CompositionRootBuilder ConfigureCompositionRoot(CompositionRootBuilder compositionRootBuilder);
+
         public static IApplicationBuilder UseSession(this IApplicationBuilder applicationBuilder)
         {
             return applicationBuilder.UseSession(builder => builder);
