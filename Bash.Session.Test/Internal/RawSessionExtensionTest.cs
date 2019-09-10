@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Bash.Session.Test.Internal
 {
-    public class RawSessionExtensionTest
+    public sealed class RawSessionExtensionTest
     {
         private static readonly DateTime CreationDate = DateTime.UnixEpoch;
 

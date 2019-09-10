@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Bash.Session.Test.Internal
 {
-    public class SessionTest
+    public sealed class SessionTest
     {
         private static readonly SessionId SessionId = new SessionId("foo");
 
