@@ -14,7 +14,7 @@ namespace Bash.Session.AspNetCore.Example.Controllers
                 ?? throw new NullReferenceException("Session was not found in context");
 
             const string isLoggedIn = "isLoggedIn";
-            session.SetInt32(isLoggedIn, 1);
+            session.SetBoolean(isLoggedIn, true);
             session.RenewId();
 
             return new RedirectResult("/");

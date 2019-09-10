@@ -25,5 +25,15 @@ namespace Bash.Session
         {
             session.Set(key, Encoding.UTF8.GetBytes(value));
         }
+
+        public static bool? GetBoolean(this ISession session, string key)
+        {
+            return NullableValue.Map<byte[], bool>(session.Get(key), bytes => BitConverter.ToBoolean(bytes));
+        }
+
+        public static void SetBoolean(this ISession session, string key, bool value)
+        {
+            session.Set(key, BitConverter.GetBytes(value));
+        }
     }
 }
