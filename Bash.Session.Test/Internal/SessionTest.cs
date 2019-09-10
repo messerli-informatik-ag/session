@@ -209,7 +209,7 @@ namespace Bash.Session.Test.Internal
 
         private static ISession CreateSession(RawSession rawSession)
         {
-            return new Internal.Session(rawSession, MockSessionIdGenerator());
+            return new Session.Internal.Session(rawSession, MockSessionIdGenerator());
         }
 
         private static ISessionIdGenerator MockSessionIdGenerator()
