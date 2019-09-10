@@ -1,4 +1,4 @@
-namespace Bash.Session.Configuration
+﻿namespace Bash.Session.Configuration
 {
     public sealed class CookieSettingsBuilder
     {
@@ -7,6 +7,8 @@ namespace Bash.Session.Configuration
 
         private static readonly CookieName DefaultCookieName =
             new CookieName("session_id");
+
+        private static readonly bool DefaultHttpOnly = true;
 
         private readonly CookieName? _name;
 
@@ -47,7 +49,7 @@ namespace Bash.Session.Configuration
         {
             return new CookieSettings(
                 _name ?? DefaultCookieName,
-                _httpOnly ?? true,
+                _httpOnly ?? DefaultHttpOnly,
                 _securePreference ?? DefaultCookieSecurePreference);
         }
 

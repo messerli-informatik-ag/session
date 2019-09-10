@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -50,31 +50,31 @@ namespace Bash.Session.Storage
                 return null;
             }
 
-            if (entry.IsExpired(_dateTimeFactory.Now()))
+            if (!entry.IsExpired(_dateTimeFactory.Now()))
             {
-                _storage.Remove(entry.Id);
-                return null;
+                return entry;
             }
 
-            return entry;
+            _storage.Remove(entry.Id);
+            return null;
         }
 
         private class Entry
         {
-            public SessionId Id { get; }
+            internal SessionId Id { get; }
             
-            public SessionData SessionData { get; }
-            
-            public DateTime IdleExpirationDate { get; }
+            internal SessionData SessionData { get; }
 
-            public Entry(SessionId id, SessionData sessionData, DateTime idleExpirationDate)
+            private DateTime IdleExpirationDate { get; }
+
+            internal Entry(SessionId id, SessionData sessionData, DateTime idleExpirationDate)
             {
                 Id = id;
                 SessionData = sessionData;
                 IdleExpirationDate = idleExpirationDate;
             }
 
-            public bool IsExpired(DateTime now)
+            internal bool IsExpired(DateTime now)
             {
                 return now > IdleExpirationDate;
             }

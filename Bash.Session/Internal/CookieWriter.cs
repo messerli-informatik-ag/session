@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Bash.Session.Configuration;
 using Bash.Session.Http;
 
@@ -27,14 +27,13 @@ namespace Bash.Session.Internal
             var requestHasCookie = request.HasCookie(_cookieSettings.Name);
             var isSessionEmpty = session.IsEmpty();
 
-            if (isSessionEmpty && requestHasCookie)
-            {
-                UnsetCookie(response);
-            }
-
             if (!isSessionEmpty)
             {
                 SetCookie(response, session, idleExpirationDate);
+            }
+            else if (requestHasCookie)
+            {
+                UnsetCookie(response);
             }
         }
 
