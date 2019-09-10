@@ -28,7 +28,7 @@ namespace Bash.Session.Utility
         {
             return input.HasValue
                 ? transform(input.Value)
-                : new TOutput?();
+                : null;
         }
 
         public static TOutput? Map<TInput, TOutput>(TInput? input, Func<TInput, TOutput?> transform)
@@ -37,7 +37,7 @@ namespace Bash.Session.Utility
         {
             return input.HasValue
                 ? transform(input.Value)
-                : new TOutput?();
+                : null;
         }
     }
 }
