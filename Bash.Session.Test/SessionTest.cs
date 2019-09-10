@@ -174,7 +174,7 @@ namespace Bash.Session.Test
 
         private static ISession CreateSession(RawSession rawSession)
         {
-            return new Session(rawSession, MockSessionIdGenerator());
+            return new Internal.Session(rawSession, MockSessionIdGenerator());
         }
 
         private static ISessionIdGenerator MockSessionIdGenerator()

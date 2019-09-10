@@ -1,4 +1,3 @@
-using System;
 using Bash.Session.Configuration;
 using Bash.Session.Internal;
 using Bash.Session.Internal.Writer;
@@ -71,7 +70,7 @@ namespace Bash.Session
 
         private ISession CreateSession(RawSession rawSession)
         {
-            return new Session(rawSession, _sessionIdGenerator);
+            return new Internal.Session(rawSession, _sessionIdGenerator);
         }
     }
 }

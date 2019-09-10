@@ -1,9 +1,8 @@
 using System;
-using Bash.Session.Internal;
 using Bash.Session.SessionState;
 using static Bash.Session.Utility.Functional;
 
-namespace Bash.Session
+namespace Bash.Session.Internal
 {
     internal class Session : ISession
     {

@@ -1,7 +1,7 @@
 using System;
 using System.Security.Cryptography;
 
-namespace Bash.Session
+namespace Bash.Session.Internal
 {
     internal class SessionIdGenerator : ISessionIdGenerator
     {
