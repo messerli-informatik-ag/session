@@ -6,19 +6,19 @@ namespace Bash.Session.Storage
     [Serializable]
     public sealed class SessionData
     {
-        public DateTime Created { get; }
+        public DateTime CreationDate { get; }
 
         public IDictionary<string, byte[]> Data { get; }
 
-        public SessionData(DateTime created) : this(created, new Dictionary<string, byte[]>())
+        public SessionData(DateTime creationDate) : this(creationDate, new Dictionary<string, byte[]>())
         {
         }
 
         public SessionData(
-            DateTime created,
+            DateTime creationDate,
             IDictionary<string, byte[]> data)
         {
-            Created = created;
+            CreationDate = creationDate;
             Data = data;
         }
     }

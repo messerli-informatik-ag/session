@@ -7,6 +7,8 @@ namespace Bash.Session
         /// <exception cref="InvalidOperationException">When trying to retrieve the id of an abandoned session</exception>
         SessionId Id { get; }
 
+        DateTime CreationDate { get; }
+
         /// <summary>
         /// Generates a new id for this session.
         /// This does nothing if the session is new.

@@ -19,6 +19,8 @@ namespace Bash.Session.Internal
 
         public SessionId Id => _session.GetId();
 
+        public DateTime CreationDate => _session.SessionData.CreationDate;
+
         public void RenewId()
         {
             AssertSessionIsWritable();
