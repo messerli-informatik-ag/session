@@ -2,6 +2,7 @@
 using Bash.Session.Internal;
 using Bash.Session.SessionState;
 using Bash.Session.Storage;
+using Moq;
 using Xunit;
 
 namespace Bash.Session.Test
@@ -9,6 +10,8 @@ namespace Bash.Session.Test
     public class SessionTest
     {
         private static readonly SessionId SessionId = new SessionId("foo");
+
+        private static readonly SessionId RenewedSessionId = new SessionId("renewed");
 
         private static readonly DateTime Created = DateTime.UnixEpoch;
 
@@ -40,6 +43,38 @@ namespace Bash.Session.Test
             Assert.Throws<InvalidOperationException>(() => session.Remove("Foo"));
         }
 
+        [Fact]
+        public void RenewIdDoesNothingForNewSession()
+        {
+            TestRenewsSessionId(new New(SessionId), new New(SessionId));
+        }
+
+        [Fact]
+        public void RenewIdDoesNothingForExistingSessionWithNewId()
+        {
+            TestRenewsSessionId(new ExistingWithNewId(SessionId, RenewedSessionId), new ExistingWithNewId(SessionId, RenewedSessionId));
+        }
+
+        [Fact]
+        public void RenewIdDoesNothingForAbandonedSession()
+        {
+            TestRenewsSessionId(new Abandoned(SessionId), new Abandoned(SessionId));
+        }
+
+        [Fact]
+        public void RenewIdRenewsIdForExistingSession()
+        {
+            TestRenewsSessionId(new Existing(SessionId), new ExistingWithNewId(SessionId, RenewedSessionId));
+        }
+
+        private static void TestRenewsSessionId(ISessionStateVariant state, ISessionStateVariant expectedState)
+        {
+            var rawSession = new RawSession(state, new SessionData(Created));
+            var session = CreateSession(rawSession);
+            session.RenewId();
+            Assert.Equal(rawSession.State, expectedState);
+        }
+
         private static ISession CreateReadOnlySession()
         {
             return CreateSession(CreateReadOnlyRawSession());
@@ -59,7 +94,15 @@ namespace Bash.Session.Test
 
         private static ISession CreateSession(RawSession rawSession)
         {
-            return new Session(rawSession, new SessionIdGenerator());
+            return new Session(rawSession, MockSessionIdGenerator());
+        }
+
+        private static ISessionIdGenerator MockSessionIdGenerator()
+        {
+            var sessionIdGenerator = new Mock<ISessionIdGenerator>();
+            sessionIdGenerator.Setup(g => g.Generate())
+                .Returns(RenewedSessionId);
+            return sessionIdGenerator.Object;
         }
     }
 }

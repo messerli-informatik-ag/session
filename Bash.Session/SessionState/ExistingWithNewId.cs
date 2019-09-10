@@ -2,6 +2,7 @@ using System;
 
 namespace Bash.Session.SessionState
 {
+    [Equals(DoNotAddEqualityOperators = true)]
     internal class ExistingWithNewId : ISessionStateVariant
     {
         public SessionId OldId { get; }
