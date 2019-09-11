@@ -3,6 +3,7 @@ using Bash.Session.Storage;
 
 namespace Bash.Session.Internal
 {
+    [Equals(DoNotAddEqualityOperators = true)]
     internal class RawSession
     {
         public ISessionStateVariant State { get; set; }

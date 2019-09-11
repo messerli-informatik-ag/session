@@ -4,6 +4,7 @@ using System.Collections.Generic;
 namespace Bash.Session.Storage
 {
     [Serializable]
+    [Equals(DoNotAddEqualityOperators = true)]
     public sealed class SessionData
     {
         public DateTime CreationDate { get; }
