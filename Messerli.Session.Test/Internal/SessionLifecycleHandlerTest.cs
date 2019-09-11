@@ -60,22 +60,35 @@ namespace Messerli.Session.Test.Internal
         }
 
         [Fact]
-        public void SessionIsWrittenToStorageAndCookie()
+        public async Task SessionIsWrittenToStorageAndCookie()
         {
             var session = CreateSession(new Existing(SessionId));
 
-            var lifecycleHandler = new SessionLifecycleHandlerBuilder()
+            var lifecycleHandlerBuilder = new SessionLifecycleHandlerBuilder()
                 .ConfigureSessionLoader(session)
                 .ConfigureIdleExpirationRetriever()
                 .ConfigureSessionWriter(session)
-                .ConfigureCookieWriter(session)
-                .Build();
+                .ConfigureCookieWriter(session);
+            var lifecycleHandler = lifecycleHandlerBuilder.Build();
 
             var request = CreateMockRequest();
             var response = CreateMockResponse();
 
-            lifecycleHandler.OnRequest(request);
-            lifecycleHandler.OnResponse(request, response);
+            await lifecycleHandler.OnRequest(request);
+            await lifecycleHandler.OnResponse(request, response);
+
+            lifecycleHandlerBuilder
+                .SessionWriter
+                .Verify(w => w.WriteSession(
+                    It.IsAny<RawSession>(),
+                    It.IsAny<DateTime>()));
+            lifecycleHandlerBuilder
+                .CookieWriter
+                .Verify(w => w.WriteCookie(
+                    It.IsAny<IRequest>(),
+                    It.IsAny<IResponse>(),
+                    It.IsAny<RawSession>(),
+                    It.IsAny<DateTime>()));
         }
 
         [Fact]
@@ -186,7 +199,8 @@ namespace Messerli.Session.Test.Internal
             public SessionLifecycleHandlerBuilder ConfigureSessionWriter(RawSession session)
             {
                 SessionWriter
-                    .Setup(w => w.WriteSession(session, IdleExpirationTime));
+                    .Setup(w => w.WriteSession(session, IdleExpirationTime))
+                    .Returns(Task.CompletedTask);
                 return this;
             }
 
