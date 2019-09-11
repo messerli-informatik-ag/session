@@ -1,0 +1,23 @@
+dist: bionic
+language: generic
+
+env:
+    global:
+        - DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
+        - DOTNET_CLI_TELEMETRY_OPTOUT=1
+        - PATH="$PATH:$HOME/.dotnet/tools"
+        - DOTNET_ROOT="/snap/dotnet-sdk/current"
+
+addons:
+    snaps:
+        - name: dotnet-sdk
+          classic: true
+          channel: latest/beta
+
+install:
+    - sudo snap alias dotnet-sdk.dotnet dotnet
+
+script:
+    - dotnet restore
+    - dotnet build
+    - dotnet test
