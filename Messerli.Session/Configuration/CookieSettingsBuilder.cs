@@ -1,4 +1,6 @@
-﻿namespace Messerli.Session.Configuration
+﻿using System;
+
+namespace Messerli.Session.Configuration
 {
     public sealed class CookieSettingsBuilder
     {
@@ -47,10 +49,22 @@
 
         public CookieSettings Build()
         {
+            var name = _name ?? DefaultCookieName;
+
+            ValidateCookieName(name);
+
             return new CookieSettings(
-                _name ?? DefaultCookieName,
+                name,
                 _httpOnly ?? DefaultHttpOnly,
                 _securePreference ?? DefaultCookieSecurePreference);
+        }
+
+        private static void ValidateCookieName(CookieName name)
+        {
+            if (string.IsNullOrWhiteSpace(name.Value))
+            {
+                throw new InvalidOperationException("Cookie name must not be contain whitespace only");
+            }
         }
 
         private CookieSettingsBuilder ShallowClone(
