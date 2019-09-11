@@ -1,0 +1,10 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.0</TargetFramework>
+        <RootNamespace>Messerli.Session.AspNetCore.Example</RootNamespace>
+    </PropertyGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\Messerli.Session.AspNetCore\Messerli.Session.AspNetCore.csproj" />
+      <ProjectReference Include="..\Messerli.Session\Messerli.Session.csproj" />
+    </ItemGroup>
+</Project>
