@@ -211,34 +211,19 @@ namespace Messerli.Session.Test.Internal
                 RawSession = rawSession;
             }
 
-            public SessionId Id { get; }
+            public SessionId Id => throw new NotImplementedException();
 
-            public DateTime CreationDate { get; }
+            DateTime ISession.CreationDate => throw new NotImplementedException();
 
-            public void RenewId()
-            {
-                throw new NotImplementedException();
-            }
+            public void RenewId() => throw new NotImplementedException();
 
-            public void Abandon()
-            {
-                throw new NotImplementedException();
-            }
+            public void Abandon() => throw new NotImplementedException();
 
-            public void Set(string key, byte[] value)
-            {
-                throw new NotImplementedException();
-            }
+            public void Set(string key, byte[] value) => throw new NotImplementedException();
 
-            public byte[] Get(string key)
-            {
-                throw new NotImplementedException();
-            }
+            public byte[] Get(string key) => throw new NotImplementedException();
 
-            public void Remove(string key)
-            {
-                throw new NotImplementedException();
-            }
+            public void Remove(string key) => throw new NotImplementedException();
         }
     }
 }
