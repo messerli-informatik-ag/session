@@ -14,6 +14,8 @@ namespace Bash.Session.Test.Internal
     {
         private static readonly DateTime CreationDate = DateTime.UnixEpoch;
 
+        private static readonly DateTime IdleExpirationTime = new DateTime(2000, 2, 2, 4, 4, 4);
+
         private static readonly SessionId SessionId = new SessionId("foo-bar");
 
         [Fact]
@@ -57,6 +59,46 @@ namespace Bash.Session.Test.Internal
             });
         }
 
+        [Fact]
+        public void SessionIsWrittenToStorageAndCookie()
+        {
+            var session = CreateSession(new Existing(SessionId));
+
+            var lifecycleHandler = new SessionLifecycleHandlerBuilder()
+                .ConfigureSessionLoader(session)
+                .ConfigureIdleExpirationRetriever()
+                .ConfigureSessionWriter(session)
+                .ConfigureCookieWriter(session)
+                .Build();
+
+            var request = CreateMockRequest();
+            var response = CreateMockResponse();
+
+            lifecycleHandler.OnRequest(request);
+            lifecycleHandler.OnResponse(request, response);
+        }
+
+        [Fact]
+        public void SessionIsReadOnlyAfterResponseHasBeenSent()
+        {
+            var session = CreateSession(new Existing(SessionId));
+
+            var lifecycleHandler = new SessionLifecycleHandlerBuilder()
+                .ConfigureSessionLoader(session)
+                .ConfigureIdleExpirationRetriever()
+                .ConfigureSessionWriter(session)
+                .ConfigureCookieWriter(session)
+                .Build();
+
+            var request = CreateMockRequest();
+            var response = CreateMockResponse();
+
+            lifecycleHandler.OnRequest(request);
+            lifecycleHandler.OnResponse(request, response);
+
+            Assert.True(session.ReadOnly);
+        }
+
         private static RawSession ExtractRawSession(ISession session)
         {
             var sessionStub = session as SessionStub
@@ -69,6 +111,13 @@ namespace Bash.Session.Test.Internal
             var request = new Mock<IRequest>();
             return request.Object;
         }
+
+        private static IResponse CreateMockResponse()
+        {
+            var request = new Mock<IResponse>();
+            return request.Object;
+        }
+
 
         private static RawSession CreateSession(ISessionStateVariant state)
         {
@@ -123,6 +172,33 @@ namespace Bash.Session.Test.Internal
                 SessionCreator
                     .Setup(c => c.CreateSession())
                     .Returns(session);
+                return this;
+            }
+
+            public SessionLifecycleHandlerBuilder ConfigureIdleExpirationRetriever()
+            {
+                IdleExpirationRetriever
+                    .Setup(r => r.GetIdleExpiration())
+                    .Returns(IdleExpirationTime);
+                return this;
+            }
+
+            public SessionLifecycleHandlerBuilder ConfigureSessionWriter(RawSession session)
+            {
+                SessionWriter
+                    .Setup(w => w.WriteSession(session, IdleExpirationTime))
+                    .Returns(Task.CompletedTask);
+                return this;
+            }
+
+            public SessionLifecycleHandlerBuilder ConfigureCookieWriter(RawSession session)
+            {
+                CookieWriter
+                    .Setup(w => w.WriteCookie(
+                        It.IsAny<IRequest>(),
+                        It.IsAny<IResponse>(),
+                        session,
+                        IdleExpirationTime));
                 return this;
             }
         }
