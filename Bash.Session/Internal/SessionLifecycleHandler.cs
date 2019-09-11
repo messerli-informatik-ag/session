@@ -41,7 +41,7 @@ namespace Bash.Session.Internal
 
         public ISession Session => _wrapSession(RawSession);
 
-        private RawSession RawSession => 
+        private RawSession RawSession =>
             _rawSession ?? throw new InvalidOperationException(
                 $"{nameof(OnRequest)} must be called before accessing the session");
 
