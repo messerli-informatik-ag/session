@@ -163,7 +163,7 @@ namespace Bash.Session.Test.Internal
             {
                 SessionLoader
                     .Setup(l => l.LoadFromRequest(It.IsAny<IRequest>()))
-                    .Returns(Task.FromResult(session));
+                    .ReturnsAsync(session);
                 return this;
             }
 
@@ -186,8 +186,7 @@ namespace Bash.Session.Test.Internal
             public SessionLifecycleHandlerBuilder ConfigureSessionWriter(RawSession session)
             {
                 SessionWriter
-                    .Setup(w => w.WriteSession(session, IdleExpirationTime))
-                    .Returns(Task.CompletedTask);
+                    .Setup(w => w.WriteSession(session, IdleExpirationTime));
                 return this;
             }
 

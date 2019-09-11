@@ -161,18 +161,7 @@ namespace Bash.Session.Test.Internal
             Assert.Equal(CreationDate, session.CreationDate);
         }
 
-        public static TheoryData<string> InvalidSessionDataKeys()
-        {
-            return new TheoryData<string>
-            {
-                "",
-                " ",
-                "\t",
-                "\n",
-                "\r",
-                "\r\n",
-            };
-        }
+        public static TheoryData<string> InvalidSessionDataKeys() => Constant.WhitespaceValues;
 
         private static void TestRenewsSessionId(ISessionStateVariant state, ISessionStateVariant expectedState)
         {
