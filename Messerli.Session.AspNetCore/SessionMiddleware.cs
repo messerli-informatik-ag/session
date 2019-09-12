@@ -34,19 +34,13 @@ namespace Messerli.Session.AspNetCore
             var response = new Response(context);
 
             await lifecycleHandler.OnRequest(request);
-            context.Features.Set(lifecycleHandler.Session);
 
-            context.Response.OnStarting(async () =>
+            RegisterOnResponseStartingHandler(context, async () =>
             {
-                try
-                {
-                    await lifecycleHandler.OnResponse(request, response);
-                }
-                catch (Exception exception)
-                {
-                    _logger.ErrorSavingTheSession(exception);
-                }
+                await lifecycleHandler.OnResponse(request, response);
             });
+
+            context.Features.Set(lifecycleHandler.Session);
 
             try
             {
@@ -56,6 +50,23 @@ namespace Messerli.Session.AspNetCore
             {
                 context.Features[typeof(ISession)] = null;
             }
+        }
+
+        private void RegisterOnResponseStartingHandler(
+            HttpContext context,
+            Func<Task> onResponseAction)
+        {
+            context.Response.OnStarting(async () =>
+            {
+                try
+                {
+                    await onResponseAction();
+                }
+                catch (Exception exception)
+                {
+                    _logger.ErrorSavingTheSession(exception);
+                }
+            });
         }
     }
 }
