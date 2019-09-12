@@ -31,7 +31,8 @@ namespace Messerli.Session.AspNetCore
 
             await lifecycleHandler.OnRequest(request);
             context.Features.Set(lifecycleHandler.Session);
-            
+            context.Features.Set(new PerRequestSessionSettings());
+
             context.Response.OnStarting(async () =>
             {
                 await lifecycleHandler.OnResponse(request, response); 

@@ -14,7 +14,11 @@ namespace Messerli.Session.AspNetCore.Internal
             _httpContext = httpContext;
         }
 
-        public bool AutomaticCacheControl => true;
+        public bool AutomaticCacheControl =>
+            _httpContext
+                .Features
+                .Get<PerRequestSessionSettings>()
+                .AutomaticCacheControl;
 
         public void SetCookie(Cookie cookie)
         {
