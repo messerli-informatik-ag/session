@@ -7,7 +7,7 @@ using Microsoft.Extensions.Caching.Distributed;
 
 namespace Messerli.Session.AspNetCore.Internal
 {
-    public class Storage : ISessionStorage
+    internal class Storage : ISessionStorage
     {
         private static readonly string CacheKeyPrefix = typeof(SessionMiddleware).Namespace;
 
