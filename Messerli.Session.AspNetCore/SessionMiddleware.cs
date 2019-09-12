@@ -1,6 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Messerli.Session.AspNetCore.Internal;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
 namespace Messerli.Session.AspNetCore
 {
@@ -8,22 +10,24 @@ namespace Messerli.Session.AspNetCore
     {
         public delegate ISessionLifecycleHandler CreateSessionLifecycleHandler();
 
-        private readonly CreateSessionLifecycleHandler _createSessionLifecycleHandler;
-
         private readonly RequestDelegate _next;
+
+        private readonly ILogger _logger;
+
+        private readonly CreateSessionLifecycleHandler _createSessionLifecycleHandler;
 
         public SessionMiddleware(
             RequestDelegate next,
+            ILoggerFactory loggerFactory,
             CreateSessionLifecycleHandler sessionLifecycleHandler)
         {
             _next = next;
+            _logger = loggerFactory.CreateLogger<SessionMiddleware>();
             _createSessionLifecycleHandler = sessionLifecycleHandler;
         }
 
         public async Task Invoke(HttpContext context)
         {
-            // TODO: handle errors properly
-
             var lifecycleHandler = _createSessionLifecycleHandler();
 
             var request = new Request(context);
@@ -31,10 +35,17 @@ namespace Messerli.Session.AspNetCore
 
             await lifecycleHandler.OnRequest(request);
             context.Features.Set(lifecycleHandler.Session);
-            
+
             context.Response.OnStarting(async () =>
             {
-                await lifecycleHandler.OnResponse(request, response); 
+                try
+                {
+                    await lifecycleHandler.OnResponse(request, response);
+                }
+                catch (Exception exception)
+                {
+                    _logger.ErrorSavingTheSession(exception);
+                }
             });
 
             try
