@@ -1,4 +1,3 @@
-using System.Linq;
 using Messerli.Session.Http;
 
 namespace Messerli.Session.Internal
@@ -11,6 +10,12 @@ namespace Messerli.Session.Internal
         private const string Validation = "must-revalidate";
         private static readonly string CacheControlValue = $"{Cacheability}, {Expiration}, {Validation}";
 
-        public void AddCacheControlHeaders(IResponse response) => response.SetHeader(HeaderName, CacheControlValue);
+        public void AddCacheControlHeaders(IResponse response)
+        {
+            if (response.AutomaticCacheControl)
+            {
+                response.SetHeader(HeaderName, CacheControlValue);
+            }
+        }
     }
 }

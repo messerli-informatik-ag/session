@@ -14,6 +14,8 @@ namespace Messerli.Session.AspNetCore.Internal
             _httpContext = httpContext;
         }
 
+        public bool AutomaticCacheControl => true;
+
         public void SetCookie(Cookie cookie)
         {
             var maxAge = cookie.Expiration - DateTime.Now;
