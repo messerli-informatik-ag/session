@@ -21,7 +21,7 @@ namespace Messerli.Session.Internal
             if (response.HasHeader(HeaderName))
             {
                 throw new InvalidOperationException(
-                    $"The {HeaderName} is already present in the response. If you need to set the header to a custom value, disable automatic cache control.");
+                    $"The {HeaderName} is already present in the response. sesIf you need to set the header to a custom value, disable automatic cache control.");
             }
 
             response.SetHeader(HeaderName, CacheControlValue);

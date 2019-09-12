@@ -1,6 +1,7 @@
 using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Logging;
 
 namespace Messerli.Session.AspNetCore
 {
@@ -20,24 +21,27 @@ namespace Messerli.Session.AspNetCore
             var compositionRoot = CreateCompositionRoot(applicationBuilder, configureCompositionRoot);
             var createLifecycleHandler = new SessionMiddleware.CreateSessionLifecycleHandler(
                 compositionRoot.CreateSessionLifeCycleHandler);
-            return applicationBuilder.UseMiddleware<SessionMiddleware>(createLifecycleHandler);
+            var loggerFactory = ResolveApplicationService<ILoggerFactory>(applicationBuilder);
+            var logger = loggerFactory.CreateLogger<SessionMiddleware>();
+            return applicationBuilder.UseMiddleware<SessionMiddleware>(logger, createLifecycleHandler);
         }
 
         private static CompositionRoot CreateCompositionRoot(
             IApplicationBuilder applicationBuilder,
             ConfigureCompositionRoot configureCompositionRoot)
         {
+            var distributedCache = ResolveApplicationService<IDistributedCache>(applicationBuilder);
             return configureCompositionRoot(new CompositionRootBuilder())
-                .SessionStorage(new Internal.Storage(GetDistributedCache(applicationBuilder)))
+                .SessionStorage(new Internal.Storage(distributedCache))
                 .Build();
         }
 
-        private static IDistributedCache GetDistributedCache(IApplicationBuilder applicationBuilder)
+        private static T ResolveApplicationService<T>(IApplicationBuilder applicationBuilder)
+            where T : class
         {
-            return applicationBuilder
-                       .ApplicationServices
-                       .GetService(typeof(IDistributedCache)) as IDistributedCache
-                   ?? throw new NullReferenceException($"Unable to resolve {nameof(IDistributedCache)}");
+            var type = typeof(T);
+            return applicationBuilder.ApplicationServices.GetService(type) as T
+                   ?? throw new NullReferenceException($"Unable to resolve {type.Name}");
         }
     }
 }
