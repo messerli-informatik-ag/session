@@ -36,6 +36,15 @@ namespace Messerli.Session.Test
         }
 
         [Fact]
+        public void ReturnsNullWhenReadingNonExistentString()
+        {
+            TestValueCanBeRead(
+                null,
+                null,
+                session => session.GetString(Key));
+        }
+
+        [Fact]
         public void IntegerCanBeWritten()
         {
             TestValueCanBeSet(IntegerValueAsBytes, session => session.SetInt32(Key, IntegerValue));
@@ -47,6 +56,15 @@ namespace Messerli.Session.Test
             TestValueCanBeRead(
                 IntegerValue,
                 IntegerValueAsBytes,
+                session => session.GetInt32(Key));
+        }
+
+        [Fact]
+        public void ReturnsNullWhenReadingNonExistentInteger()
+        {
+            TestValueCanBeRead(
+                null,
+                null,
                 session => session.GetInt32(Key));
         }
 
@@ -80,7 +98,16 @@ namespace Messerli.Session.Test
                 session => session.GetBoolean(Key));
         }
 
-        private static void TestValueCanBeRead<T>(T expectedValue, byte[] valueAsBytes, Func<ISession, T> readValue)
+        [Fact]
+        public void ReturnsNullWhenReadingNonExistentBoolean()
+        {
+            TestValueCanBeRead(
+                null,
+                null,
+                session => session.GetBoolean(Key));
+        }
+
+        private static void TestValueCanBeRead<T>(T expectedValue, byte[]? valueAsBytes, Func<ISession, T> readValue)
         {
             var session = new Mock<ISession>();
             session
