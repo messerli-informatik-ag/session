@@ -1,3 +1,5 @@
+#pragma warning disable 660,661
+
 using System;
 using Messerli.Session.Configuration;
 
