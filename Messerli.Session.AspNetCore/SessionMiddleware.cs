@@ -18,11 +18,11 @@ namespace Messerli.Session.AspNetCore
 
         public SessionMiddleware(
             RequestDelegate next,
-            ILoggerFactory loggerFactory,
+            ILogger logger,
             CreateSessionLifecycleHandler sessionLifecycleHandler)
         {
             _next = next;
-            _logger = loggerFactory.CreateLogger<SessionMiddleware>();
+            _logger = logger;
             _createSessionLifecycleHandler = sessionLifecycleHandler;
         }
 
