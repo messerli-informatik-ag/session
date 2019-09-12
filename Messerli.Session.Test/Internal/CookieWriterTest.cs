@@ -28,7 +28,13 @@ namespace Messerli.Session.Test.Internal
                     { "foo", new byte[0] },
                 });
 
-        private static readonly DateTime Expiration = new DateTime(year: 2010, month: 10, day: 10, hour: 10, minute: 10, second: 10);
+        private static readonly DateTime Expiration = new DateTime(
+            year: 2010,
+            month: 10,
+            day: 10,
+            hour: 10,
+            minute: 10,
+            second: 10);
 
         private static readonly CookieSettings CookieSettings = new CookieSettingsBuilder()
             .Name(CookieName)
