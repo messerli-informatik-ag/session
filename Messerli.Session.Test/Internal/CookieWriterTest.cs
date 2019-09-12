@@ -86,90 +86,66 @@ namespace Messerli.Session.Test.Internal
         {
             return new TheoryData<object>
             {
-                new WriteCookieTestParameters
-                {
-                    State = new New(SessionId),
-                    CookieWasSetInRequest = false,
-                    HasSessionData = false,
-                    ExpectedAction = Action.None,
-                },
-                new WriteCookieTestParameters
-                {
-                    State = new New(SessionId),
-                    CookieWasSetInRequest = false,
-                    HasSessionData = true,
-                    ExpectedAction = Action.SetCookie,
-                },
-                new WriteCookieTestParameters
-                {
-                    State = new New(SessionId),
-                    CookieWasSetInRequest = true,
-                    HasSessionData = false,
-                    ExpectedAction = Action.RemoveCookie,
-                },
-                new WriteCookieTestParameters
-                {
-                    State = new New(SessionId),
-                    CookieWasSetInRequest = true,
-                    HasSessionData = true,
-                    ExpectedAction = Action.SetCookie,
-                },
-                new WriteCookieTestParameters
-                {
-                    State = new Existing(SessionId),
-                    CookieWasSetInRequest = true,
-                    HasSessionData = false,
-                    ExpectedAction = Action.RemoveCookie,
-                },
-                new WriteCookieTestParameters
-                {
-                    State = new Existing(SessionId),
-                    CookieWasSetInRequest = true,
-                    HasSessionData = true,
-                    ExpectedAction = Action.SetCookie,
-                },
-                new WriteCookieTestParameters
-                {
-                    State = new ExistingWithNewId(SessionId, SessionId),
-                    CookieWasSetInRequest = true,
-                    HasSessionData = false,
-                    ExpectedAction = Action.RemoveCookie,
-                },
-                new WriteCookieTestParameters
-                {
-                    State = new ExistingWithNewId(SessionId, SessionId),
-                    CookieWasSetInRequest = true,
-                    HasSessionData = true,
-                    ExpectedAction = Action.SetCookie,
-                },
-                new WriteCookieTestParameters
-                {
-                    State = new Abandoned(SessionId),
-                    CookieWasSetInRequest = false,
-                    HasSessionData = false,
-                    ExpectedAction = Action.None,
-                },
-                new WriteCookieTestParameters
-                {
-                    State = new Abandoned(SessionId),
-                    CookieWasSetInRequest = false,
-                    HasSessionData = true,
-                    ExpectedAction = Action.None,
-                },
-                new WriteCookieTestParameters
-                {
-                    State = new Abandoned(SessionId),
-                    CookieWasSetInRequest = true,
-                    HasSessionData = false,
-                    ExpectedAction = Action.RemoveCookie,
-                },
-                new WriteCookieTestParameters
-                {
-                    State = new Abandoned(SessionId),
-                    CookieWasSetInRequest = true,
-                    HasSessionData = true,
-                    ExpectedAction = Action.RemoveCookie,
-                },
+                new WriteCookieTestParameters(
+                    state: new New(SessionId),
+                    cookieWasSetInRequest: false,
+                    hasSessionData: false,
+                    expectedAction: Action.None),
+                new WriteCookieTestParameters(
+                    state: new New(SessionId),
+                    cookieWasSetInRequest: false,
+                    hasSessionData: true,
+                    expectedAction: Action.SetCookie),
+                new WriteCookieTestParameters(
+                    state: new New(SessionId),
+                    cookieWasSetInRequest: true,
+                    hasSessionData: false,
+                    expectedAction: Action.RemoveCookie),
+                new WriteCookieTestParameters(
+                    state: new New(SessionId),
+                    cookieWasSetInRequest: true,
+                    hasSessionData: true,
+                    expectedAction: Action.SetCookie),
+                new WriteCookieTestParameters(
+                    state: new Existing(SessionId),
+                    cookieWasSetInRequest: true,
+                    hasSessionData: false,
+                    expectedAction: Action.RemoveCookie),
+                new WriteCookieTestParameters(
+                    state: new Existing(SessionId),
+                    cookieWasSetInRequest: true,
+                    hasSessionData: true,
+                    expectedAction: Action.SetCookie),
+                new WriteCookieTestParameters(
+                    state: new ExistingWithNewId(SessionId, SessionId),
+                    cookieWasSetInRequest: true,
+                    hasSessionData: false,
+                    expectedAction: Action.RemoveCookie),
+                new WriteCookieTestParameters(
+                    state: new ExistingWithNewId(SessionId, SessionId),
+                    cookieWasSetInRequest: true,
+                    hasSessionData: true,
+                    expectedAction: Action.SetCookie),
+                new WriteCookieTestParameters(
+                    state: new Abandoned(SessionId),
+                    cookieWasSetInRequest: false,
+                    hasSessionData: false,
+                    expectedAction: Action.None),
+                new WriteCookieTestParameters(
+                    state: new Abandoned(SessionId),
+                    cookieWasSetInRequest: false,
+                    hasSessionData: true,
+                    expectedAction: Action.None),
+                new WriteCookieTestParameters(
+                    state: new Abandoned(SessionId),
+                    cookieWasSetInRequest: true,
+                    hasSessionData: false,
+                    expectedAction: Action.RemoveCookie),
+                new WriteCookieTestParameters(
+                    state: new Abandoned(SessionId),
+                    cookieWasSetInRequest: true,
+                    hasSessionData: true,
+                    expectedAction: Action.RemoveCookie),
             };
         }
 
@@ -180,7 +156,6 @@ namespace Messerli.Session.Test.Internal
             RemoveCookie,
         }
 
-        #nullable disable
         public class WriteCookieTestParameters
         {
             internal ISessionStateVariant State { get; set; }
@@ -191,6 +166,18 @@ namespace Messerli.Session.Test.Internal
 
             internal Action ExpectedAction { get; set; }
 
+            internal WriteCookieTestParameters(
+                ISessionStateVariant state,
+                bool cookieWasSetInRequest,
+                bool hasSessionData,
+                Action expectedAction)
+            {
+                State = state;
+                CookieWasSetInRequest = cookieWasSetInRequest;
+                HasSessionData = hasSessionData;
+                ExpectedAction = expectedAction;
+            }
+
             public override string ToString()
             {
                 return $"{State}, " +
@@ -199,6 +186,5 @@ namespace Messerli.Session.Test.Internal
                        $"{nameof(ExpectedAction)} = {ExpectedAction}";
             }
         }
-        #nullable enable
     }
 }
