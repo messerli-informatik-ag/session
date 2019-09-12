@@ -8,9 +8,14 @@ namespace Messerli.Session.Internal
     {
         private readonly CookieSettings _cookieSettings;
 
-        public CookieWriter(CookieSettings cookieSettings)
+        private readonly ICacheControlHeaderWriter _cacheControlHeaderWriter;
+
+        public CookieWriter(
+            CookieSettings cookieSettings,
+            ICacheControlHeaderWriter cacheControlHeaderWriter)
         {
             _cookieSettings = cookieSettings;
+            _cacheControlHeaderWriter = cacheControlHeaderWriter;
         }
 
         public void WriteCookie(IRequest request, IResponse response, RawSession session, DateTime idleExpirationDate)
@@ -68,7 +73,7 @@ namespace Messerli.Session.Internal
                     _cookieSettings,
                     string.Empty,
                     DateTime.UnixEpoch));
-            SetCacheControlHeader(response);
+            _cacheControlHeaderWriter.AddCacheControlHeaders(response);
         }
 
         private void SetCookie(IResponse response, RawSession session, DateTime idleExpirationDate)
@@ -78,14 +83,7 @@ namespace Messerli.Session.Internal
                     _cookieSettings,
                     session.GetId().ToString(),
                     idleExpirationDate));
-            SetCacheControlHeader(response);
-        }
-
-        private static void SetCacheControlHeader(IResponse response)
-        {
-            // TODO: make this configurable
-            const string cacheControlHeader = "Cache-Control";
-            response.SetHeader(cacheControlHeader, "private");
+            _cacheControlHeaderWriter.AddCacheControlHeaders(response);
         }
     }
 }

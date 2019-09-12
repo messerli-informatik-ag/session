@@ -65,7 +65,12 @@ namespace Messerli.Session
 
         private ICookieWriter CreateCookieWriter()
         {
-            return new CookieWriter(_cookieSettings);
+            return new CookieWriter(_cookieSettings, CreateCacheControlHeaderWriter());
+        }
+
+        private static ICacheControlHeaderWriter CreateCacheControlHeaderWriter()
+        {
+            return new CacheControlHeaderWriter();
         }
 
         private ISession CreateSession(RawSession rawSession)

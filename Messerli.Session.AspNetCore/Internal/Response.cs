@@ -14,6 +14,12 @@ namespace Messerli.Session.AspNetCore.Internal
             _httpContext = httpContext;
         }
 
+        public bool AutomaticCacheControl =>
+            _httpContext
+                .Features
+                .Get<PerRequestSessionSettings>()
+                .AutomaticCacheControl;
+
         public void SetCookie(Cookie cookie)
         {
             var maxAge = cookie.Expiration - DateTime.Now;
@@ -35,6 +41,11 @@ namespace Messerli.Session.AspNetCore.Internal
         public void SetHeader(string name, string value)
         {
             _httpContext.Response.Headers.Append(name, value);
+        }
+
+        public bool HasHeader(string name)
+        {
+            return _httpContext.Response.Headers.ContainsKey(name);
         }
 
         private bool MapSecurePreferenceToBool(CookieSecurePreference securePreference)

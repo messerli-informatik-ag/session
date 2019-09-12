@@ -41,6 +41,7 @@ namespace Messerli.Session.AspNetCore
             });
 
             context.Features.Set(lifecycleHandler.Session);
+            context.Features.Set(new PerRequestSessionSettings());
 
             try
             {
