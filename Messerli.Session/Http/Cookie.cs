@@ -3,6 +3,7 @@ using Messerli.Session.Configuration;
 
 namespace Messerli.Session.Http
 {
+    [Equals(DoNotAddEqualityOperators = true)]
     public sealed class Cookie
     {
         public CookieSettings Settings { get; }
