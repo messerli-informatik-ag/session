@@ -72,7 +72,7 @@ namespace Messerli.Session.Test.Internal
             return request;
         }
 
-        private static Cookie ExpectedCookie(WriteCookieTestParameters parameters)
+        private static Cookie? ExpectedCookie(WriteCookieTestParameters parameters)
         {
             return parameters.ExpectedAction switch
             {
