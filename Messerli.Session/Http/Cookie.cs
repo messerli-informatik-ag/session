@@ -1,8 +1,11 @@
+#pragma warning disable 660,661
+
 using System;
 using Messerli.Session.Configuration;
 
 namespace Messerli.Session.Http
 {
+    [Equals]
     public sealed class Cookie
     {
         public CookieSettings Settings { get; }
@@ -17,5 +20,9 @@ namespace Messerli.Session.Http
             Value = value;
             Expiration = expiration;
         }
+
+        public static bool operator ==(Cookie left, Cookie right) => Operator.Weave(left, right);
+
+        public static bool operator !=(Cookie left, Cookie right) => Operator.Weave(left, right);
     }
 }

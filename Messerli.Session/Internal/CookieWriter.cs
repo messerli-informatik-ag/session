@@ -19,19 +19,18 @@ namespace Messerli.Session.Internal
                 mapNew: _ => WriteNew(request, response, session, idleExpirationDate),
                 mapExisting: _ => WriteExisting(response, session, idleExpirationDate),
                 mapExistingWithNewId: _ => WriteExisting(response, session, idleExpirationDate),
-                mapAbandoned: _ => WriteAbandoned(response));
+                mapAbandoned: _ => WriteAbandoned(request, response));
         }
 
         private void WriteNew(IRequest request, IResponse response, RawSession session, DateTime idleExpirationDate)
         {
-            var requestHasCookie = request.HasCookie(_cookieSettings.Name);
             var isSessionEmpty = session.IsEmpty();
 
             if (!isSessionEmpty)
             {
                 SetCookie(response, session, idleExpirationDate);
             }
-            else if (requestHasCookie)
+            else if (RequestHasSessionIdCookie(request))
             {
                 UnsetCookie(response);
             }
@@ -49,9 +48,17 @@ namespace Messerli.Session.Internal
             }
         }
 
-        private void WriteAbandoned(IResponse response)
+        private void WriteAbandoned(IRequest request, IResponse response)
         {
-            UnsetCookie(response);
+            if (RequestHasSessionIdCookie(request))
+            {
+                UnsetCookie(response);
+            }
+        }
+
+        private bool RequestHasSessionIdCookie(IRequest request)
+        {
+            return request.HasCookie(_cookieSettings.Name);
         }
 
         private void UnsetCookie(IResponse response)

@@ -161,7 +161,7 @@ namespace Messerli.Session.Test.Internal
             Assert.Equal(CreationDate, session.CreationDate);
         }
 
-        public static TheoryData<string> InvalidSessionDataKeys() => Constant.WhitespaceValues;
+        public static TheoryData<string> InvalidSessionDataKeys() => Constant.WhitespaceValuesAsTheoryData;
 
         private static void TestRenewsSessionId(ISessionStateVariant state, ISessionStateVariant expectedState)
         {

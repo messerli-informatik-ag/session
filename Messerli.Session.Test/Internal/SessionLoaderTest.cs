@@ -68,7 +68,7 @@ namespace Messerli.Session.Test.Internal
             Assert.Equal(expectedSession, session);
         }
 
-        public static TheoryData<string> InvalidSessionIds() => Constant.WhitespaceValues;
+        public static TheoryData<string> InvalidSessionIds() => Constant.WhitespaceValuesAsTheoryData;
 
         private static ISessionLoader CreateSessionLoader(ISessionStorage sessionStorage)
         {
