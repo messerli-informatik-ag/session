@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Messerli.Session.AspNetCore
 {
-    public class SessionMiddleware
+    internal class SessionMiddleware
     {
         public delegate ISessionLifecycleHandler CreateSessionLifecycleHandler();
 
