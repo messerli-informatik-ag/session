@@ -43,6 +43,11 @@ namespace Messerli.Session.AspNetCore.Internal
             _httpContext.Response.Headers.Append(name, value);
         }
 
+        public bool HasHeader(string name)
+        {
+            return _httpContext.Response.Headers.ContainsKey(name);
+        }
+
         private bool MapSecurePreferenceToBool(CookieSecurePreference securePreference)
         {
             return securePreference switch

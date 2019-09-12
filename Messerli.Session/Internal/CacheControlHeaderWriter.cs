@@ -1,3 +1,4 @@
+using System;
 using Messerli.Session.Http;
 
 namespace Messerli.Session.Internal
@@ -12,10 +13,18 @@ namespace Messerli.Session.Internal
 
         public void AddCacheControlHeaders(IResponse response)
         {
-            if (response.AutomaticCacheControl)
+            if (!response.AutomaticCacheControl)
             {
-                response.SetHeader(HeaderName, CacheControlValue);
+                return;
             }
+
+            if (response.HasHeader(HeaderName))
+            {
+                throw new InvalidOperationException(
+                    $"The {HeaderName} is already present in the response. If you need to set the header to a custom value, disable automatic cache control.");
+            }
+
+            response.SetHeader(HeaderName, CacheControlValue);
         }
     }
 }

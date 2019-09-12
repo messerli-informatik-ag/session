@@ -1,3 +1,4 @@
+using System;
 using Messerli.Session.Http;
 using Messerli.Session.Internal;
 using Moq;
@@ -26,9 +27,30 @@ namespace Messerli.Session.Test.Internal
                 .Setup(r => r.AutomaticCacheControl)
                 .Returns(true);
             response
+                .Setup(r => r.HasHeader(It.IsAny<string>()))
+                .Returns(false);
+            response
                 .Setup(r => r.SetHeader(It.IsAny<string>(), It.IsAny<string>()));
             var cacheControlHeaderWriter = CreateCacheControlHeaderWriter();
             cacheControlHeaderWriter.AddCacheControlHeaders(response.Object);
+        }
+
+        [Fact]
+        public void ThrowsIfCacheControlHeaderIsAlreadyPresentInResponse()
+        {
+            var response = new Mock<IResponse>(MockBehavior.Strict);
+            response
+                .Setup(r => r.AutomaticCacheControl)
+                .Returns(true);
+            response
+                .Setup(r => r.HasHeader(It.IsAny<string>()))
+                .Returns(true);
+            var cacheControlHeaderWriter = CreateCacheControlHeaderWriter();
+
+            Assert.Throws<InvalidOperationException>(() =>
+            {
+                cacheControlHeaderWriter.AddCacheControlHeaders(response.Object);
+            });
         }
 
         private static ICacheControlHeaderWriter CreateCacheControlHeaderWriter()
