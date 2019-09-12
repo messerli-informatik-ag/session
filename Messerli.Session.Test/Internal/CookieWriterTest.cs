@@ -49,11 +49,12 @@ namespace Messerli.Session.Test.Internal
         public void TestCookieIsWrittenAndRemovedCorrectly(WriteCookieTestParameters parameters)
         {
             var response = new Mock<IResponse>();
+            var cacheControlHeaderWriter = new Mock<ICacheControlHeaderWriter>();
             var request = MockRequest(parameters);
             var sessionData = parameters.HasSessionData ? NonEmptySessionData : EmptySessionData;
             var expectedCookie = ExpectedCookie(parameters);
 
-            var cookieWriter = new CookieWriter(CookieSettings);
+            var cookieWriter = new CookieWriter(CookieSettings, cacheControlHeaderWriter.Object);
             cookieWriter.WriteCookie(
                 request.Object,
                 response.Object,
@@ -63,10 +64,11 @@ namespace Messerli.Session.Test.Internal
             if (expectedCookie is { } cookie)
             {
                 response.Verify(r => r.SetCookie(cookie));
-                response.Verify(r => r.SetHeader(It.IsAny<string>(), It.IsAny<string>()));
+                cacheControlHeaderWriter.Verify(w => w.AddCacheControlHeaders(response.Object));
             }
 
             response.VerifyNoOtherCalls();
+            cacheControlHeaderWriter.VerifyNoOtherCalls();
         }
 
         private static Mock<IRequest> MockRequest(WriteCookieTestParameters parameters)
