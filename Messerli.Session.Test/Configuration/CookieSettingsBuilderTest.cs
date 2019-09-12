@@ -40,6 +40,37 @@ namespace Messerli.Session.Test.Configuration
             Assert.Equal(expectedCookieSettings, cookieSettings);
         }
 
-        public static TheoryData<string> InvalidCookieNames() => Constant.WhitespaceValues;
+        public static TheoryData<string> InvalidCookieNames()
+        {
+            var invalidNames = new TheoryData<string>
+            {
+                "foo=",
+                "foo;",
+                "foo\0",
+                "foo👍",
+                "foo\\",
+                "foo(",
+                "foo)",
+                "foo<",
+                "foo>",
+                "foo@foo",
+                "foo,bar",
+                "foo:bar",
+                "foo\"bar",
+                "bar/foo",
+                "foo[bar",
+                "foo]bar",
+                "foo?bar",
+                "{foo",
+                "}foo",
+            };
+
+            foreach (var value in Constant.WhitespaceValues)
+            {
+                invalidNames.Add(value);
+            }
+
+            return invalidNames;
+        }
     }
 }

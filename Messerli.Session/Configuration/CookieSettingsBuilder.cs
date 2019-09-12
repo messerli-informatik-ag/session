@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 namespace Messerli.Session.Configuration
 {
@@ -11,6 +12,8 @@ namespace Messerli.Session.Configuration
             new CookieName("session_id");
 
         private static readonly bool DefaultHttpOnly = true;
+
+        private const string ValidCookieNameRegex = @"^[a-zA-Z0-9!#$%&'*+\-.\^_`|~]+$";
 
         private readonly CookieName? _name;
 
@@ -47,6 +50,7 @@ namespace Messerli.Session.Configuration
             return ShallowClone(securePreference: securePreference);
         }
 
+        /// <exception cref="InvalidOperationException">When the provided cookie name is not valid. <see cref="CookieName" /></exception>
         public CookieSettings Build()
         {
             var name = _name ?? DefaultCookieName;
@@ -61,9 +65,9 @@ namespace Messerli.Session.Configuration
 
         private static void ValidateCookieName(CookieName name)
         {
-            if (string.IsNullOrWhiteSpace(name.Value))
+            if (!Regex.IsMatch(name.Value, ValidCookieNameRegex))
             {
-                throw new InvalidOperationException("Cookie name must not be contain whitespace only");
+                throw new InvalidOperationException("Cookie name must only contain letters, numbers, and the following characters: !#$%&'*+-.^_`|~");
             }
         }
 

@@ -2,6 +2,10 @@
 
 namespace Messerli.Session.Configuration
 {
+    /// <summary>
+    /// The name of a cookie.
+    /// It should only contain letters, numbers, and the following characters: !#$%&amp;'*+-.^_`|~
+    /// </summary>
     [Equals]
     public sealed class CookieName
     {
@@ -13,9 +17,9 @@ namespace Messerli.Session.Configuration
         }
 
         public override string ToString() => Value;
-        
+
         public static bool operator ==(CookieName left, CookieName right) => Operator.Weave(left, right);
-        
+
         public static bool operator !=(CookieName left, CookieName right) => Operator.Weave(left, right);
     }
 }
