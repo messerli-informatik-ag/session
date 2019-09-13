@@ -14,103 +14,83 @@ namespace Messerli.Session.Test.Internal
 
         [Theory]
         [MemberData(nameof(TestData))]
-        public void TestIdleExpirationIsCalculatedCorrectly(DateTime today, TimeSpan idleTimeout, DateTime expectedExpiration)
+        public void ReturnsCorrectExpiration(TestParameters parameters)
         {
+            var session = CreateRawSession(parameters.CreationDate);
+            var settings = new TimeoutSettingsBuilder()
+                .IdleTimeout(parameters.IdleTimeout)
+                .AbsoluteTimeout(parameters.AbsoluteTimeout)
+                .Build();
+
             var dateTimeFactory = new Mock<IDateTimeFactory>();
             dateTimeFactory.Setup(f => f.Now())
-                .Returns(today);
-            var settings = new TimeoutSettingsBuilder()
-                .IdleTimeout(idleTimeout)
-                .AbsoluteTimeout(TimeSpan.FromDays(10000))
-                .Build();
-            var rawSession = CreateRawSession(today);
+                .Returns(parameters.Today);
 
             var expirationRetriever = new ExpirationRetriever(dateTimeFactory.Object, settings);
-            Assert.Equal(expectedExpiration, expirationRetriever.GetExpiration(rawSession));
+            Assert.Equal(parameters.ExpectedExpiration, expirationRetriever.GetExpiration(session));
         }
 
-        [Fact]
-        public void ReturnsAbsoluteExpirationIfAbsoluteExpirationIsCloserToNow()
+        public static TheoryData<TestParameters> TestData()
         {
-            var creationDate = new DateTime(year: 2000, month: 1, day: 1);
+            const int year = 2000;
+            const int month = 1;
+            var creationDate = new DateTime(year: year, month: month, day: 1);
             var idleTimeout = TimeSpan.FromDays(5);
             var absoluteTimeout = TimeSpan.FromDays(10);
-            var today = new DateTime(year: 2000, month: 1, day: 8);
-            var expectedExpiration = new DateTime(year: 2000, month: 1, day: 11);
 
-            var session = CreateRawSession(creationDate);
-            var settings = new TimeoutSettingsBuilder()
-                .IdleTimeout(idleTimeout)
-                .AbsoluteTimeout(absoluteTimeout)
-                .Build();
+            var idleExpirationIsCloserToToday =
+                new TestParameters(
+                    creationDate,
+                    idleTimeout,
+                    absoluteTimeout,
+                    today: new DateTime(year: year, month: month, day: 2),
+                    expectedExpiration: new DateTime(year: year, month: month, day: 7));
 
-            var dateTimeFactory = new Mock<IDateTimeFactory>();
-            dateTimeFactory.Setup(f => f.Now())
-                .Returns(today);
+            var absoluteExpirationIsCloserToToday =
+                new TestParameters(
+                    creationDate,
+                    idleTimeout,
+                    absoluteTimeout,
+                    today: new DateTime(year: year, month: month, day: 8),
+                    expectedExpiration: new DateTime(year: year, month: month, day: 11));
 
-            var expirationRetriever = new ExpirationRetriever(dateTimeFactory.Object, settings);
-            Assert.Equal(expectedExpiration, expirationRetriever.GetExpiration(session));
+            return new TheoryData<TestParameters>
+            {
+                idleExpirationIsCloserToToday,
+                absoluteExpirationIsCloserToToday,
+            };
         }
 
-        [Fact]
-        public void ReturnsIdleExpirationIfAbsoluteExpirationIsCloserToNow()
+        public class TestParameters
         {
-            var creationDate = new DateTime(year: 2000, month: 1, day: 1);
-            var idleTimeout = TimeSpan.FromDays(5);
-            var absoluteTimeout = TimeSpan.FromDays(10);
-            var today = new DateTime(year: 2000, month: 1, day: 2);
-            var expectedExpiration = new DateTime(year: 2000, month: 1, day: 7);
+            public DateTime CreationDate { get; }
 
-            var session = CreateRawSession(creationDate);
-            var settings = new TimeoutSettingsBuilder()
-                .IdleTimeout(idleTimeout)
-                .AbsoluteTimeout(absoluteTimeout)
-                .Build();
+            public TimeSpan IdleTimeout { get; }
 
-            var dateTimeFactory = new Mock<IDateTimeFactory>();
-            dateTimeFactory.Setup(f => f.Now())
-                .Returns(today);
+            public TimeSpan AbsoluteTimeout { get; }
 
-            var expirationRetriever = new ExpirationRetriever(dateTimeFactory.Object, settings);
-            Assert.Equal(expectedExpiration, expirationRetriever.GetExpiration(session));
+            public DateTime Today { get; }
+
+            public DateTime ExpectedExpiration { get; }
+
+            internal TestParameters(
+                DateTime creationDate,
+                TimeSpan idleTimeout,
+                TimeSpan absoluteTimeout,
+                DateTime today,
+                DateTime expectedExpiration)
+            {
+                CreationDate = creationDate;
+                IdleTimeout = idleTimeout;
+                AbsoluteTimeout = absoluteTimeout;
+                Today = today;
+                ExpectedExpiration = expectedExpiration;
+            }
         }
 
         private static RawSession CreateRawSession(DateTime creationDate)
         {
             return new RawSession(new New(SessionId), new SessionData(creationDate));
-        }
-
-        public static TheoryData<DateTime, TimeSpan, DateTime> TestData()
-        {
-            const int year = 2019;
-            const int month = 1;
-            const int day = 1;
-            const int hour = 0;
-            const int minute = 0;
-            const int second = 0;
-            return new TheoryData<DateTime, TimeSpan, DateTime>
-            {
-                {
-                    new DateTime(year, month, day, hour, minute, second),
-                    TimeSpan.FromSeconds(1),
-                    new DateTime(year, month, day, hour, minute, second + 1)
-                },
-                {
-                    new DateTime(year, month, day, hour, minute, second),
-                    TimeSpan.FromMinutes(1),
-                    new DateTime(year, month, day, hour, minute + 1, second)
-                },
-                {
-                    new DateTime(year, month, day, hour, minute, second),
-                    TimeSpan.FromHours(1),
-                    new DateTime(year, month, day, hour + 1, minute, second)
-                },
-                {
-                    new DateTime(year, month, day, hour, minute, second),
-                    TimeSpan.FromDays(1),
-                    new DateTime(year, month, day + 1, hour, minute, second)
-                },
-            };
         }
     }
 }
