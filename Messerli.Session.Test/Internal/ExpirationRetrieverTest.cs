@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Messerli.Session.Test.Internal
 {
-    public sealed class IdleExpirationRetrieverTest
+    public sealed class ExpirationRetrieverTest
     {
         private static readonly SessionId SessionId = new SessionId("foo-bar");
 
@@ -24,8 +24,8 @@ namespace Messerli.Session.Test.Internal
                 .Build();
             var rawSession = CreateRawSession(today);
 
-            var idleExpirationRetriever = new ExpirationRetriever(dateTimeFactory.Object, settings);
-            Assert.Equal(expectedExpiration, idleExpirationRetriever.GetExpiration(rawSession));
+            var expirationRetriever = new ExpirationRetriever(dateTimeFactory.Object, settings);
+            Assert.Equal(expectedExpiration, expirationRetriever.GetExpiration(rawSession));
         }
 
         private static RawSession CreateRawSession(DateTime creationDate)
