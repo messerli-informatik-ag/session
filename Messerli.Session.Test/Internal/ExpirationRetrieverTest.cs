@@ -21,11 +21,58 @@ namespace Messerli.Session.Test.Internal
                 .Returns(today);
             var settings = new TimeoutSettingsBuilder()
                 .IdleTimeout(idleTimeout)
+                .AbsoluteTimeout(TimeSpan.FromDays(10000))
                 .Build();
             var rawSession = CreateRawSession(today);
 
             var expirationRetriever = new ExpirationRetriever(dateTimeFactory.Object, settings);
             Assert.Equal(expectedExpiration, expirationRetriever.GetExpiration(rawSession));
+        }
+
+        [Fact]
+        public void ReturnsAbsoluteExpirationIfAbsoluteExpirationIsCloserToNow()
+        {
+            var creationDate = new DateTime(year: 2000, month: 1, day: 1);
+            var idleTimeout = TimeSpan.FromDays(5);
+            var absoluteTimeout = TimeSpan.FromDays(10);
+            var today = new DateTime(year: 2000, month: 1, day: 8);
+            var expectedExpiration = new DateTime(year: 2000, month: 1, day: 11);
+
+            var session = CreateRawSession(creationDate);
+            var settings = new TimeoutSettingsBuilder()
+                .IdleTimeout(idleTimeout)
+                .AbsoluteTimeout(absoluteTimeout)
+                .Build();
+
+            var dateTimeFactory = new Mock<IDateTimeFactory>();
+            dateTimeFactory.Setup(f => f.Now())
+                .Returns(today);
+
+            var expirationRetriever = new ExpirationRetriever(dateTimeFactory.Object, settings);
+            Assert.Equal(expectedExpiration, expirationRetriever.GetExpiration(session));
+        }
+
+        [Fact]
+        public void ReturnsIdleExpirationIfAbsoluteExpirationIsCloserToNow()
+        {
+            var creationDate = new DateTime(year: 2000, month: 1, day: 1);
+            var idleTimeout = TimeSpan.FromDays(5);
+            var absoluteTimeout = TimeSpan.FromDays(10);
+            var today = new DateTime(year: 2000, month: 1, day: 2);
+            var expectedExpiration = new DateTime(year: 2000, month: 1, day: 7);
+
+            var session = CreateRawSession(creationDate);
+            var settings = new TimeoutSettingsBuilder()
+                .IdleTimeout(idleTimeout)
+                .AbsoluteTimeout(absoluteTimeout)
+                .Build();
+
+            var dateTimeFactory = new Mock<IDateTimeFactory>();
+            dateTimeFactory.Setup(f => f.Now())
+                .Returns(today);
+
+            var expirationRetriever = new ExpirationRetriever(dateTimeFactory.Object, settings);
+            Assert.Equal(expectedExpiration, expirationRetriever.GetExpiration(session));
         }
 
         private static RawSession CreateRawSession(DateTime creationDate)

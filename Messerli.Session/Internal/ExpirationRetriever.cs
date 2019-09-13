@@ -19,7 +19,14 @@ namespace Messerli.Session.Internal
 
         public DateTime GetExpiration(RawSession session)
         {
-            return _dateTimeFactory.Now() + _timeoutSettings.IdleTimeout;
+            var idleExpiration = _dateTimeFactory.Now() + _timeoutSettings.IdleTimeout;
+            var absoluteExpiration = session.SessionData.CreationDate + _timeoutSettings.AbsoluteTimeout;
+            return MinOf(absoluteExpiration, idleExpiration);
+        }
+
+        private static DateTime MinOf(DateTime dateOne, DateTime dateTwo)
+        {
+            return new DateTime(Math.Min(dateOne.Ticks, dateTwo.Ticks));
         }
     }
 }
