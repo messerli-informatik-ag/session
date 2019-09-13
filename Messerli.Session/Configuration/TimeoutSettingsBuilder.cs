@@ -38,6 +38,11 @@ namespace Messerli.Session.Configuration
             ValidateTimeout(idleTimeout, nameof(TimeoutSettings.IdleTimeout));
             ValidateTimeout(absoluteTimeout, nameof(TimeoutSettings.AbsoluteTimeout));
 
+            if (absoluteTimeout < idleTimeout)
+            {
+                throw new InvalidOperationException("Absolute timeout must be greater than or equal to the idle timeout");
+            }
+
             return new TimeoutSettings(idleTimeout, absoluteTimeout);
         }
 

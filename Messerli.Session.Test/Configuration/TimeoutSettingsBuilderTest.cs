@@ -37,6 +37,20 @@ namespace Messerli.Session.Test.Configuration
         }
 
         [Fact]
+        public void ThrowsIfAbsoluteTimeoutIsLessThanIdleTimeout()
+        {
+            var absoluteTimeout = TimeSpan.FromDays(1);
+            var idleTimeout = TimeSpan.FromDays(2);
+            var builder = new TimeoutSettingsBuilder()
+                .AbsoluteTimeout(absoluteTimeout)
+                .IdleTimeout(idleTimeout);
+            Assert.Throws<InvalidOperationException>(() =>
+            {
+                var _ = builder.Build();
+            });
+        }
+
+        [Fact]
         public void UsesProvidedValues()
         {
             var idleTimeout = TimeSpan.FromDays(1);
