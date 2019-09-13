@@ -35,12 +35,12 @@ namespace Messerli.Session
                 CreateSessionWriter(),
                 CreateSession,
                 CreateCookieWriter(),
-                CreateIdleExpirationRetriever());
+                CreateExpirationRetriever());
         }
 
-        private IIdleExpirationRetriever CreateIdleExpirationRetriever()
+        private IExpirationRetriever CreateExpirationRetriever()
         {
-            return new IdleExpirationRetriever(CreateDateTimeFactory(), _timeoutSettings);
+            return new ExpirationRetriever(CreateDateTimeFactory(), _timeoutSettings);
         }
 
         private ISessionWriter CreateSessionWriter()

@@ -5,6 +5,6 @@ namespace Messerli.Session.Internal.Writer
 {
     internal interface ISessionWriter
     {
-        Task WriteSession(RawSession session, DateTime idleExpirationDate);
+        Task WriteSession(RawSession session, DateTime expirationDate);
     }
 }

@@ -17,7 +17,7 @@ namespace Messerli.Session.Internal
 
         private readonly WrapSession _wrapSession;
 
-        private readonly IIdleExpirationRetriever _idleExpirationRetriever;
+        private readonly IExpirationRetriever _expirationRetriever;
 
         private readonly ICookieWriter _cookieWriter;
 
@@ -29,14 +29,14 @@ namespace Messerli.Session.Internal
             ISessionWriter sessionWriter,
             WrapSession wrapSession,
             ICookieWriter cookieWriter,
-            IIdleExpirationRetriever idleExpirationRetriever)
+            IExpirationRetriever expirationRetriever)
         {
             _sessionLoader = sessionLoader;
             _sessionCreator = sessionCreator;
             _sessionWriter = sessionWriter;
             _wrapSession = wrapSession;
             _cookieWriter = cookieWriter;
-            _idleExpirationRetriever = idleExpirationRetriever;
+            _expirationRetriever = expirationRetriever;
         }
 
         public ISession Session => _wrapSession(RawSession);
@@ -54,7 +54,7 @@ namespace Messerli.Session.Internal
         public async Task OnResponse(IRequest request, IResponse response)
         {
             RawSession.ReadOnly = true;
-            var idleExpiration = _idleExpirationRetriever.GetIdleExpiration();
+            var idleExpiration = _expirationRetriever.GetExpiration(RawSession);
             await _sessionWriter.WriteSession(RawSession, idleExpiration);
             _cookieWriter.WriteCookie(request, response, RawSession, idleExpiration);
         }

@@ -18,22 +18,22 @@ namespace Messerli.Session.Internal
             _cacheControlHeaderWriter = cacheControlHeaderWriter;
         }
 
-        public void WriteCookie(IRequest request, IResponse response, RawSession session, DateTime idleExpirationDate)
+        public void WriteCookie(IRequest request, IResponse response, RawSession session, DateTime expirationDate)
         {
             session.State.Map(
-                mapNew: _ => WriteNew(request, response, session, idleExpirationDate),
-                mapExisting: _ => WriteExisting(response, session, idleExpirationDate),
-                mapExistingWithNewId: _ => WriteExisting(response, session, idleExpirationDate),
+                mapNew: _ => WriteNew(request, response, session, expirationDate),
+                mapExisting: _ => WriteExisting(response, session, expirationDate),
+                mapExistingWithNewId: _ => WriteExisting(response, session, expirationDate),
                 mapAbandoned: _ => WriteAbandoned(request, response));
         }
 
-        private void WriteNew(IRequest request, IResponse response, RawSession session, DateTime idleExpirationDate)
+        private void WriteNew(IRequest request, IResponse response, RawSession session, DateTime expirationDate)
         {
             var isSessionEmpty = session.IsEmpty();
 
             if (!isSessionEmpty)
             {
-                SetCookie(response, session, idleExpirationDate);
+                SetCookie(response, session, expirationDate);
             }
             else if (RequestHasSessionIdCookie(request))
             {
@@ -41,7 +41,7 @@ namespace Messerli.Session.Internal
             }
         }
 
-        private void WriteExisting(IResponse response, RawSession session, DateTime idleExpirationDate)
+        private void WriteExisting(IResponse response, RawSession session, DateTime expirationDate)
         {
             if (session.IsEmpty())
             {
@@ -49,7 +49,7 @@ namespace Messerli.Session.Internal
             }
             else
             {
-                SetCookie(response, session, idleExpirationDate);
+                SetCookie(response, session, expirationDate);
             }
         }
 
@@ -76,13 +76,13 @@ namespace Messerli.Session.Internal
             _cacheControlHeaderWriter.AddCacheControlHeaders(response);
         }
 
-        private void SetCookie(IResponse response, RawSession session, DateTime idleExpirationDate)
+        private void SetCookie(IResponse response, RawSession session, DateTime expirationDate)
         {
             response.SetCookie(
                 new Cookie(
                     _cookieSettings,
                     session.GetId().ToString(),
-                    idleExpirationDate));
+                    expirationDate));
             _cacheControlHeaderWriter.AddCacheControlHeaders(response);
         }
     }
