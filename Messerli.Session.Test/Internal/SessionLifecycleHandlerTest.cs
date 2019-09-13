@@ -149,7 +149,7 @@ namespace Messerli.Session.Test.Internal
 
             public Mock<ICookieWriter> CookieWriter  { get; }
 
-            public Mock<IIdleExpirationRetriever> IdleExpirationRetriever  { get; }
+            public Mock<IExpirationRetriever> IdleExpirationRetriever  { get; }
 
             public SessionLifecycleHandlerBuilder()
             {
@@ -158,7 +158,7 @@ namespace Messerli.Session.Test.Internal
                 SessionCreator = MockRepository.Create<ISessionCreator>();
                 SessionWriter = MockRepository.Create<ISessionWriter>();
                 CookieWriter = MockRepository.Create<ICookieWriter>();
-                IdleExpirationRetriever = MockRepository.Create<IIdleExpirationRetriever>();
+                IdleExpirationRetriever = MockRepository.Create<IExpirationRetriever>();
             }
 
             public SessionLifecycleHandler Build()
@@ -191,7 +191,7 @@ namespace Messerli.Session.Test.Internal
             public SessionLifecycleHandlerBuilder ConfigureIdleExpirationRetriever()
             {
                 IdleExpirationRetriever
-                    .Setup(r => r.GetIdleExpiration())
+                    .Setup(r => r.GetExpiration())
                     .Returns(IdleExpirationTime);
                 return this;
             }

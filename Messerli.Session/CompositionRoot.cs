@@ -38,9 +38,9 @@ namespace Messerli.Session
                 CreateIdleExpirationRetriever());
         }
 
-        private IIdleExpirationRetriever CreateIdleExpirationRetriever()
+        private IExpirationRetriever CreateIdleExpirationRetriever()
         {
-            return new IdleExpirationRetriever(CreateDateTimeFactory(), _timeoutSettings);
+            return new ExpirationRetriever(CreateDateTimeFactory(), _timeoutSettings);
         }
 
         private ISessionWriter CreateSessionWriter()

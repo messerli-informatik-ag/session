@@ -19,8 +19,8 @@ namespace Messerli.Session.Test.Internal
                 .IdleTimeout(idleTimeout)
                 .Build();
 
-            var idleExpirationRetriever = new IdleExpirationRetriever(dateTimeFactory.Object, settings);
-            Assert.Equal(expectedExpiration, idleExpirationRetriever.GetIdleExpiration());
+            var idleExpirationRetriever = new ExpirationRetriever(dateTimeFactory.Object, settings);
+            Assert.Equal(expectedExpiration, idleExpirationRetriever.GetExpiration());
         }
 
         public static TheoryData<DateTime, TimeSpan, DateTime> TestData()
