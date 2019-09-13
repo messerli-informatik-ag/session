@@ -1,6 +1,8 @@
 using System;
 using Messerli.Session.Configuration;
 using Messerli.Session.Internal;
+using Messerli.Session.SessionState;
+using Messerli.Session.Storage;
 using Moq;
 using Xunit;
 
@@ -8,6 +10,8 @@ namespace Messerli.Session.Test.Internal
 {
     public sealed class IdleExpirationRetrieverTest
     {
+        private static readonly SessionId SessionId = new SessionId("foo-bar");
+
         [Theory]
         [MemberData(nameof(TestData))]
         public void TestIdleExpirationIsCalculatedCorrectly(DateTime today, TimeSpan idleTimeout, DateTime expectedExpiration)
@@ -18,9 +22,15 @@ namespace Messerli.Session.Test.Internal
             var settings = new TimeoutSettingsBuilder()
                 .IdleTimeout(idleTimeout)
                 .Build();
+            var rawSession = CreateRawSession(today);
 
             var idleExpirationRetriever = new ExpirationRetriever(dateTimeFactory.Object, settings);
-            Assert.Equal(expectedExpiration, idleExpirationRetriever.GetExpiration());
+            Assert.Equal(expectedExpiration, idleExpirationRetriever.GetExpiration(rawSession));
+        }
+
+        private static RawSession CreateRawSession(DateTime creationDate)
+        {
+            return new RawSession(new New(SessionId), new SessionData(creationDate));
         }
 
         public static TheoryData<DateTime, TimeSpan, DateTime> TestData()

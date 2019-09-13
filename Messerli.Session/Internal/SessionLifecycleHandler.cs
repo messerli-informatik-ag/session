@@ -54,7 +54,7 @@ namespace Messerli.Session.Internal
         public async Task OnResponse(IRequest request, IResponse response)
         {
             RawSession.ReadOnly = true;
-            var idleExpiration = _expirationRetriever.GetExpiration();
+            var idleExpiration = _expirationRetriever.GetExpiration(RawSession);
             await _sessionWriter.WriteSession(RawSession, idleExpiration);
             _cookieWriter.WriteCookie(request, response, RawSession, idleExpiration);
         }

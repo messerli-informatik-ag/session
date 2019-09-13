@@ -66,7 +66,7 @@ namespace Messerli.Session.Test.Internal
 
             var lifecycleHandlerBuilder = new SessionLifecycleHandlerBuilder()
                 .ConfigureSessionLoader(session)
-                .ConfigureIdleExpirationRetriever()
+                .ConfigureIdleExpirationRetriever(session)
                 .ConfigureSessionWriter(session)
                 .ConfigureCookieWriter(session);
             var lifecycleHandler = lifecycleHandlerBuilder.Build();
@@ -98,7 +98,7 @@ namespace Messerli.Session.Test.Internal
 
             var lifecycleHandler = new SessionLifecycleHandlerBuilder()
                 .ConfigureSessionLoader(session)
-                .ConfigureIdleExpirationRetriever()
+                .ConfigureIdleExpirationRetriever(session)
                 .ConfigureSessionWriter(session)
                 .ConfigureCookieWriter(session)
                 .Build();
@@ -188,11 +188,11 @@ namespace Messerli.Session.Test.Internal
                 return this;
             }
 
-            public SessionLifecycleHandlerBuilder ConfigureIdleExpirationRetriever()
+            public SessionLifecycleHandlerBuilder ConfigureIdleExpirationRetriever(RawSession session)
             {
                 IdleExpirationRetriever
-                    .Setup(r => r.GetExpiration())
-                    .Returns(IdleExpirationTime);
+                        .Setup(r => r.GetExpiration(session))
+                        .Returns(IdleExpirationTime);
                 return this;
             }
 

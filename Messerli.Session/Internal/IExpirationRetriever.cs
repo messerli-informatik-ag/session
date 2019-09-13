@@ -4,6 +4,6 @@ namespace Messerli.Session.Internal
 {
     internal interface IExpirationRetriever
     {
-        DateTime GetExpiration();
+        DateTime GetExpiration(RawSession session);
     }
 }

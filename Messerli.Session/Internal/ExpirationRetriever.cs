@@ -17,7 +17,7 @@ namespace Messerli.Session.Internal
             _timeoutSettings = timeoutSettings;
         }
 
-        public DateTime GetExpiration()
+        public DateTime GetExpiration(RawSession session)
         {
             return _dateTimeFactory.Now() + _timeoutSettings.IdleTimeout;
         }
