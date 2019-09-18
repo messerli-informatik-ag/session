@@ -11,7 +11,7 @@
         <PackageId>Messerli.Session.AspNetCore</PackageId>
         <PackageTags>session http aspnetcore</PackageTags>
         <PackageLicenseExpression>MIT OR Apache-2.0</PackageLicenseExpression>
-        <Authors>Ruben Schmidmeister, Jan Nils Ferner, Dominic Groth</Authors>
+        <Authors>Ruben Schmidmeister</Authors>
         <Copyright>© Messerli Informatik AG. All rights reserved.</Copyright>
         <Description>Session middleware for ASP.NET Core.</Description>
     </PropertyGroup>
