@@ -6,7 +6,7 @@
         <RootNamespace>Messerli.Session.AspNetCore</RootNamespace>
         <AssemblyName>Messerli.Session.AspNetCore</AssemblyName>
         <Version>0.1.1</Version>
-        <RepositoryUrl>http://github.com/messerli-informatik-ag/session</RepositoryUrl>
+        <RepositoryUrl>https://github.com/messerli-informatik-ag/session</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageId>Messerli.Session.AspNetCore</PackageId>
         <PackageTags>session http aspnetcore</PackageTags>
