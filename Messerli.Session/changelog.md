@@ -7,3 +7,6 @@
 - Add missing metadata to NuGet packages.
 - Fix typo in exception message.
 - Remove public dependency on Fody
+
+## 0.1.2
+- Fix incorrect repository URL in NuGet package metadata.
