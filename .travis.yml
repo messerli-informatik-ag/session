@@ -21,3 +21,4 @@ script:
     - dotnet restore
     - dotnet build
     - dotnet test
+    - dotnet pack -c Release

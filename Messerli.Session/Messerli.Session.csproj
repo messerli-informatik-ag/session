@@ -6,6 +6,14 @@
         <RootNamespace>Messerli.Session</RootNamespace>
         <AssemblyName>Messerli.Session</AssemblyName>
         <Version>0.1.0</Version>
+        <RepositoryUrl>http://github.com/messerli-informatik-ag/session</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageId>Messerli.Session</PackageId>
+        <PackageTags>session http</PackageTags>
+        <PackageLicenseExpression>MIT OR Apache-2.0</PackageLicenseExpression>
+        <Authors>Ruben Schmidmeister</Authors>
+        <Copyright>© Messerli Informatik AG. All rights reserved.</Copyright>
+        <Description>Generic session implementation.</Description>
     </PropertyGroup>
     <ItemGroup>
       <PackageReference Include="Equals.Fody" Version="4.0.0" />
