@@ -5,7 +5,7 @@
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
         <RootNamespace>Messerli.Session</RootNamespace>
         <AssemblyName>Messerli.Session</AssemblyName>
-        <Version>0.1.1</Version>
+        <Version>0.1.2</Version>
         <RepositoryUrl>https://github.com/messerli-informatik-ag/session</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageId>Messerli.Session</PackageId>
