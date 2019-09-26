@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Messerli.Session.Configuration;
 using Xunit;
 
@@ -30,12 +30,14 @@ namespace Messerli.Session.Test.Configuration
             var cookieName = new CookieName("foo");
             const bool httpOnly = false;
             const CookieSecurePreference secureOnly = CookieSecurePreference.Never;
-            var expectedCookieSettings = new CookieSettings(cookieName, httpOnly, secureOnly);
+            const CookieSameSiteMode sameSiteMode = CookieSameSiteMode.Strict;
+            var expectedCookieSettings = new CookieSettings(cookieName, httpOnly, secureOnly, sameSiteMode);
 
             var cookieSettings = new CookieSettingsBuilder()
                 .Name(cookieName)
                 .HttpOnly(httpOnly)
                 .SecurePreference(secureOnly)
+                .SameSiteMode(sameSiteMode)
                 .Build();
             Assert.Equal(expectedCookieSettings, cookieSettings);
         }

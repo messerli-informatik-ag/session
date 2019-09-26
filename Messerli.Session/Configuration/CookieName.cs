@@ -1,4 +1,4 @@
-#pragma warning disable 660,661
+﻿#pragma warning disable 660,661
 
 namespace Messerli.Session.Configuration
 {
