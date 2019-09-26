@@ -1,4 +1,4 @@
-#pragma warning disable 660,661
+﻿#pragma warning disable 660,661
 
 namespace Messerli.Session.Configuration
 {
@@ -11,14 +11,18 @@ namespace Messerli.Session.Configuration
 
         public CookieSecurePreference SecurePreference { get; }
 
+        public CookieSameSiteMode SameSiteMode { get; }
+
         internal CookieSettings(
             CookieName name,
             bool httpOnly,
-            CookieSecurePreference securePreference)
+            CookieSecurePreference securePreference,
+            CookieSameSiteMode sameSiteMode)
         {
             Name = name;
             HttpOnly = httpOnly;
             SecurePreference = securePreference;
+            SameSiteMode = sameSiteMode;
         }
 
         public static bool operator ==(CookieSettings left, CookieSettings right) => Operator.Weave(left, right);

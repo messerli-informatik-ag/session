@@ -11,7 +11,9 @@ namespace Messerli.Session.Configuration
         private static readonly CookieName DefaultCookieName =
             new CookieName("session_id");
 
-        private static readonly bool DefaultHttpOnly = true;
+        private const bool DefaultHttpOnly = true;
+
+        private const CookieSameSiteMode DefaultSameSiteMode = CookieSameSiteMode.None;
 
         private const string ValidCookieNameRegex = @"^[a-zA-Z0-9!#$%&'*+\-.\^_`|~]+$";
 
@@ -21,6 +23,8 @@ namespace Messerli.Session.Configuration
 
         private readonly CookieSecurePreference? _securePreference;
 
+        private readonly CookieSameSiteMode? _sameSiteMode;
+
         public CookieSettingsBuilder()
         {
         }
@@ -28,11 +32,13 @@ namespace Messerli.Session.Configuration
         private CookieSettingsBuilder(
             CookieName? name,
             bool? httpOnly,
-            CookieSecurePreference? securePreference)
+            CookieSecurePreference? securePreference,
+            CookieSameSiteMode? sameSiteMode)
         {
             _name = name;
             _httpOnly = httpOnly;
             _securePreference = securePreference;
+            _sameSiteMode = sameSiteMode;
         }
 
         public CookieSettingsBuilder Name(CookieName name)
@@ -50,6 +56,11 @@ namespace Messerli.Session.Configuration
             return ShallowClone(securePreference: securePreference);
         }
 
+        public CookieSettingsBuilder SameSiteMode(CookieSameSiteMode sameSiteMode)
+        {
+            return ShallowClone(sameSiteMode: sameSiteMode);
+        }
+
         /// <exception cref="InvalidOperationException">When the provided cookie name is not valid. <see cref="CookieName" /></exception>
         public CookieSettings Build()
         {
@@ -60,7 +71,8 @@ namespace Messerli.Session.Configuration
             return new CookieSettings(
                 name,
                 _httpOnly ?? DefaultHttpOnly,
-                _securePreference ?? DefaultCookieSecurePreference);
+                _securePreference ?? DefaultCookieSecurePreference,
+                _sameSiteMode ?? DefaultSameSiteMode);
         }
 
         private static void ValidateCookieName(CookieName name)
@@ -74,12 +86,14 @@ namespace Messerli.Session.Configuration
         private CookieSettingsBuilder ShallowClone(
             CookieName? name = null,
             bool? httpOnly = null,
-            CookieSecurePreference? securePreference = null)
+            CookieSecurePreference? securePreference = null,
+            CookieSameSiteMode? sameSiteMode = null)
         {
             return new CookieSettingsBuilder(
                 name ?? _name,
                 httpOnly ?? _httpOnly,
-                securePreference ?? _securePreference);
+                securePreference ?? _securePreference,
+                sameSiteMode ?? _sameSiteMode);
         }
     }
 }

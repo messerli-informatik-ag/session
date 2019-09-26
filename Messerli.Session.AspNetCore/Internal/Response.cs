@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Messerli.Session.Configuration;
 using Messerli.Session.Http;
 using Microsoft.AspNetCore.Http;
@@ -30,6 +30,7 @@ namespace Messerli.Session.AspNetCore.Internal
                 Secure = MapSecurePreferenceToBool(cookie.Settings.SecurePreference),
                 Expires = new DateTimeOffset(cookie.Expiration),
                 MaxAge = maxAge > TimeSpan.Zero ? maxAge : TimeSpan.Zero,
+                SameSite = MapToAspNetCoreSameSiteMode(cookie.Settings.SameSiteMode),
             };
 
             _httpContext.Response.Cookies.Append(
@@ -55,6 +56,17 @@ namespace Messerli.Session.AspNetCore.Internal
                 CookieSecurePreference.Always => true,
                 CookieSecurePreference.Never => false,
                 CookieSecurePreference.MatchingRequest => _httpContext.Request.IsHttps,
+                _ => throw new InvalidOperationException(),
+            };
+        }
+
+        private static SameSiteMode MapToAspNetCoreSameSiteMode(CookieSameSiteMode sameSiteMode)
+        {
+            return sameSiteMode switch
+            {
+                CookieSameSiteMode.None => SameSiteMode.None,
+                CookieSameSiteMode.Lax => SameSiteMode.Lax,
+                CookieSameSiteMode.Strict => SameSiteMode.Strict,
                 _ => throw new InvalidOperationException(),
             };
         }
