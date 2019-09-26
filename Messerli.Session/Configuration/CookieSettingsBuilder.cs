@@ -13,7 +13,7 @@ namespace Messerli.Session.Configuration
 
         private const bool DefaultHttpOnly = true;
 
-        private const CookieSameSiteMode DefaultSameSiteMode = CookieSameSiteMode.None;
+        private const CookieSameSiteMode DefaultSameSiteMode = CookieSameSiteMode.Lax;
 
         private const string ValidCookieNameRegex = @"^[a-zA-Z0-9!#$%&'*+\-.\^_`|~]+$";
 
