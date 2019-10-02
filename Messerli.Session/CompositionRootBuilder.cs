@@ -1,4 +1,4 @@
-using Messerli.Session.Configuration;
+﻿using Messerli.Session.Configuration;
 using Messerli.Session.Internal;
 using Messerli.Session.Storage;
 

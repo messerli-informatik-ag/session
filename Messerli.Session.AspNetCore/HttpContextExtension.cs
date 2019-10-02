@@ -1,4 +1,4 @@
-using Messerli.Session.AspNetCore.Internal;
+﻿using Messerli.Session.AspNetCore.Internal;
 using Microsoft.AspNetCore.Http;
 
 namespace Messerli.Session.AspNetCore

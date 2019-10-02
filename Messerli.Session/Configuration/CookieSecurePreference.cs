@@ -1,4 +1,4 @@
-namespace Messerli.Session.Configuration
+﻿namespace Messerli.Session.Configuration
 {
     /// <summary>
     /// Corresponds with the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie">Secure</a> directive

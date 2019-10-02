@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Messerli.Session.Configuration;
 using Messerli.Session.Http;

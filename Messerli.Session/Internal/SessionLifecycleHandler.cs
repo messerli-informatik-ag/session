@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using Messerli.Session.Http;
 using Messerli.Session.Internal.Writer;

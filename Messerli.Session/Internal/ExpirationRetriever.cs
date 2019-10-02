@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Messerli.Session.Configuration;
 
 namespace Messerli.Session.Internal

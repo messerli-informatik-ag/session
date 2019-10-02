@@ -1,4 +1,4 @@
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Messerli.Session.Configuration;
 using Messerli.Session.Http;
 using Messerli.Session.SessionState;
