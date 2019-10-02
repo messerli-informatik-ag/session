@@ -6,12 +6,6 @@ namespace Messerli.Session.Internal
     [Equals(DoNotAddEqualityOperators = true)]
     internal class RawSession
     {
-        public ISessionStateVariant State { get; set; }
-
-        public SessionData SessionData { get; set; }
-
-        public bool ReadOnly { get; set; }
-
         public RawSession(
             ISessionStateVariant state,
             SessionData sessionData)
@@ -19,6 +13,12 @@ namespace Messerli.Session.Internal
             State = state;
             SessionData = sessionData;
         }
+
+        public ISessionStateVariant State { get; set; }
+
+        public SessionData SessionData { get; set; }
+
+        public bool ReadOnly { get; set; }
 
         public bool IsEmpty() => SessionData.Data.Count == 0;
     }

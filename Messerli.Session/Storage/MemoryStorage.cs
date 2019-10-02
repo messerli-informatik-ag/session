@@ -61,18 +61,18 @@ namespace Messerli.Session.Storage
 
         private class Entry
         {
-            internal SessionId Id { get; }
-            
-            internal SessionData SessionData { get; }
-
-            private DateTime IdleExpirationDate { get; }
-
             internal Entry(SessionId id, SessionData sessionData, DateTime idleExpirationDate)
             {
                 Id = id;
                 SessionData = sessionData;
                 IdleExpirationDate = idleExpirationDate;
             }
+
+            internal SessionId Id { get; }
+
+            internal SessionData SessionData { get; }
+
+            private DateTime IdleExpirationDate { get; }
 
             internal bool IsExpired(DateTime now)
             {

@@ -27,8 +27,12 @@ namespace Messerli.Session.Internal
         private static byte[] GetRandomBytes()
         {
             var bytes = new byte[SessionIdByteLength];
-            using var crypto = new RNGCryptoServiceProvider();
-            crypto.GetBytes(bytes);
+
+            using (var crypto = new RNGCryptoServiceProvider())
+            {
+                crypto.GetBytes(bytes);
+            }
+
             return bytes;
         }
     }

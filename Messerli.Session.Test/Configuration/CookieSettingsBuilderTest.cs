@@ -9,7 +9,7 @@ namespace Messerli.Session.Test.Configuration
         [Fact]
         public void BuilderHasDefaultValues()
         {
-            var _ = new CookieSettingsBuilder().Build();
+            var unusedResult = new CookieSettingsBuilder().Build();
         }
 
         [Theory]
@@ -20,7 +20,7 @@ namespace Messerli.Session.Test.Configuration
             var builder = new CookieSettingsBuilder().Name(cookieName);
             Assert.Throws<InvalidOperationException>(() =>
             {
-                var _ = builder.Build();
+                var unusedResult = builder.Build();
             });
         }
 

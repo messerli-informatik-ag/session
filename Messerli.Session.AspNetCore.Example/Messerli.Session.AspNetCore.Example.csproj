@@ -5,6 +5,7 @@
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
         <RootNamespace>Messerli.Session.AspNetCore.Example</RootNamespace>
         <IsPackable>false</IsPackable>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
     <ItemGroup>
       <ProjectReference Include="..\Messerli.Session.AspNetCore\Messerli.Session.AspNetCore.csproj" />

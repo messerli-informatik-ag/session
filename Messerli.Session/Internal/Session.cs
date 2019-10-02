@@ -7,6 +7,7 @@ namespace Messerli.Session.Internal
     internal class Session : ISession
     {
         private readonly RawSession _session;
+
         private readonly ISessionIdGenerator _sessionIdGenerator;
 
         internal Session(
@@ -31,11 +32,6 @@ namespace Messerli.Session.Internal
                 mapAbandoned: _ => throw new InvalidOperationException("Trying to renew the id of an abandoned session"));
         }
 
-        private ISessionStateVariant RenewExisting(Existing oldState)
-        {
-            return new ExistingWithNewId(oldState.Id, _sessionIdGenerator.Generate());
-        }
-
         public void Abandon()
         {
             AssertSessionIsWritable();
@@ -53,18 +49,25 @@ namespace Messerli.Session.Internal
             _session.SessionData.Data[key] = value;
         }
 
+        #pragma warning disable SA1011 // ClosingSquareBracketsMustBeSpacedCorrectly
         public byte[]? Get(string key)
         {
             ValidateKey(key);
             _session.SessionData.Data.TryGetValue(key, out var value);
             return value;
         }
+        #pragma warning restore SA1011
 
         public void Remove(string key)
         {
             ValidateKey(key);
             AssertSessionIsWritable();
             _session.SessionData.Data.Remove(key);
+        }
+
+        private ISessionStateVariant RenewExisting(Existing oldState)
+        {
+            return new ExistingWithNewId(oldState.Id, _sessionIdGenerator.Generate());
         }
 
         private void ValidateKey(string key)

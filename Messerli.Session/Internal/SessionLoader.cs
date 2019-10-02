@@ -9,7 +9,7 @@ namespace Messerli.Session.Internal
     internal class SessionLoader : ISessionLoader
     {
         private readonly ISessionStorage _sessionStorage;
-        
+
         private readonly CookieName _cookieName;
 
         public SessionLoader(

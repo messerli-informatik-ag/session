@@ -7,7 +7,7 @@ namespace Messerli.Session.Test
         [Fact]
         public void SessionLifecycleHandlerCanBeCreated()
         {
-            var _ = new CompositionRootBuilder()
+            var unusedResult = new CompositionRootBuilder()
                 .Build()
                 .CreateSessionLifeCycleHandler();
         }

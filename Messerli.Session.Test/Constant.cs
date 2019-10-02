@@ -5,9 +5,9 @@ namespace Messerli.Session.Test
 {
     internal static class Constant
     {
-        public static IEnumerable<string> WhitespaceValues = new[]
+        public static IEnumerable<string> WhitespaceValues => new[]
         {
-            "",
+            string.Empty,
             " ",
             "\t",
             "\n",
@@ -15,7 +15,7 @@ namespace Messerli.Session.Test
             "\r\n",
         };
 
-        public static TheoryData<string> WhitespaceValuesAsTheoryData = EnumerableToTheoryData(WhitespaceValues);
+        public static TheoryData<string> WhitespaceValuesAsTheoryData => EnumerableToTheoryData(WhitespaceValues);
 
         private static TheoryData<T> EnumerableToTheoryData<T>(IEnumerable<T> values)
         {

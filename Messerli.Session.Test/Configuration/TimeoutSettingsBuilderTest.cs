@@ -9,7 +9,7 @@ namespace Messerli.Session.Test.Configuration
         [Fact]
         public void BuilderHasDefaultValues()
         {
-            var _ = new TimeoutSettingsBuilder().Build();
+            var unusedResult = new TimeoutSettingsBuilder().Build();
         }
 
         [Theory]
@@ -20,7 +20,7 @@ namespace Messerli.Session.Test.Configuration
 
             Assert.Throws<InvalidOperationException>(() =>
             {
-                var _ = builder.Build();
+                var unusedResult = builder.Build();
             });
         }
 
@@ -32,7 +32,7 @@ namespace Messerli.Session.Test.Configuration
 
             Assert.Throws<InvalidOperationException>(() =>
             {
-                var _ = builder.Build();
+                var unusedResult = builder.Build();
             });
         }
 
@@ -46,7 +46,7 @@ namespace Messerli.Session.Test.Configuration
                 .IdleTimeout(idleTimeout);
             Assert.Throws<InvalidOperationException>(() =>
             {
-                var _ = builder.Build();
+                var unusedResult = builder.Build();
             });
         }
 

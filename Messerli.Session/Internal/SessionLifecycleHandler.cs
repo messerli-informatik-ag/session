@@ -7,8 +7,6 @@ namespace Messerli.Session.Internal
 {
     internal class SessionLifecycleHandler : ISessionLifecycleHandler
     {
-        internal delegate ISession WrapSession(RawSession session);
-
         private readonly ISessionLoader _sessionLoader;
 
         private readonly ISessionCreator _sessionCreator;
@@ -38,6 +36,8 @@ namespace Messerli.Session.Internal
             _cookieWriter = cookieWriter;
             _expirationRetriever = expirationRetriever;
         }
+
+        internal delegate ISession WrapSession(RawSession session);
 
         public ISession Session => _wrapSession(RawSession);
 

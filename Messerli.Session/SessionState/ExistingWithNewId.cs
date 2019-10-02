@@ -5,15 +5,15 @@ namespace Messerli.Session.SessionState
     [Equals(DoNotAddEqualityOperators = true)]
     internal class ExistingWithNewId : ISessionStateVariant
     {
-        public SessionId OldId { get; }
-
-        public SessionId NewId { get; }
-
         public ExistingWithNewId(SessionId oldId, SessionId newId)
         {
             OldId = oldId;
             NewId = newId;
         }
+
+        public SessionId OldId { get; }
+
+        public SessionId NewId { get; }
 
         public T Map<T>(
             Func<New, T> mapNew,

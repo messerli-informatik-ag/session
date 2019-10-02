@@ -71,7 +71,7 @@ namespace Messerli.Session
                 timeoutSettings ?? _timeoutSettings,
                 sessionIdGenerator ?? _sessionIdGenerator);
         }
-        
+
         private static ISessionStorage DefaultSessionStorage()
         {
             return new MemoryStorage(new DateTimeFactory());
