@@ -13,4 +13,4 @@
 
 ## 0.1.3
 - Added support for the `SameSite` cookie attribute is now supported.
-  The attribute is set to `lax` by default.
+  The attribute is set to `Lax` by default.
