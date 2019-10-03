@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Security.Cryptography;
 
 namespace Messerli.Session.Internal
@@ -27,8 +27,12 @@ namespace Messerli.Session.Internal
         private static byte[] GetRandomBytes()
         {
             var bytes = new byte[SessionIdByteLength];
-            using var crypto = new RNGCryptoServiceProvider();
-            crypto.GetBytes(bytes);
+
+            using (var crypto = new RNGCryptoServiceProvider())
+            {
+                crypto.GetBytes(bytes);
+            }
+
             return bytes;
         }
     }

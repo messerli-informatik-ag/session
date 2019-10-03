@@ -1,4 +1,4 @@
-namespace Messerli.Session.AspNetCore.Internal
+﻿namespace Messerli.Session.AspNetCore.Internal
 {
     public class PerRequestSessionSettings
     {

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using Messerli.Session.Http;
 using Messerli.Session.Internal;
@@ -55,7 +55,7 @@ namespace Messerli.Session.Test.Internal
 
             Assert.Throws<InvalidOperationException>(() =>
             {
-                var _ = lifecycleHandler.Session;
+                var unusedResult = lifecycleHandler.Session;
             });
         }
 
@@ -131,7 +131,6 @@ namespace Messerli.Session.Test.Internal
             return request.Object;
         }
 
-
         private static RawSession CreateSession(ISessionStateVariant state)
         {
             return new RawSession(state, new SessionData(CreationDate));
@@ -139,18 +138,6 @@ namespace Messerli.Session.Test.Internal
 
         private class SessionLifecycleHandlerBuilder
         {
-            public MockRepository MockRepository { get; }
-
-            public Mock<ISessionLoader> SessionLoader { get; }
-
-            public Mock<ISessionCreator> SessionCreator { get; }
-
-            public Mock<ISessionWriter> SessionWriter { get; }
-
-            public Mock<ICookieWriter> CookieWriter  { get; }
-
-            public Mock<IExpirationRetriever> ExpirationRetriever  { get; }
-
             public SessionLifecycleHandlerBuilder()
             {
                 MockRepository = new MockRepository(MockBehavior.Strict);
@@ -160,6 +147,18 @@ namespace Messerli.Session.Test.Internal
                 CookieWriter = MockRepository.Create<ICookieWriter>();
                 ExpirationRetriever = MockRepository.Create<IExpirationRetriever>();
             }
+
+            public MockRepository MockRepository { get; }
+
+            public Mock<ISessionLoader> SessionLoader { get; }
+
+            public Mock<ISessionCreator> SessionCreator { get; }
+
+            public Mock<ISessionWriter> SessionWriter { get; }
+
+            public Mock<ICookieWriter> CookieWriter { get; }
+
+            public Mock<IExpirationRetriever> ExpirationRetriever { get; }
 
             public SessionLifecycleHandler Build()
             {
@@ -218,12 +217,12 @@ namespace Messerli.Session.Test.Internal
 
         private class SessionStub : ISession
         {
-            public RawSession RawSession { get; }
-
             public SessionStub(RawSession rawSession)
             {
                 RawSession = rawSession;
             }
+
+            public RawSession RawSession { get; }
 
             public SessionId Id => throw new NotImplementedException();
 

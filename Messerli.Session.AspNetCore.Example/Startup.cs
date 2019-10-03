@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Messerli.Session.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

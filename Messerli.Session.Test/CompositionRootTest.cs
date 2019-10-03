@@ -1,4 +1,4 @@
-using Xunit;
+﻿using Xunit;
 
 namespace Messerli.Session.Test
 {
@@ -7,7 +7,7 @@ namespace Messerli.Session.Test
         [Fact]
         public void SessionLifecycleHandlerCanBeCreated()
         {
-            var _ = new CompositionRootBuilder()
+            var unusedResult = new CompositionRootBuilder()
                 .Build()
                 .CreateSessionLifeCycleHandler();
         }

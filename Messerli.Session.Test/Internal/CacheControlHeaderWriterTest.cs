@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Messerli.Session.Http;
 using Messerli.Session.Internal;
 using Moq;

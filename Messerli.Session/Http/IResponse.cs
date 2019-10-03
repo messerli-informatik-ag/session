@@ -1,4 +1,4 @@
-namespace Messerli.Session.Http
+﻿namespace Messerli.Session.Http
 {
     public interface IResponse
     {

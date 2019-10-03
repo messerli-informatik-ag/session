@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Messerli.Session.Internal;
 using Messerli.Session.SessionState;
 using Messerli.Session.Storage;

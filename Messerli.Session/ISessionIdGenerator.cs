@@ -1,4 +1,4 @@
-namespace Messerli.Session
+﻿namespace Messerli.Session
 {
     public interface ISessionIdGenerator
     {

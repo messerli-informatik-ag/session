@@ -5,17 +5,17 @@ namespace Messerli.Session.Configuration
 {
     public sealed class CookieSettingsBuilder
     {
-        private const CookieSecurePreference DefaultCookieSecurePreference =
-            CookieSecurePreference.MatchingRequest;
-
-        private static readonly CookieName DefaultCookieName =
-            new CookieName("session_id");
-
         private const bool DefaultHttpOnly = true;
 
         private const CookieSameSiteMode DefaultSameSiteMode = CookieSameSiteMode.Lax;
 
         private const string ValidCookieNameRegex = @"^[a-zA-Z0-9!#$%&'*+\-.\^_`|~]+$";
+
+        private const CookieSecurePreference DefaultCookieSecurePreference =
+            CookieSecurePreference.MatchingRequest;
+
+        private static readonly CookieName DefaultCookieName =
+            new CookieName("session_id");
 
         private readonly CookieName? _name;
 
@@ -61,7 +61,7 @@ namespace Messerli.Session.Configuration
             return ShallowClone(sameSiteMode: sameSiteMode);
         }
 
-        /// <exception cref="InvalidOperationException">When the provided cookie name is not valid. <see cref="CookieName" /></exception>
+        /// <exception cref="InvalidOperationException">When the provided <see cref="CookieName" /> is not valid.</exception>
         public CookieSettings Build()
         {
             var name = _name ?? DefaultCookieName;

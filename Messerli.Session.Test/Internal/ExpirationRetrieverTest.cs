@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Messerli.Session.Configuration;
 using Messerli.Session.Internal;
 using Messerli.Session.SessionState;
@@ -61,18 +61,13 @@ namespace Messerli.Session.Test.Internal
             };
         }
 
+        private static RawSession CreateRawSession(DateTime creationDate)
+        {
+            return new RawSession(new New(SessionId), new SessionData(creationDate));
+        }
+
         public class TestParameters
         {
-            public DateTime CreationDate { get; }
-
-            public TimeSpan IdleTimeout { get; }
-
-            public TimeSpan AbsoluteTimeout { get; }
-
-            public DateTime Today { get; }
-
-            public DateTime ExpectedExpiration { get; }
-
             internal TestParameters(
                 DateTime creationDate,
                 TimeSpan idleTimeout,
@@ -86,11 +81,16 @@ namespace Messerli.Session.Test.Internal
                 Today = today;
                 ExpectedExpiration = expectedExpiration;
             }
-        }
 
-        private static RawSession CreateRawSession(DateTime creationDate)
-        {
-            return new RawSession(new New(SessionId), new SessionData(creationDate));
+            public DateTime CreationDate { get; }
+
+            public TimeSpan IdleTimeout { get; }
+
+            public TimeSpan AbsoluteTimeout { get; }
+
+            public DateTime Today { get; }
+
+            public DateTime ExpectedExpiration { get; }
         }
     }
 }

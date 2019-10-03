@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace Messerli.Session.Storage
@@ -7,11 +7,8 @@ namespace Messerli.Session.Storage
     [Equals(DoNotAddEqualityOperators = true)]
     public sealed class SessionData
     {
-        public DateTime CreationDate { get; }
-
-        public IDictionary<string, byte[]> Data { get; }
-
-        public SessionData(DateTime creationDate) : this(creationDate, new Dictionary<string, byte[]>())
+        public SessionData(DateTime creationDate)
+            : this(creationDate, new Dictionary<string, byte[]>())
         {
         }
 
@@ -22,5 +19,9 @@ namespace Messerli.Session.Storage
             CreationDate = creationDate;
             Data = data;
         }
+
+        public DateTime CreationDate { get; }
+
+        public IDictionary<string, byte[]> Data { get; }
     }
 }

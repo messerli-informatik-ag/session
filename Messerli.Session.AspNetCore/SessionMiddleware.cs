@@ -8,8 +8,6 @@ namespace Messerli.Session.AspNetCore
 {
     internal class SessionMiddleware
     {
-        public delegate ISessionLifecycleHandler CreateSessionLifecycleHandler();
-
         private readonly RequestDelegate _next;
 
         private readonly ILogger _logger;
@@ -25,6 +23,8 @@ namespace Messerli.Session.AspNetCore
             _logger = logger;
             _createSessionLifecycleHandler = sessionLifecycleHandler;
         }
+
+        public delegate ISessionLifecycleHandler CreateSessionLifecycleHandler();
 
         public async Task Invoke(HttpContext context)
         {

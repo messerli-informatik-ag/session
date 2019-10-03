@@ -1,4 +1,4 @@
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Messerli.Session.Configuration;
 using Messerli.Session.Http;
 using Messerli.Session.SessionState;
@@ -9,7 +9,7 @@ namespace Messerli.Session.Internal
     internal class SessionLoader : ISessionLoader
     {
         private readonly ISessionStorage _sessionStorage;
-        
+
         private readonly CookieName _cookieName;
 
         public SessionLoader(

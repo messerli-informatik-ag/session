@@ -5,14 +5,6 @@ namespace Messerli.Session.Configuration
     [Equals]
     public sealed class CookieSettings
     {
-        public CookieName Name { get; }
-
-        public bool HttpOnly { get; }
-
-        public CookieSecurePreference SecurePreference { get; }
-
-        public CookieSameSiteMode SameSiteMode { get; }
-
         internal CookieSettings(
             CookieName name,
             bool httpOnly,
@@ -24,6 +16,14 @@ namespace Messerli.Session.Configuration
             SecurePreference = securePreference;
             SameSiteMode = sameSiteMode;
         }
+
+        public CookieName Name { get; }
+
+        public bool HttpOnly { get; }
+
+        public CookieSecurePreference SecurePreference { get; }
+
+        public CookieSameSiteMode SameSiteMode { get; }
 
         public static bool operator ==(CookieSettings left, CookieSettings right) => Operator.Weave(left, right);
 

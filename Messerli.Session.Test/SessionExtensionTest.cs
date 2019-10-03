@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Moq;
 using Xunit;
 
@@ -10,9 +10,9 @@ namespace Messerli.Session.Test
 
         private const string StringValue = "hello";
 
-        private static readonly byte[] StringValueAsBytes = { 0x68, 0x65, 0x6C, 0x6C, 0x6F };
-
         private const int IntegerValue = 42;
+
+        private static readonly byte[] StringValueAsBytes = { 0x68, 0x65, 0x6C, 0x6C, 0x6F };
 
         private static readonly byte[] IntegerValueAsBytes = { 42, 0, 0, 0 };
 
@@ -107,6 +107,7 @@ namespace Messerli.Session.Test
                 session => session.GetBoolean(Key));
         }
 
+        #pragma warning disable SA1011 // ClosingSquareBracketsMustBeSpacedCorrectly
         private static void TestValueCanBeRead<T>(T expectedValue, byte[]? valueAsBytes, Func<ISession, T> readValue)
         {
             var session = new Mock<ISession>();
@@ -115,6 +116,7 @@ namespace Messerli.Session.Test
                 .Returns(valueAsBytes);
             Assert.Equal(expectedValue, readValue(session.Object));
         }
+        #pragma warning restore SA1011
 
         private static void TestValueCanBeSet(byte[] expectedValueAsBytes, Action<ISession> action)
         {

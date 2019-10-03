@@ -8,7 +8,7 @@ namespace Messerli.Session.AspNetCore.Example.Controllers
     public class HomeController : ControllerBase
     {
         [HttpGet]
-        public ContentResult  Get()
+        public ContentResult Get()
         {
             var session = HttpContext.Features.Get<ISession>()
                 ?? throw new NullReferenceException("Session was not found in context");

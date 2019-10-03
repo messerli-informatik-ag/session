@@ -1,4 +1,4 @@
-using Messerli.Session.Configuration;
+﻿using Messerli.Session.Configuration;
 
 namespace Messerli.Session.Http
 {

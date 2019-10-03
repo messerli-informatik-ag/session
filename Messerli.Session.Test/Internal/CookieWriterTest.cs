@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Messerli.Session.Configuration;
 using Messerli.Session.Http;
@@ -44,6 +44,13 @@ namespace Messerli.Session.Test.Internal
 
         private static readonly Cookie UnsetCookie = new Cookie(CookieSettings, string.Empty, DateTime.UnixEpoch);
 
+        public enum Action
+        {
+            None,
+            SetCookie,
+            RemoveCookie,
+        }
+
         [Theory]
         [MemberData(nameof(TestData))]
         public void TestCookieIsWrittenAndRemovedCorrectly(WriteCookieTestParameters parameters)
@@ -69,25 +76,6 @@ namespace Messerli.Session.Test.Internal
 
             response.VerifyNoOtherCalls();
             cacheControlHeaderWriter.VerifyNoOtherCalls();
-        }
-
-        private static Mock<IRequest> MockRequest(WriteCookieTestParameters parameters)
-        {
-            var request = new Mock<IRequest>();
-            request
-                .Setup(r => r.HasCookie(CookieName))
-                .Returns(parameters.CookieWasSetInRequest);
-            return request;
-        }
-
-        private static Cookie? ExpectedCookie(WriteCookieTestParameters parameters)
-        {
-            return parameters.ExpectedAction switch
-            {
-                Action.SetCookie => Cookie,
-                Action.RemoveCookie => UnsetCookie,
-                _ => null,
-            };
         }
 
         public static TheoryData<object> TestData()
@@ -157,23 +145,27 @@ namespace Messerli.Session.Test.Internal
             };
         }
 
-        public enum Action
+        private static Mock<IRequest> MockRequest(WriteCookieTestParameters parameters)
         {
-            None,
-            SetCookie,
-            RemoveCookie,
+            var request = new Mock<IRequest>();
+            request
+                .Setup(r => r.HasCookie(CookieName))
+                .Returns(parameters.CookieWasSetInRequest);
+            return request;
+        }
+
+        private static Cookie? ExpectedCookie(WriteCookieTestParameters parameters)
+        {
+            return parameters.ExpectedAction switch
+            {
+                Action.SetCookie => Cookie,
+                Action.RemoveCookie => UnsetCookie,
+                _ => null,
+            };
         }
 
         public class WriteCookieTestParameters
         {
-            internal ISessionStateVariant State { get; set; }
-
-            internal bool CookieWasSetInRequest { get; set; }
-
-            internal bool HasSessionData { get; set; }
-
-            internal Action ExpectedAction { get; set; }
-
             internal WriteCookieTestParameters(
                 ISessionStateVariant state,
                 bool cookieWasSetInRequest,
@@ -185,6 +177,14 @@ namespace Messerli.Session.Test.Internal
                 HasSessionData = hasSessionData;
                 ExpectedAction = expectedAction;
             }
+
+            internal ISessionStateVariant State { get; }
+
+            internal bool CookieWasSetInRequest { get; }
+
+            internal bool HasSessionData { get; }
+
+            internal Action ExpectedAction { get; }
 
             public override string ToString()
             {

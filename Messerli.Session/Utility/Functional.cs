@@ -1,4 +1,4 @@
-namespace Messerli.Session.Utility
+﻿namespace Messerli.Session.Utility
 {
     internal static class Functional
     {

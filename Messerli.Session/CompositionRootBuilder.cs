@@ -1,4 +1,4 @@
-using Messerli.Session.Configuration;
+﻿using Messerli.Session.Configuration;
 using Messerli.Session.Internal;
 using Messerli.Session.Storage;
 
@@ -71,7 +71,7 @@ namespace Messerli.Session
                 timeoutSettings ?? _timeoutSettings,
                 sessionIdGenerator ?? _sessionIdGenerator);
         }
-        
+
         private static ISessionStorage DefaultSessionStorage()
         {
             return new MemoryStorage(new DateTimeFactory());
