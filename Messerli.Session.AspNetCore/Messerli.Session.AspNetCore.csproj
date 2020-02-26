@@ -17,8 +17,8 @@
     </PropertyGroup>
     <ItemGroup>
       <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
-      <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="2.2.0" />
-      <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.2.0" />
+      <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="3.1.0" />
+      <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.0" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\Messerli.Session\Messerli.Session.csproj" />
