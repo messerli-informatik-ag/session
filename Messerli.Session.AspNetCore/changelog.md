@@ -8,3 +8,7 @@
 
 ## 0.1.2
 - Fix incorrect repository URL in NuGet package metadata.
+
+## 0.2.0
+- Depend on latest version (3.1.x) of Microsoft.Extensions.Caching.Abstractions.
+- Depend on latest version (3.1.x) of Microsoft.Extensions.Logging.Abstractions.
