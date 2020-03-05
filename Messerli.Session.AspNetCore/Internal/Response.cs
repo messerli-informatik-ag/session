@@ -41,35 +41,27 @@ namespace Messerli.Session.AspNetCore.Internal
         }
 
         public void SetHeader(string name, string value)
-        {
-            _httpContext.Response.Headers.Append(name, value);
-        }
+            => _httpContext.Response.Headers.Append(name, value);
 
         public string? GetFirstHeaderValue(string name)
-        {
-            return _httpContext.Response.Headers[name].FirstOrDefault();
-        }
+            => _httpContext.Response.Headers[name].FirstOrDefault();
 
         private bool MapSecurePreferenceToBool(CookieSecurePreference securePreference)
-        {
-            return securePreference switch
+            => securePreference switch
             {
                 CookieSecurePreference.Always => true,
                 CookieSecurePreference.Never => false,
                 CookieSecurePreference.MatchingRequest => _httpContext.Request.IsHttps,
                 _ => throw new InvalidOperationException(),
             };
-        }
 
         private static SameSiteMode MapToAspNetCoreSameSiteMode(CookieSameSiteMode sameSiteMode)
-        {
-            return sameSiteMode switch
+            => sameSiteMode switch
             {
                 CookieSameSiteMode.None => SameSiteMode.None,
                 CookieSameSiteMode.Lax => SameSiteMode.Lax,
                 CookieSameSiteMode.Strict => SameSiteMode.Strict,
                 _ => throw new InvalidOperationException(),
             };
-        }
     }
 }
