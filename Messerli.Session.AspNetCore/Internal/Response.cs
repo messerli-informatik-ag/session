@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Messerli.Session.Configuration;
 using Messerli.Session.Http;
 using Microsoft.AspNetCore.Http;
@@ -44,9 +45,9 @@ namespace Messerli.Session.AspNetCore.Internal
             _httpContext.Response.Headers.Append(name, value);
         }
 
-        public bool HasHeader(string name)
+        public string? GetFirstHeaderValue(string name)
         {
-            return _httpContext.Response.Headers.ContainsKey(name);
+            return _httpContext.Response.Headers[name].FirstOrDefault();
         }
 
         private bool MapSecurePreferenceToBool(CookieSecurePreference securePreference)

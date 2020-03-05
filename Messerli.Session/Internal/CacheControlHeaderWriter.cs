@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http.Headers;
 using Messerli.Session.Http;
 
 namespace Messerli.Session.Internal
@@ -6,10 +7,6 @@ namespace Messerli.Session.Internal
     internal class CacheControlHeaderWriter : ICacheControlHeaderWriter
     {
         private const string HeaderName = "Cache-Control";
-        private const string Cacheability = "private";
-        private const string Expiration = "max-age=0";
-        private const string Validation = "must-revalidate";
-        private static readonly string CacheControlValue = $"{Cacheability}, {Expiration}, {Validation}";
 
         public void AddCacheControlHeaders(IResponse response)
         {
@@ -18,13 +15,37 @@ namespace Messerli.Session.Internal
                 return;
             }
 
-            if (response.HasHeader(HeaderName))
+            if (response.GetFirstHeaderValue(HeaderName) is { } headerValue)
+            {
+                ValidateExistingHeader(headerValue);
+            }
+            else
+            {
+                SetCacheControlHeader(response);
+            }
+        }
+
+        private static void ValidateExistingHeader(string headerValue)
+        {
+            var cacheControlHeader = CacheControlHeaderValue.Parse(headerValue);
+
+            if (!cacheControlHeader.NoCache)
             {
                 throw new InvalidOperationException(
-                    $"The {HeaderName} is already present in the response. If you need to set the header to a custom value, disable automatic cache control.");
+                    $"The {HeaderName} header is already present in the response and does not disable caching completely. " +
+                    $"If you need to set the header to a custom value, disable automatic cache control.");
             }
-
-            response.SetHeader(HeaderName, CacheControlValue);
         }
+
+        private static void SetCacheControlHeader(IResponse response)
+            => response.SetHeader(HeaderName, CreateCacheControlHeader().ToString());
+
+        private static CacheControlHeaderValue CreateCacheControlHeader()
+            => new CacheControlHeaderValue
+            {
+                Private = true,
+                MaxAge = TimeSpan.Zero,
+                MustRevalidate = true,
+            };
     }
 }

@@ -8,6 +8,6 @@
 
         void SetHeader(string name, string value);
 
-        bool HasHeader(string name);
+        string? GetFirstHeaderValue(string name);
     }
 }
