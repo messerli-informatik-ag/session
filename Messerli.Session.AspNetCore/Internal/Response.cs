@@ -44,7 +44,9 @@ namespace Messerli.Session.AspNetCore.Internal
             => _httpContext.Response.Headers.Append(name, value);
 
         public string? GetFirstHeaderValue(string name)
-            => _httpContext.Response.Headers[name].FirstOrDefault();
+            => _httpContext.Response.Headers.TryGetValue(name, out var value)
+                ? value.FirstOrDefault()
+                : null;
 
         private bool MapSecurePreferenceToBool(CookieSecurePreference securePreference)
             => securePreference switch
