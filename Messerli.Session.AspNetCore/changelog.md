@@ -12,3 +12,7 @@
 ## 0.2.0
 - Depend on latest version (3.1.x) of Microsoft.Extensions.Caching.Abstractions.
 - Depend on latest version (3.1.x) of Microsoft.Extensions.Logging.Abstractions.
+
+## 0.3.0
+- Do not throw when `Cache-Control` is already present and set to `no-cache`.
+  This was an issue when using the session middleware and ASP.NET Core's built-in anti forgery handling.

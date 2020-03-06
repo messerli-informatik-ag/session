@@ -14,3 +14,6 @@
 ## 0.1.3
 - Added support for the `SameSite` cookie attribute is now supported.
   The attribute is set to `Lax` by default.
+
+## 0.2.0
+- Do not throw when `Cache-Control` is already present and set to `no-cache`.
