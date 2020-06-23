@@ -6,11 +6,11 @@ namespace Messerli.Session.Internal
     {
         public static SessionId GetId(this RawSession session)
         {
-            return session.State.Map(
-                mapNew: state => state.Id,
-                mapExisting: state => state.Id,
-                mapExistingWithNewId: state => state.NewId,
-                mapAbandoned: state => throw new InvalidOperationException("Trying to retrieve the id of an abandoned session"));
+            return session.State.Match(
+                @new: state => state.Id,
+                existing: state => state.Id,
+                existingWithNewId: state => state.NewId,
+                abandoned: _ => throw new InvalidOperationException("Trying to retrieve the id of an abandoned session"));
         }
     }
 }

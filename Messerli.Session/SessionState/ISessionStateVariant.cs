@@ -4,16 +4,16 @@ namespace Messerli.Session.SessionState
 {
     internal interface ISessionStateVariant
     {
-        T Map<T>(
-            Func<New, T> mapNew,
-            Func<Existing, T> mapExisting,
-            Func<ExistingWithNewId, T> mapExistingWithNewId,
-            Func<Abandoned, T> mapAbandoned);
+        T Match<T>(
+            Func<New, T> @new,
+            Func<Existing, T> existing,
+            Func<ExistingWithNewId, T> existingWithNewId,
+            Func<Abandoned, T> abandoned);
 
-        void Map(
-            Action<New> mapNew,
-            Action<Existing> mapExisting,
-            Action<ExistingWithNewId> mapExistingWithNewId,
-            Action<Abandoned> mapAbandoned);
+        void Match(
+            Action<New> @new,
+            Action<Existing> existing,
+            Action<ExistingWithNewId> existingWithNewId,
+            Action<Abandoned> abandoned);
     }
 }

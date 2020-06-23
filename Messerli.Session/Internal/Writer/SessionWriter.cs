@@ -16,11 +16,11 @@ namespace Messerli.Session.Internal.Writer
 
         public async Task WriteSession(RawSession session, DateTime expirationDate)
         {
-            await session.State.Map(
-                mapNew: _ => WriteNew(session, expirationDate),
-                mapExisting: state => WriteExisting(state, session, expirationDate),
-                mapExistingWithNewId: state => WriteExistingWithNewId(state, session, expirationDate),
-                mapAbandoned: WriteAbandonedSession);
+            await session.State.Match(
+                @new: _ => WriteNew(session, expirationDate),
+                existing: state => WriteExisting(state, session, expirationDate),
+                existingWithNewId: state => WriteExistingWithNewId(state, session, expirationDate),
+                abandoned: WriteAbandonedSession);
         }
 
         private async Task WriteNew(RawSession session, DateTime idleExpirationDate)

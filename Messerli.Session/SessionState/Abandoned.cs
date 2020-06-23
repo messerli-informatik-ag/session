@@ -15,16 +15,16 @@ namespace Messerli.Session.SessionState
         /// </summary>
         public SessionId? Id { get; }
 
-        public T Map<T>(
-            Func<New, T> mapNew,
-            Func<Existing, T> mapExisting,
-            Func<ExistingWithNewId, T> mapExistingWithNewId,
-            Func<Abandoned, T> mapAbandoned) => mapAbandoned(this);
+        public T Match<T>(
+            Func<New, T> @new,
+            Func<Existing, T> existing,
+            Func<ExistingWithNewId, T> existingWithNewId,
+            Func<Abandoned, T> abandoned) => abandoned(this);
 
-        public void Map(
-            Action<New> mapNew,
-            Action<Existing> mapExisting,
-            Action<ExistingWithNewId> mapExistingWithNewId,
-            Action<Abandoned> mapAbandoned) => mapAbandoned(this);
+        public void Match(
+            Action<New> @new,
+            Action<Existing> existing,
+            Action<ExistingWithNewId> existingWithNewId,
+            Action<Abandoned> abandoned) => abandoned(this);
     }
 }
