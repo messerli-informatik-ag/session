@@ -18,11 +18,7 @@ namespace Messerli.Session.Internal
         }
 
         private static string ConvertBytesToString(byte[] bytes)
-        {
-            return BitConverter
-                .ToString(bytes)
-                .Replace("-", string.Empty);
-        }
+            => BitConverter.ToString(bytes).Replace("-", string.Empty);
 
         private static byte[] GetRandomBytes()
         {

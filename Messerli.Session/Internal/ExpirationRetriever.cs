@@ -25,8 +25,6 @@ namespace Messerli.Session.Internal
         }
 
         private static DateTime MinOf(DateTime dateOne, DateTime dateTwo)
-        {
-            return new DateTime(Math.Min(dateOne.Ticks, dateTwo.Ticks));
-        }
+            => new DateTime(Math.Min(dateOne.Ticks, dateTwo.Ticks));
     }
 }

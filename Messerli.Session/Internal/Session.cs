@@ -66,9 +66,7 @@ namespace Messerli.Session.Internal
         }
 
         private ISessionStateVariant RenewExisting(Existing oldState)
-        {
-            return new ExistingWithNewId(oldState.Id, _sessionIdGenerator.Generate());
-        }
+            => new ExistingWithNewId(oldState.Id, _sessionIdGenerator.Generate());
 
         private void ValidateKey(string key)
         {
