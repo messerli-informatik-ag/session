@@ -24,10 +24,8 @@ namespace Messerli.Session.Internal
         {
             var bytes = new byte[SessionIdByteLength];
 
-            using (var crypto = new RNGCryptoServiceProvider())
-            {
-                crypto.GetBytes(bytes);
-            }
+            using var crypto = new RNGCryptoServiceProvider();
+            crypto.GetBytes(bytes);
 
             return bytes;
         }
