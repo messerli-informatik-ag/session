@@ -20,27 +20,20 @@ namespace Messerli.Session.Storage
 
         public Task WriteSessionData(SessionId id, SessionData data, DateTime idleExpirationDate)
         {
-            return Task.Run(() =>
-            {
-                _storage[id] = new Entry(id, data, idleExpirationDate);
-            });
+            _storage[id] = new Entry(id, data, idleExpirationDate);
+            return Task.CompletedTask;
         }
 
         public Task RemoveSessionData(SessionId id)
         {
-            return Task.Run(() =>
-            {
-                _storage.Remove(id);
-            });
+            _storage.Remove(id);
+            return Task.CompletedTask;
         }
 
         public Task<SessionData?> ReadSessionData(SessionId id)
         {
-            return Task.Run(() =>
-            {
-                _storage.TryGetValue(id, out var entry);
-                return CheckEntryExpiration(entry)?.SessionData;
-            });
+            _storage.TryGetValue(id, out var entry);
+            return Task.FromResult(CheckEntryExpiration(entry)?.SessionData);
         }
 
         private Entry? CheckEntryExpiration(Entry? entry)

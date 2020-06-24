@@ -31,65 +31,45 @@ namespace Messerli.Session
         }
 
         public CompositionRootBuilder SessionStorage(ISessionStorage sessionStorage)
-        {
-            return ShallowClone(sessionStorage: sessionStorage);
-        }
+            => ShallowClone(sessionStorage: sessionStorage);
 
         public CompositionRootBuilder CookieSettings(CookieSettings cookieSettings)
-        {
-            return ShallowClone(cookieSettings: cookieSettings);
-        }
+            => ShallowClone(cookieSettings: cookieSettings);
 
         public CompositionRootBuilder TimeoutSettings(TimeoutSettings timeoutSettings)
-        {
-            return ShallowClone(timeoutSettings: timeoutSettings);
-        }
+            => ShallowClone(timeoutSettings: timeoutSettings);
 
         public CompositionRootBuilder SessionIdGenerator(ISessionIdGenerator sessionIdGenerator)
-        {
-            return ShallowClone(sessionIdGenerator: sessionIdGenerator);
-        }
+            => ShallowClone(sessionIdGenerator: sessionIdGenerator);
 
         public CompositionRoot Build()
-        {
-            return new CompositionRoot(
-                _sessionStorage ?? DefaultSessionStorage(),
-                _cookieSettings ?? DefaultCookieSettings(),
-                _timeoutSettings ?? DefaultTimeoutSettings(),
-                _sessionIdGenerator ?? DefaultSessionIdGenerator());
-        }
+            => new CompositionRoot(
+                   _sessionStorage ?? DefaultSessionStorage(),
+                   _cookieSettings ?? DefaultCookieSettings(),
+                   _timeoutSettings ?? DefaultTimeoutSettings(),
+                   _sessionIdGenerator ?? DefaultSessionIdGenerator());
 
         private CompositionRootBuilder ShallowClone(
             ISessionStorage? sessionStorage = null,
             CookieSettings? cookieSettings = null,
             TimeoutSettings? timeoutSettings = null,
             ISessionIdGenerator? sessionIdGenerator = null)
-        {
-            return new CompositionRootBuilder(
-                sessionStorage ?? _sessionStorage,
-                cookieSettings ?? _cookieSettings,
-                timeoutSettings ?? _timeoutSettings,
-                sessionIdGenerator ?? _sessionIdGenerator);
-        }
+            => new CompositionRootBuilder(
+                   sessionStorage ?? _sessionStorage,
+                   cookieSettings ?? _cookieSettings,
+                   timeoutSettings ?? _timeoutSettings,
+                   sessionIdGenerator ?? _sessionIdGenerator);
 
         private static ISessionStorage DefaultSessionStorage()
-        {
-            return new MemoryStorage(new DateTimeFactory());
-        }
+            => new MemoryStorage(new DateTimeFactory());
 
         private static ISessionIdGenerator DefaultSessionIdGenerator()
-        {
-            return new SessionIdGenerator();
-        }
+            => new SessionIdGenerator();
 
         private static CookieSettings DefaultCookieSettings()
-        {
-            return new CookieSettingsBuilder().Build();
-        }
+            => new CookieSettingsBuilder().Build();
 
         private static TimeoutSettings DefaultTimeoutSettings()
-        {
-            return new TimeoutSettingsBuilder().Build();
-        }
+            => new TimeoutSettingsBuilder().Build();
     }
 }

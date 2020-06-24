@@ -37,9 +37,7 @@ namespace Messerli.Session.Internal
                 return null;
             }
 
-            return new RawSession(
-                new Existing(sessionId),
-                sessionData);
+            return new RawSession(new Existing(sessionId), sessionData);
         }
     }
 }

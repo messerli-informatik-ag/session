@@ -25,21 +25,21 @@ namespace Messerli.Session.Internal
         public void RenewId()
         {
             AssertSessionIsWritable();
-            _session.State = _session.State.Map(
-                mapNew: Identity,
-                mapExisting: RenewExisting,
-                mapExistingWithNewId: Identity,
-                mapAbandoned: _ => throw new InvalidOperationException("Trying to renew the id of an abandoned session"));
+            _session.State = _session.State.Match(
+                @new: Identity,
+                existing: RenewExisting,
+                existingWithNewId: Identity,
+                abandoned: _ => throw new InvalidOperationException("Trying to renew the id of an abandoned session"));
         }
 
         public void Abandon()
         {
             AssertSessionIsWritable();
-            _session.State = _session.State.Map(
-                mapNew: state => new Abandoned(null),
-                mapExisting: state => new Abandoned(state.Id),
-                mapExistingWithNewId: state => new Abandoned(state.OldId),
-                mapAbandoned: Identity);
+            _session.State = _session.State.Match(
+                @new: state => new Abandoned(null),
+                existing: state => new Abandoned(state.Id),
+                existingWithNewId: state => new Abandoned(state.OldId),
+                abandoned: Identity);
         }
 
         public void Set(string key, byte[] value)
@@ -66,9 +66,7 @@ namespace Messerli.Session.Internal
         }
 
         private ISessionStateVariant RenewExisting(Existing oldState)
-        {
-            return new ExistingWithNewId(oldState.Id, _sessionIdGenerator.Generate());
-        }
+            => new ExistingWithNewId(oldState.Id, _sessionIdGenerator.Generate());
 
         private void ValidateKey(string key)
         {

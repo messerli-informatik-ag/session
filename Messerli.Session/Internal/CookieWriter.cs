@@ -20,11 +20,11 @@ namespace Messerli.Session.Internal
 
         public void WriteCookie(IRequest request, IResponse response, RawSession session, DateTime expirationDate)
         {
-            session.State.Map(
-                mapNew: _ => WriteNew(request, response, session, expirationDate),
-                mapExisting: _ => WriteExisting(response, session, expirationDate),
-                mapExistingWithNewId: _ => WriteExisting(response, session, expirationDate),
-                mapAbandoned: _ => WriteAbandoned(request, response));
+            session.State.Match(
+                @new: _ => WriteNew(request, response, session, expirationDate),
+                existing: _ => WriteExisting(response, session, expirationDate),
+                existingWithNewId: _ => WriteExisting(response, session, expirationDate),
+                abandoned: _ => WriteAbandoned(request, response));
         }
 
         private void WriteNew(IRequest request, IResponse response, RawSession session, DateTime expirationDate)

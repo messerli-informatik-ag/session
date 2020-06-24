@@ -28,54 +28,36 @@ namespace Messerli.Session
         }
 
         public ISessionLifecycleHandler CreateSessionLifeCycleHandler()
-        {
-            return new SessionLifecycleHandler(
-                CreateSessionLoader(),
-                CreateSessionCreator(),
-                CreateSessionWriter(),
-                CreateSession,
-                CreateCookieWriter(),
-                CreateExpirationRetriever());
-        }
+            => new SessionLifecycleHandler(
+                   CreateSessionLoader(),
+                   CreateSessionCreator(),
+                   CreateSessionWriter(),
+                   CreateSession,
+                   CreateCookieWriter(),
+                   CreateExpirationRetriever());
 
         private IExpirationRetriever CreateExpirationRetriever()
-        {
-            return new ExpirationRetriever(CreateDateTimeFactory(), _timeoutSettings);
-        }
+            => new ExpirationRetriever(CreateDateTimeFactory(), _timeoutSettings);
 
         private ISessionWriter CreateSessionWriter()
-        {
-            return new SessionWriter(_sessionStorage);
-        }
+            => new SessionWriter(_sessionStorage);
 
         private ISessionCreator CreateSessionCreator()
-        {
-            return new SessionCreator(_sessionIdGenerator, CreateDateTimeFactory());
-        }
+            => new SessionCreator(_sessionIdGenerator, CreateDateTimeFactory());
 
         private static IDateTimeFactory CreateDateTimeFactory()
-        {
-            return new DateTimeFactory();
-        }
+            => new DateTimeFactory();
 
         private ISessionLoader CreateSessionLoader()
-        {
-            return new SessionLoader(_sessionStorage, _cookieSettings.Name);
-        }
+            => new SessionLoader(_sessionStorage, _cookieSettings.Name);
 
         private ICookieWriter CreateCookieWriter()
-        {
-            return new CookieWriter(_cookieSettings, CreateCacheControlHeaderWriter());
-        }
+            => new CookieWriter(_cookieSettings, CreateCacheControlHeaderWriter());
 
         private static ICacheControlHeaderWriter CreateCacheControlHeaderWriter()
-        {
-            return new CacheControlHeaderWriter();
-        }
+            => new CacheControlHeaderWriter();
 
         private ISession CreateSession(RawSession rawSession)
-        {
-            return new Internal.Session(rawSession, _sessionIdGenerator);
-        }
+            => new Internal.Session(rawSession, _sessionIdGenerator);
     }
 }

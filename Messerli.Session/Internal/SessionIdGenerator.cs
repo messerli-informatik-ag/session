@@ -18,20 +18,14 @@ namespace Messerli.Session.Internal
         }
 
         private static string ConvertBytesToString(byte[] bytes)
-        {
-            return BitConverter
-                .ToString(bytes)
-                .Replace("-", string.Empty);
-        }
+            => BitConverter.ToString(bytes).Replace("-", string.Empty);
 
         private static byte[] GetRandomBytes()
         {
             var bytes = new byte[SessionIdByteLength];
 
-            using (var crypto = new RNGCryptoServiceProvider())
-            {
-                crypto.GetBytes(bytes);
-            }
+            using var crypto = new RNGCryptoServiceProvider();
+            crypto.GetBytes(bytes);
 
             return bytes;
         }
