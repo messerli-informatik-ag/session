@@ -25,7 +25,7 @@ namespace Messerli.Session.Test.Internal
                 CreationDate,
                 new Dictionary<string, byte[]>
                 {
-                    { "foo", new byte[0] },
+                    ["foo"] = new byte[0],
                 });
 
         private static readonly DateTime Expiration = new DateTime(
