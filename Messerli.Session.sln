@@ -17,6 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build Configuration", "Buil
 		.gitignore = .gitignore
 		.travis.yml = .travis.yml
 		Directory.Build.props = Directory.Build.props
+		global.json = global.json
 	EndProjectSection
 EndProject
 Global
@@ -44,8 +45,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {C166067F-07A1-47C9-8C54-BA17DFE74112}
 	EndGlobalSection
 EndGlobal
