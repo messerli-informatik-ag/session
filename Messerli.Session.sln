@@ -1,12 +1,23 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messerli.Session", "Messerli.Session\Messerli.Session.csproj", "{A4C18A88-B9C5-4DB4-A611-DAD6189ABF67}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33530.505
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Messerli.Session", "Messerli.Session\Messerli.Session.csproj", "{A4C18A88-B9C5-4DB4-A611-DAD6189ABF67}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messerli.Session.AspNetCore", "Messerli.Session.AspNetCore\Messerli.Session.AspNetCore.csproj", "{BF1C0DBF-84E5-4DCB-90C6-9775E5874828}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Messerli.Session.AspNetCore", "Messerli.Session.AspNetCore\Messerli.Session.AspNetCore.csproj", "{BF1C0DBF-84E5-4DCB-90C6-9775E5874828}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messerli.Session.Test", "Messerli.Session.Test\Messerli.Session.Test.csproj", "{7415339D-BBA6-4E4C-830F-328387278C7F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Messerli.Session.Test", "Messerli.Session.Test\Messerli.Session.Test.csproj", "{7415339D-BBA6-4E4C-830F-328387278C7F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messerli.Session.AspNetCore.Example", "Messerli.Session.AspNetCore.Example\Messerli.Session.AspNetCore.Example.csproj", "{AA4BF236-4E2E-4CFD-AB25-8AAB192C8142}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Messerli.Session.AspNetCore.Example", "Messerli.Session.AspNetCore.Example\Messerli.Session.AspNetCore.Example.csproj", "{AA4BF236-4E2E-4CFD-AB25-8AAB192C8142}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build Configuration", "Build Configuration", "{1FFF94D4-3398-4F4A-B163-272115BA279E}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		.travis.yml = .travis.yml
+		Directory.Build.props = Directory.Build.props
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,5 +41,11 @@ Global
 		{AA4BF236-4E2E-4CFD-AB25-8AAB192C8142}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA4BF236-4E2E-4CFD-AB25-8AAB192C8142}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA4BF236-4E2E-4CFD-AB25-8AAB192C8142}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C166067F-07A1-47C9-8C54-BA17DFE74112}
 	EndGlobalSection
 EndGlobal

@@ -15,6 +15,6 @@
         <PackageReference Include="coverlet.collector" Version="1.0.1" />
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\Messerli.Session\Messerli.Session.csproj" />
+        <ProjectReference Include="..\Messerli.Session\Messerli.Session.csproj" />
     </ItemGroup>
 </Project>

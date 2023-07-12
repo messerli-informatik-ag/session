@@ -5,22 +5,21 @@
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
         <RootNamespace>Messerli.Session</RootNamespace>
         <AssemblyName>Messerli.Session</AssemblyName>
-        <Version>0.2.0</Version>
+        <Version>0.2.1</Version>
         <RepositoryUrl>https://github.com/messerli-informatik-ag/session</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageId>Messerli.Session</PackageId>
         <PackageTags>session http</PackageTags>
         <PackageLicenseExpression>MIT OR Apache-2.0</PackageLicenseExpression>
-        <Copyright>© Messerli Informatik AG. All rights reserved.</Copyright>
         <Description>Generic session implementation.</Description>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
     <ItemGroup>
-      <PackageReference Include="Equals.Fody" Version="4.0.0">
-          <PrivateAssets>all</PrivateAssets>
-      </PackageReference>
-      <PackageReference Include="Fody" Version="6.1.0">
-          <PrivateAssets>all</PrivateAssets>
-      </PackageReference>
+        <PackageReference Include="Equals.Fody" Version="4.0.0">
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="Fody" Version="6.1.0">
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
     </ItemGroup>
 </Project>
