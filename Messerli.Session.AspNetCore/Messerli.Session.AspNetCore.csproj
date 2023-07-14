@@ -5,22 +5,21 @@
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
         <RootNamespace>Messerli.Session.AspNetCore</RootNamespace>
         <AssemblyName>Messerli.Session.AspNetCore</AssemblyName>
-        <Version>0.3.0</Version>
+        <Version>0.3.1</Version>
         <RepositoryUrl>https://github.com/messerli-informatik-ag/session</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageId>Messerli.Session.AspNetCore</PackageId>
         <PackageTags>session http aspnetcore</PackageTags>
         <PackageLicenseExpression>MIT OR Apache-2.0</PackageLicenseExpression>
-        <Copyright>© Messerli Informatik AG. All rights reserved.</Copyright>
         <Description>Session middleware for ASP.NET Core.</Description>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
     <ItemGroup>
-      <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
-      <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="3.1.0" />
-      <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+        <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="3.1.0" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.0" />
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\Messerli.Session\Messerli.Session.csproj" />
+        <ProjectReference Include="..\Messerli.Session\Messerli.Session.csproj" />
     </ItemGroup>
 </Project>

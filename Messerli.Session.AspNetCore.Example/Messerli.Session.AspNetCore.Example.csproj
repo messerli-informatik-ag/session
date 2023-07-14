@@ -8,7 +8,7 @@
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
     <ItemGroup>
-      <ProjectReference Include="..\Messerli.Session.AspNetCore\Messerli.Session.AspNetCore.csproj" />
-      <ProjectReference Include="..\Messerli.Session\Messerli.Session.csproj" />
+        <ProjectReference Include="..\Messerli.Session.AspNetCore\Messerli.Session.AspNetCore.csproj" />
+        <ProjectReference Include="..\Messerli.Session\Messerli.Session.csproj" />
     </ItemGroup>
 </Project>
